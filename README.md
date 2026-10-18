@@ -295,7 +295,7 @@ Every module has a page in **F10 › Settings**, and the first switch on it turn
 
 * **Settings › Server:** server name, server-list description and tags (update live), Discord link, autosave interval, **whitelist** (only `server.whitelisted` can join), **maintenance mode** (only `server.maintenance` can join), join/leave messages.
 * **Settings › Interface:** menu title, subtitle and logo, accent colours, panel colour and opacity, menu position (left/right/center) and size, notification position, money pop-ups, HUD, menu sounds, and whether players can walk/drive with the menu open.
-* **Logo:** put a PNG in `resources/[fusion]/fusion-core/html/img/`, run `ensure fusion-core`, and type the file name in *Logo*.
+* **Logo:** the menu shows the Fusion logo until you set your own: put a PNG in `resources/[fusion]/fusion-core/html/img/`, run `ensure fusion-core`, and type the file name in *Logo*. To show no logo at all, leave *Logo* empty and turn off *Show the Fusion logo when no logo is set*.
 
 ### HUD and vehicle HUD
 
@@ -618,7 +618,7 @@ Fusion's anticheat runs mostly on the server, reading what the game reports abou
 
 New files inside a resource are only picked up when that resource restarts. That's why you run `ensure`.
 
-**On a Linux VPS:** files you upload with WinSCP or FileZilla, or unzip with `sudo`, may not belong to the user the server runs as. After adding content, run `sudo chown -R <user>:<user> <server folder>` (e.g. `sudo chown -R ubuntu:ubuntu /home/fivem/fusion`), or Fusion can't save into it (carcols fixer, handling editor, postal map).
+**On a Linux VPS:** files you upload with WinSCP or FileZilla logged in as `root`, or unzip with `sudo`, belong to root instead of the user the server runs as, and Fusion can't save into them (carcols fixer, handling editor, postal map). The Linux installer handles this for you: every minute it gives anything in the server folder back to the server user, so you never need to fix ownership yourself. To avoid it entirely, log WinSCP in as the server user (e.g. `ubuntu`) instead of `root`. Installed before this was added? Run `sudo chown -R ubuntu:ubuntu /home/fivem/fusion` after adding content (with your own user and folder).
 
 ### Scripts that must start in a certain order
 

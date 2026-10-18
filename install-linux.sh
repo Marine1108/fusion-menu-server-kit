@@ -265,8 +265,31 @@ RestartSec=10
 [Install]
 WantedBy=multi-user.target
 EOF
+    # Files copied in as root (sudo unzip, WinSCP logged in as root) would stop Fusion saving into them:
+    # every minute, hand anything in the server folder that isn't the server user's back to it.
+    cat > /etc/systemd/system/fusion-owner.service <<EOF
+[Unit]
+Description=Fusion Menu - give server files back to $RUN_USER
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/find "$ROOT" -xdev ! -user $RUN_USER -exec chown -h $RUN_USER:$RUN_USER {} +
+EOF
+    cat > /etc/systemd/system/fusion-owner.timer <<EOF
+[Unit]
+Description=Fusion Menu - check server file ownership every minute
+
+[Timer]
+OnBootSec=20
+OnUnitActiveSec=60
+AccuracySec=5
+
+[Install]
+WantedBy=timers.target
+EOF
     systemctl daemon-reload
     systemctl enable fusion.service >/dev/null
+    systemctl enable --now fusion-owner.timer >/dev/null
     c_ok "Created the 'fusion' service."
 
     if command -v ufw >/dev/null 2>&1 && ufw status | grep "Status: active" >/dev/null; then
