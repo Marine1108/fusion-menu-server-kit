@@ -1,0 +1,13 @@
+PUT FUSION MENU HERE
+====================
+
+1. Sign in at https://portal.cfx.re with the Cfx.re account you bought Fusion Menu with.
+2. Open "Granted Assets" and download Fusion Menu.
+3. Unzip it into THIS folder, so you end up with:
+     resources/[fusion]/fusion-core
+     resources/[fusion]/fusion-vehicles
+     resources/[fusion]/qb-core
+     ... and so on, next to oxmysql.
+4. Run the installer (install-windows.bat or install-linux.sh).
+
+Fusion Menu only runs on servers whose license key belongs to that Cfx.re account.

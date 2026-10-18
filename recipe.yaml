@@ -1,0 +1,63 @@
+# Fusion Menu - txAdmin recipe (works on hosted servers and on your own PC / VPS)
+# In txAdmin setup choose "Remote URL Template" and paste:
+#   https://raw.githubusercontent.com/Marine1108/fusion-menu-server-kit/main/recipe.yaml
+# txAdmin downloads the free server kit, creates the database, writes server.cfg and makes
+# your txAdmin account the owner - nothing to edit by hand.
+#
+# Fusion Menu itself is protected by Cfx.re, so it can't be downloaded by a recipe: after this,
+# upload the zip from portal.cfx.re (Granted Assets) into resources/[fusion] (see README).
+
+$engine: 3
+$minFxVersion: 12913
+$onesync: on
+name: Fusion Menu
+version: 1.0.0
+author: Fusion Menu
+description: vMenu-style FiveM framework that runs QBCore scripts unmodified. Everything - settings, permissions, locations, jobs, items - is configured in game.
+
+tasks:
+  - action: download_github
+    src: https://github.com/Marine1108/fusion-menu-server-kit
+    ref: main
+    dest: ./tmp/fusion
+
+  - action: move_path
+    src: ./tmp/fusion/resources
+    dest: ./resources
+
+  - action: move_path
+    src: ./tmp/fusion/install/server.cfg.template
+    dest: ./server.cfg
+
+  - action: move_path
+    src: ./tmp/fusion/README.md
+    dest: ./README.md
+
+  - action: move_path
+    src: ./tmp/fusion/install
+    dest: ./install
+
+  - action: move_path
+    src: ./tmp/fusion/update-fusion.bat
+    dest: ./update-fusion.bat
+
+  - action: move_path
+    src: ./tmp/fusion/update-fusion.sh
+    dest: ./update-fusion.sh
+
+  - action: move_path
+    src: ./tmp/fusion/install-script.bat
+    dest: ./install-script.bat
+
+  - action: move_path
+    src: ./tmp/fusion/install-script.sh
+    dest: ./install-script.sh
+
+  - action: remove_path
+    path: ./tmp
+
+  - action: connect_database
+
+  - action: replace_string
+    file: ./server.cfg
+    mode: template
