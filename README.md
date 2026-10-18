@@ -113,6 +113,21 @@ Already have the kit folder? Double-click `install-windows.bat` inside it instea
 3. Upload Fusion Menu: unzip the file from portal.cfx.re on your PC, then upload its folders into **`resources/[fusion]`** with the host's **File Manager** or FTP (next to `oxmysql`).
 4. Start the server in txAdmin.
 
+### Option D: Your own server with txAdmin's recipe
+
+Prefer txAdmin's recipe on your own PC or VPS instead of Option A or B? txAdmin's database step needs a database login it can sign in to with a password, which a fresh machine doesn't have. Set one up first:
+
+* **Linux VPS (Ubuntu / Debian):** run
+  ```bash
+  curl -fsSL https://raw.githubusercontent.com/Marine1108/fusion-menu-server-kit/main/setup/prepare-database.sh | sudo bash
+  ```
+  It installs MariaDB if needed, creates the login `txadmin` with a random password, and prints what to type in txAdmin's database step (also saved in `~/fusion-database-login.txt`).
+* **Windows:** install a database that starts with Windows, e.g. run **FusionMenu-Setup.bat** once (it installs MariaDB and saves the login in `database-login.txt`), or use XAMPP's MySQL (user `root`, no password). Using the setup? Then you don't need the recipe at all, see below.
+
+Then follow Option C, steps 1–4, using that login on the database step.
+
+> **Already ran the Windows setup or the Linux installer?** Don't use the recipe: everything is set up. In txAdmin choose **Existing Server Data** and point it at the server folder (the installer prints the exact paths; on Linux with txAdmin it's `/opt/fxserver/txData/fusion`). Running the recipe as well would create a second, separate server.
+
 Players connect on port **30120** (TCP and UDP) unless you chose another. txAdmin uses **40120**. If friends outside your home can't join a server on your own PC, forward port 30120 on your router.
 
 ### First start

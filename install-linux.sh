@@ -158,6 +158,24 @@ USER_PART="$(urlencode "$DB_USER")"
 [[ -n "$DB_PASS" ]] && USER_PART="$USER_PART:$(urlencode "$DB_PASS")"
 CONNECTION="mysql://$USER_PART@$DB_HOST:$DB_PORT/$DB_NAME?charset=utf8mb4"
 
+# keep the login where the owner can find it (tools like HeidiSQL, or txAdmin's database step)
+if [[ -n "$DB_PASS" ]]; then
+    cat > "$ROOT/database-login.txt" <<EOF
+FUSION MENU - DATABASE LOGIN (keep this file private)
+
+Host:     $DB_HOST
+Port:     $DB_PORT
+Database: $DB_NAME
+Username: $DB_USER
+Password: $DB_PASS
+
+The server already uses this login (mysql_connection_string in server.cfg).
+EOF
+    chmod 600 "$ROOT/database-login.txt"
+    chown "$RUN_USER" "$ROOT/database-login.txt" 2>/dev/null || true
+    c_ok "Database login saved in $ROOT/database-login.txt"
+fi
+
 # ------------------------------------------------------------------ Server
 c_title "Server"
 echo "Get a free license key at https://portal.cfx.re (Server Registration Keys)."
@@ -225,6 +243,9 @@ if [[ -n "$FX_DIR" ]]; then
         EXEC="$FX_DIR/run.sh +set onesync on +exec $CONFIG"
     else
         mkdir -p "$FX_DIR/txData"
+        # txAdmin expects server folders inside its data folder: give it a path there to this one
+        TX_SERVER="$FX_DIR/txData/fusion"
+        [[ -e "$TX_SERVER" && ! -L "$TX_SERVER" ]] || ln -sfn "$ROOT" "$TX_SERVER"
         EXEC="$FX_DIR/run.sh +set txDataPath $FX_DIR/txData"
     fi
     chown -R "$RUN_USER":"$RUN_USER" "$FX_DIR" "$ROOT"
@@ -265,8 +286,9 @@ EOF
         echo "Open http://YOUR_SERVER_IP:40120 in your browser. The PIN is in the log:"
         echo "    journalctl -u fusion -f"
         echo "In the txAdmin setup choose 'Existing server data' and use:"
-        echo "    Server Data Folder: $ROOT"
-        echo "    CFG File:          $CONFIG"
+        echo "    Server Data Folder: ${TX_SERVER:-$ROOT}"
+        echo "    CFG File:          ${TX_SERVER:-$ROOT}/server.cfg"
+        echo "(${TX_SERVER:-$ROOT} is the same folder as $ROOT.)"
         echo "Then turn OneSync on (Settings > FXServer) and start the server."
     fi
     echo "Control it with:  systemctl start|stop|restart fusion"
