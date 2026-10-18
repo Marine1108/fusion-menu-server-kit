@@ -71,13 +71,13 @@ find_fusion_zip() {
     local z
     while IFS= read -r z; do
         [[ -f "$z" ]] || continue
-        if unzip -Z1 "$z" 2>/dev/null | grep -qE '(^|/)fusion-core/fxmanifest\.lua$'; then printf '%s\n' "$z"; return 0; fi
+        if unzip -Z1 "$z" 2>/dev/null | grep -E '(^|/)fusion-core/fxmanifest\.lua$' >/dev/null; then printf '%s\n' "$z"; return 0; fi
     done < <(ls -t "$ROOT"/*.zip /root/*.zip /root/Downloads/*.zip /home/*/*.zip /home/*/Downloads/*.zip /tmp/*.zip 2>/dev/null)
     return 1
 }
 add_fusion() {
     local z="$1" entry prefix tmp
-    entry="$(unzip -Z1 "$z" | grep -E '(^|/)fusion-core/fxmanifest\.lua$' | head -n1)"
+    entry="$(unzip -Z1 "$z" | grep -E '(^|/)fusion-core/fxmanifest\.lua$' | sed -n 1p)"
     prefix="${entry%fusion-core/fxmanifest.lua}"
     tmp="$(mktemp -d)"
     unzip -q "$z" -d "$tmp"
@@ -86,7 +86,7 @@ add_fusion() {
     rm -rf "$tmp"
     c_ok "Fusion Menu unpacked into resources/[fusion]"
 }
-if ! find "$ROOT/resources" -type d -name fusion-core 2>/dev/null | grep -q .; then
+if ! find "$ROOT/resources" -type d -name fusion-core 2>/dev/null | grep . >/dev/null; then
     c_title "Fusion Menu files"
     while true; do
         if zip="$(find_fusion_zip)"; then echo "Found $zip"; add_fusion "$zip"; break; fi
@@ -96,8 +96,18 @@ if ! find "$ROOT/resources" -type d -name fusion-core 2>/dev/null | grep -q .; t
         ask "Press Enter when it is uploaded (or type its path, or 'skip')" ""
         if [[ "$REPLY" == "skip" ]]; then c_warn "Skipped - put Fusion Menu into resources/[fusion] before starting."; break; fi
         if [[ -n "$REPLY" && -f "$REPLY" ]]; then
-            if unzip -Z1 "$REPLY" 2>/dev/null | grep -qE '(^|/)fusion-core/fxmanifest\.lua$'; then add_fusion "$REPLY"; break; fi
+            if unzip -Z1 "$REPLY" 2>/dev/null | grep -E '(^|/)fusion-core/fxmanifest\.lua$' >/dev/null; then add_fusion "$REPLY"; break; fi
             c_err "That zip does not contain Fusion Menu."
+        elif [[ -n "$REPLY" && -d "$REPLY" ]]; then
+            # an already unzipped download: copy the folder that holds fusion-core
+            core="$(find "$REPLY" -maxdepth 3 -type d -name fusion-core 2>/dev/null | sed -n 1p)"
+            if [[ -n "$core" ]]; then
+                mkdir -p "$ROOT/resources/[fusion]"
+                cp -a "$(dirname "$core")/." "$ROOT/resources/[fusion]/"
+                c_ok "Fusion Menu copied into resources/[fusion]"
+                break
+            fi
+            c_err "That folder does not contain Fusion Menu."
         fi
     done
 fi
@@ -238,7 +248,7 @@ EOF
     systemctl enable fusion.service >/dev/null
     c_ok "Created the 'fusion' service."
 
-    if command -v ufw >/dev/null 2>&1 && ufw status | grep -q "Status: active"; then
+    if command -v ufw >/dev/null 2>&1 && ufw status | grep "Status: active" >/dev/null; then
         if ask_yn "Open the firewall ports (ufw) for the server?" y; then
             ufw allow "$PORT"/tcp >/dev/null; ufw allow "$PORT"/udp >/dev/null
             [[ "$MODE" != "2" ]] && ufw allow 40120/tcp >/dev/null
