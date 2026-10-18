@@ -60,4 +60,4 @@ tasks:
 
   - action: replace_string
     file: ./server.cfg
-    mode: template
+    mode: all_vars
