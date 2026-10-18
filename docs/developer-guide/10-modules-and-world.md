@@ -25,6 +25,8 @@ if exports['fusion-core']:IsModuleEnabled('fusion-phone') then … end
 | `fusion-vinewood` | the hillside sign |
 | `fusion-anticheat` | server-side anticheat |
 
+**Also on every Fusion server:** `screenshot-basic` (screenshots of the game view, started before `[qb]` / `[addons]`), `oxmysql` (database) and the standard FiveM resources (`chat`, `spawnmanager`, `mapmanager`, …).
+
 ## Vehicles
 
 ### The vehicle catalogue

@@ -50,7 +50,14 @@ Fusion itself is escrowed. If you sell your script with Asset Escrow too:
 
 ## Where owners put your script
 
-Owners install third-party scripts in `resources/[addons]` (or `[qb]` for QBCore scripts), optionally in sub-folders, and Fusion starts them automatically. Their `install-script` tool installs a zipped script and keeps their configs across updates. In your readme, list:
+Owners install third-party scripts in `resources/[addons]` (or `[qb]` for QBCore scripts), optionally in sub-folders, and Fusion starts them automatically.
+
+**Start order.** `server.cfg` starts `[qb]` and `[addons]` as whole folders (`ensure [qb]`), in no guaranteed order. If your script needs another resource running first:
+
+* best: list it as a `dependency` in your `fxmanifest.lua`, and FiveM starts it first wherever it sits;
+* otherwise tell owners to put your script in `resources/[standalone]` and add `ensure yourscript` above `ensure [qb]` in `server.cfg`.
+
+**screenshot-basic is always there.** Every Fusion server has it (`resources/[standalone]/screenshot-basic`), started before `[qb]` and `[addons]`. Use its exports directly (`exports['screenshot-basic']:requestScreenshotUpload(...)` on the client, `requestClientScreenshot(...)` on the server), and don't ship or tell owners to install another copy. Their `install-script` tool installs a zipped script and keeps their configs across updates. In your readme, list:
 
 1. requirements (`fusion-core`, or QBCore, plus anything else),
 2. item pictures to copy to `fusion-inventory/html/images/`,

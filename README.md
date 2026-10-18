@@ -58,11 +58,13 @@ FusionMenu/                          ← your server data folder
    │  ├─ fusion-jail                 prison
    │  ├─ fusion-weather              weather and time sync
    │  └─ [compat]                    qb-core, qb-menu, qb-input, progressbar (QBCore compatibility)
+   ├─ [standalone]
+   │  └─ screenshot-basic            screenshots for other scripts (CCTV, evidence, MDTs, phone cameras)
    ├─ [qb]                           ← put QBCore scripts here
    └─ [addons]                       ← put vehicles, EUP, peds, maps here
 ```
 
-Everything in `[qb]` and `[addons]` starts automatically, so you never edit `server.cfg` to add content.
+Everything in `[qb]` and `[addons]` starts automatically, so you normally never edit `server.cfg` to add content. The only exception is scripts that must start in a particular order ([section 8](#scripts-that-must-start-in-a-certain-order)).
 
 ---
 
@@ -224,8 +226,8 @@ Fusion mirrors every role to FiveM's ACE system as `group.fusion_<role>`, so sta
 
 | The script checks… | Do this |
 |---|---|
-| An ACE permission such as `cctv.view` | **Custom nodes › Add node** `cctv.view`, then **Allow** it on a role |
-| A restricted command such as `/carwash` | Add the node `command.carwash` and allow it |
+| An ACE permission such as `cctv.view` | Open the role › **Wildcard & custom rules** › type `cctv.view` › **Allow** › **Add rule**. Several at once: `cctv.view, cctv.record, cctv.playback`; all of a script's permissions: `cctv.*` |
+| A restricted command such as `/carwash` | Add the rule `command.carwash` and allow it |
 | QBCore permission levels (`admin`, `god`, `mod`) | Allow `qbcore.admin`, `qbcore.god` or `qbcore.mod` on a role |
 | A job ("police only") | Nothing; jobs are edited in **Jobs** |
 
@@ -616,6 +618,32 @@ Fusion's anticheat runs mostly on the server, reading what the game reports abou
 
 New files inside a resource are only picked up when that resource restarts. That's why you run `ensure`.
 
+**On a Linux VPS:** files you upload with WinSCP or FileZilla, or unzip with `sudo`, may not belong to the user the server runs as. After adding content, run `sudo chown -R <user>:<user> <server folder>` (e.g. `sudo chown -R ubuntu:ubuntu /home/fivem/fusion`), or Fusion can't save into it (carcols fixer, handling editor, postal map).
+
+### Scripts that must start in a certain order
+
+`server.cfg` starts each of `[qb]` and `[addons]` with one line (`ensure [qb]`), and FiveM doesn't promise any order **inside** a folder. On Linux it often isn't even alphabetical. Most scripts don't care. For scripts that need another one running first (their readme usually says so):
+
+1. Put them in `resources/[standalone]`, **not** in `[qb]` or `[addons]`. `ensure [qb]` would start, or restart, everything in `[qb]` in its own order.
+2. Start them by name in `server.cfg`, in the right order, **above** `ensure [qb]`:
+
+```
+ensure screenshot-basic
+ensure eyewitness
+ensure overwatch
+ensure [qb]
+ensure [addons]
+```
+
+If a script's `fxmanifest.lua` already lists the other one as a `dependency`, FiveM handles the order itself and it can stay in `[qb]`.
+
+### screenshot-basic is included
+
+Many scripts take screenshots of the game view: CCTV and evidence scripts (e.g. Eyewitness), MDTs, phone cameras. They need **screenshot-basic**. Fusion's server kit includes it, already built, in `resources/[standalone]/screenshot-basic`, and `server.cfg` starts it before `[qb]` and `[addons]`, so it's always running first.
+
+* **Don't install a second copy** in `[qb]` or `[addons]`. Two resources with the same name conflict. If a script's instructions tell you to install screenshot-basic, it's already done.
+* **Servers set up before it was included:** copy `resources/[standalone]/screenshot-basic` from the latest server kit into your server, and add `ensure screenshot-basic` just above `ensure [qb]` in `server.cfg`.
+
 ### Organising [qb] and [addons] into sub-folders
 
 You can group content into sub-folders, as deep as you like, as long as **every grouping folder has square brackets**:
@@ -637,7 +665,7 @@ Fusion backs this up in two ways (**Settings › Server › Resources**):
 * 15 seconds after boot it starts anything in sub-folders of `[qb]` / `[addons]` that didn't start (switch this off, or list resources to leave stopped);
 * folders the server can't see, like the two ✗ examples above, are listed in the server console when it starts, as *"&lt;folder&gt; does not have a resource manifest"*.
 
-Vehicles, EUP, weapons, the carcols fixer and the handling editor all find packs in sub-folders automatically. To install straight into a sub-folder: `install/update.ps1 -Mode script -Source pack.zip -Target "[addons]/[cars]"` (Linux: `bash install-script.sh pack.zip --target "[addons]/[cars]"`), or install normally and move the folder afterwards: upgrades find it wherever it is.
+Vehicles, EUP, weapons, the carcols fixer and the handling editor all find packs in sub-folders automatically. **New vehicle packs and the carcols fixer / handling editor:** after adding a pack, restart the whole server once before fixing or editing it. FiveM only lets Fusion save into packs it knew about when the server started. Then fix, and restart again so players download the fixed pack. To install straight into a sub-folder: `install/update.ps1 -Mode script -Source pack.zip -Target "[addons]/[cars]"` (Linux: `bash install-script.sh pack.zip --target "[addons]/[cars]"`), or install normally and move the folder afterwards: upgrades find it wherever it is.
 
 Your own pictures and media stay yours: Fusion updates never overwrite them, and they are never part of a Fusion release.
 

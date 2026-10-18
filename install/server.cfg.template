@@ -69,5 +69,7 @@ ensure fusion-jail
 ensure fusion-weather
 
 ## Your content: QBCore scripts, vehicles, EUP, maps
+# Screenshots for other scripts (CCTV, evidence, MDTs). Must start before the scripts in [qb] / [addons].
+ensure screenshot-basic
 ensure [qb]
 ensure [addons]
