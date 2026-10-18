@@ -44,6 +44,7 @@ ensure rconlog
 
 ## Fusion framework (order matters)
 ensure oxmysql
+ensure fmenu-check
 ensure fusion-core
 ensure fusion-anticheat
 ensure qb-core
