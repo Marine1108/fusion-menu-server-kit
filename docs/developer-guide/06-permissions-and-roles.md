@@ -66,6 +66,7 @@ This needs fusion-core to be allowed to run `add_ace` (the default `server.cfg` 
 | `anticheat.bypass` | Never flagged by the anticheat; give it to your own trusted staff tools' users, not to players |
 | `inventory.search`, `hospital.revive`, `jail.use` | Search players, revive, jail |
 | `emergency.siren`, `emergency.radar`, `emergency.bolo`, `emergency.pit` | Emergency vehicle tools |
+| `media.streamer`, `media.videomode`, `media.freecam`, `media.freecam.unlimited`, `media.record`, `media.rockstar` | Streaming & video |
 | `vehicles.class.<class>`, `vehicles.keys.all` | Vehicle spawning by class, keys to every vehicle |
 | `weapons.category.<category>` | Which weapon categories a role may carry |
 

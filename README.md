@@ -248,6 +248,7 @@ Fusion mirrors every role to FiveM's ACE system as `group.fusion_<role>`, so sta
 | Anticheat | `anticheat.bypass` (never flagged; admins by default), `anticheat.manage` (delete detections), `admin.anticheat` (Anticheat tab and staff alerts) |
 | Emergency | `emergency.siren`, `emergency.radar`, `emergency.bolo`, `emergency.pit` |
 | Phone | `phone.use`, `phone.amber`, `admin.alerts` |
+| Streaming & video | `media.streamer`, `media.videomode`, `media.freecam`, `media.freecam.unlimited`, `media.record`, `media.rockstar` |
 | Other | `inventory.search`, `stores.free`, `fuel.free`, `hospital.revive`, `jail.use`, `weather.change`, `weather.events`, `time.change` |
 
 The **Permissions** tab lists every node with a description, so you don't need to memorise these.
@@ -305,6 +306,27 @@ Every module has a page in **F10 › Settings**, and the first switch on it turn
 * **Settings › Interface › HUD:** turn the HUD, vehicle HUD and street/compass on or off, and decide whether players may move the HUD. Speed units (MPH / KM/H) are in **Settings › Vehicles**.
 * **Speedometer styles:** *Classic card*, *Analog dial* (needle gauge with an RPM ring), *Digital (LCD)*, *Sport* (shift-light ribbon) and *Minimal*. The server picks one in **Settings › Interface › HUD › Speedometer style**; with *Players can pick their own speedometer* on, each player chooses theirs in *Menu › Misc Settings › Speedometer*.
 * **Windshield HUD:** driving or riding in **first person** (press V until you're in the cockpit), the speedometer is replaced by a see-through display low on the windshield: speed, gear, RPM bar, turn signals, high beams, compass and street, fuel, and blinking *FASTEN SEATBELT* / *ENGINE DAMAGE* warnings. It works in every vehicle. The server can switch it off (**Settings › Interface › HUD**) and each player can too (*Menu › Misc Settings › Windshield HUD*). Players can move it with `/hud`.
+
+### Streaming & video (M › Streaming & Video)
+
+**Streamer mode** hides what each player chooses from their own screen, so it never shows on their stream or in their recordings: the chat box, names and IDs above players, names and IDs in menus, their own server ID, cash and bank, job, street / postal / compass, the minimap, phone numbers, the voice and radio channel, and notifications. *What To Hide* has a tick box for each. Bind *Fusion: streamer mode, show everything while held* in the key bindings to see it all for a moment without it staying on screen. Also `/streamer`.
+
+Streaming software (OBS, Streamlabs, Discord) records exactly what is on your screen, so anything hidden for your viewers is hidden for you too. The **Fusion Recorder** is different: it records only the game picture, so your HUD, chat, phone and menus are never in its clips even while you can see them.
+
+**Video mode** gives a clean screen for filming: no HUD, chat, minimap, name tags, prompts or notifications. *Video Mode Options* add letterbox bars (1.85:1 or 2.39:1), colour filters (filmic, warm, cool, faded, high contrast, black & white …) with a strength setting, and slow motion (50 %, 25 %, 10 %; only on your own screen). Also `/videomode`.
+
+**Free camera** (`/freecam`): fly the camera with WASD and the mouse, Q / E down / up, Shift fast, Ctrl slow, scroll to zoom, Z / C to tilt, X to level it, Backspace to leave. Save **shot A** and **shot B** and **Play Camera Move** for a smooth glide between them (3 to 25 seconds); start recording first to film it. Players' cameras stay within *Free camera range* of their character (40 m by default) so it can't be used to spy; staff with `media.freecam.unlimited` have no limit.
+
+**Fusion Recorder:** **Start Recording** (or `/record`; bind a key in the key bindings) records the game picture in 720p, 1080p, 1440p or full resolution at 30 or 60 fps, up to *Longest recording* (5 minutes by default). A small REC light shows while it records; it is not in the clip. Clips are uploaded to the server while you record and appear in **My Clips** (`/clips`):
+
+* **Play** them, **Download** them to your PC (opens in your web browser and saves to Downloads), **Rename** and **Delete** them.
+* **Edit:** trim the start and end, set slow motion (down to 0.25×) or fast forward (up to 4×), fade in / out and add a caption. **Add** more clips to join several into one. **Export as new clip** plays the edit once and saves the result as a new clip; your originals are kept.
+
+Clips have no sound: the game page cannot hear the game. For clips with sound, use the **Rockstar Editor** in the same menu: **Record (Rockstar Editor)** starts and stops a Rockstar clip, **Action Replay** keeps the last few seconds so you can save something that just happened, and **Open Rockstar Editor** edits and exports them (Documents › Rockstar Games › GTA V › Videos). Opening the Rockstar Editor disconnects you from the server.
+
+**For the owner (Settings › Streaming & Video):** turn each part on or off, the longest recording, the highest quality players can pick, storage per player (2 GB by default), how many days clips are kept (30), and the free-camera range. Clips are stored in `fusion-core/media-clips` on the server and are never part of an update or a release. **Install ffmpeg on the server** (Windows: `winget install ffmpeg`, Linux: `sudo apt install ffmpeg`) so clips are converted to MP4, which opens in every video editor (Premiere, DaVinci Resolve, CapCut) and on phones. Without it clips stay WebM, which plays in browsers, VLC and OBS but not every editor. Players download clips from the server's address on port 30120; if players join through a proxy or a domain, set *Clip address override*.
+
+Permissions: `media.streamer`, `media.videomode`, `media.freecam`, `media.record`, `media.rockstar` (everyone by default) and `media.freecam.unlimited` (admins).
 
 ### Reports and admin requests
 
@@ -832,6 +854,8 @@ In the menu: **↑↓** move, **←→** change values, **Enter** select, **Back
 | `/weatherevent thunderstorm\|flood\|hurricane\|tornado\|blizzard\|stop` | Staff | Severe weather events |
 | `/setfuel <0-100>` | Staff | Set your vehicle's fuel |
 | `/postal [code]` | Everyone | Waypoint to a postal code (empty clears it) |
+| `/streamer`, `/videomode`, `/freecam` | Everyone | Streamer mode, video mode, free camera |
+| `/record`, `/clips` | Everyone | Start / stop recording, open My Clips |
 | `/claimowner <code>` | Anyone (once) | Become owner of a server that has none (code is in the server console) |
 | `fusion_role <id|identifier> <role>` | Server console | Grant a role without being in game |
 
