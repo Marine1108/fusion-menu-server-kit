@@ -51,6 +51,7 @@ FusionMenu/                          ← your server data folder
    │  ├─ fusion-postalmap            the illustrated pause map with postal codes and place names (F10 › Postal Map)
    │  ├─ fusion-vinewood             the hillside sign: your own text, colours and night glow (F10 › Vinewood Sign)
    │  ├─ fusion-housing              apartments and houses with real interiors, keys and doorbells (F10 › Housing)
+   │  ├─ fusion-updater              automatic Fusion updates: signed, checksummed, scheduled, rolled back if needed (F10 › Updates)
    │  ├─ fusion-weapons              weapon spawner, loadouts, weapon wheel
    │  ├─ fusion-appearance           character creator, clothing, EUP uniforms
    │  ├─ fusion-stores               shops
@@ -248,6 +249,7 @@ Fusion mirrors every role to FiveM's ACE system as `group.fusion_<role>`, so sta
 | Anticheat | `anticheat.bypass` (never flagged; admins by default), `anticheat.manage` (delete detections), `admin.anticheat` (Anticheat tab and staff alerts) |
 | Emergency | `emergency.siren`, `emergency.radar`, `emergency.bolo`, `emergency.pit` |
 | Phone | `phone.use`, `phone.amber`, `admin.alerts` |
+| Updates | `admin.updates` (F10 › Updates: install, schedule, skip and undo Fusion updates; owners by default) |
 | Streaming & video | `media.streamer`, `media.videomode`, `media.freecam`, `media.freecam.unlimited`, `media.record`, `media.rockstar` |
 | Other | `inventory.search`, `stores.free`, `fuel.free`, `hospital.revive`, `jail.use`, `weather.change`, `weather.events`, `time.change` |
 
@@ -865,7 +867,22 @@ In the menu: **↑↓** move, **←→** change values, **Enter** select, **Back
 
 * **Settings backup:** F10 › Settings › **Export** copies every setting as text. **Import** restores it.
 * **Full backup:** back up the `fusion` database (phpMyAdmin › Export, or `mysqldump fusion > fusion.sql` on Linux) and the server folder. Everything Fusion knows lives in those two places.
-### Updating Fusion Menu
+### Automatic updates (F10 › Updates)
+
+Fusion checks for new versions by itself (every 6 hours) and tells staff with `admin.updates` (owners by default) when one is out.
+
+* **F10 › Updates** shows the version you run, the newest one, and **what changed** in every version in between.
+* New versions are **downloaded by themselves** and checked before anything can be installed: the update list must carry Fusion Menu Studios' signature (a fake or altered list is ignored), and the download must match its size and **SHA-256 checksum**, and every file inside it its own checksum. A broken or tampered download is thrown away and downloaded again. If the main download address fails, it retries, resumes where it stopped, and moves on to the next mirror.
+* **You choose when it installs:** **Install** (players get a countdown, by default 5 minutes, then everyone is disconnected while Fusion restarts, about a minute), **When the server is empty**, or **At this time**. Or let it install by itself in Settings › Updates (when the server is empty, or at a set time each day). **Skip this version** if you want to wait for the next one.
+* **Installing:** Fusion stops its modules, backs up exactly the files it is about to change, writes the new ones and reads every one back to check it. Files you edited are kept (the new version goes beside them as `.new`), and your pictures, media, clips and settings are never touched, the same as the updater script.
+* **If anything goes wrong it puts the old version back by itself:** when a file can't be written, when the new version doesn't start and report its build within 3 minutes, or when the server stops in the middle of an install (the next start restores the old files before Fusion loads). Staff are told why, and that build isn't installed by itself again.
+* **Undo** in the history list goes back to the version you had before the last update.
+
+The updater is its own resource, `fusion-updater`. It must start **before** `fusion-core` (`ensure fusion-updater` above `ensure fusion-core`; new installs and updates put it there), so it can repair Fusion even when Fusion itself doesn't start. It saves its downloads and backups in `resources/[fusion]/fusion-updater/data` (the last 3 versions by default, Settings › Updates).
+
+A server that runs straight from Fusion's source code (a development copy) only shows updates and never installs them.
+
+### Updating Fusion Menu with the updater script
 
 1. Download the new version from your **Cfx.re keymaster** (Granted Assets) and put the zip in the `updates` folder.
 2. Stop the server (txAdmin › Stop server, or `sudo systemctl stop fusion`).

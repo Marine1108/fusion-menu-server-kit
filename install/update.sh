@@ -236,7 +236,11 @@ if [[ $MODE == fusion ]]; then
             grep -Eq "^[[:space:]]*(ensure|start)[[:space:]]+$n[[:space:]]*"$'\r'"?\$" "$CFG" && continue
             [[ $backed_up == 1 ]] || { cp "$CFG" "$BACKUP_DIR/server.cfg"; backed_up=1; }
             last="$(grep -nE '^[[:space:]]*ensure[[:space:]]+fusion-[A-Za-z0-9_-]+[[:space:]]*'$'\r''?$' "$CFG" | tail -n1 | cut -d: -f1)"
-            if [[ -n $last ]]; then
+            corel="$(grep -nE '^[[:space:]]*ensure[[:space:]]+fusion-core[[:space:]]*'$'\r''?$' "$CFG" | head -n1 | cut -d: -f1)"
+            if [[ $n == fusion-updater && -n $corel ]]; then
+                # before fusion-core, so it can repair an interrupted update before Fusion loads
+                awk -v add="ensure $n" -v at="$corel" 'NR == at { print add (/\r$/ ? "\r" : "") } { print }' "$CFG" > "$CFG.tmp" && mv "$CFG.tmp" "$CFG"
+            elif [[ -n $last ]]; then
                 awk -v add="ensure $n" -v at="$last" '{ print } NR == at { print add (/\r$/ ? "\r" : "") }' "$CFG" > "$CFG.tmp" && mv "$CFG.tmp" "$CFG"
             else
                 printf '\nensure %s\n' "$n" >> "$CFG"

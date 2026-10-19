@@ -24,6 +24,7 @@ if exports['fusion-core']:IsModuleEnabled('fusion-phone') then … end
 | `fusion-postalmap` | the pause map with postal codes |
 | `fusion-vinewood` | the hillside sign |
 | `fusion-housing` | apartments and houses, keys, doorbells, storage |
+| `fusion-updater` | automatic Fusion updates (no dependency on fusion-core; starts before it) |
 | `fusion-anticheat` | server-side anticheat |
 
 **Also on every Fusion server:** `screenshot-basic` (screenshots of the game view, started before `[qb]` / `[addons]`), `oxmysql` (database) and the standard FiveM resources (`chat`, `spawnmanager`, `mapmanager`, …).

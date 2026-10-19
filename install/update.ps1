@@ -264,7 +264,11 @@ try {
             foreach ($n in $modules) {
                 if ($cfg -match "(?m)^\s*(ensure|start)\s+$([regex]::Escape($n))\s*$") { continue }
                 $last = [regex]::Matches($cfg, '(?m)^[ \t]*ensure[ \t]+fusion-[\w-]+[ \t]*\r?$')
-                if ($last.Count) {
+                $coreLine = [regex]::Match($cfg, '(?m)^[ \t]*ensure[ \t]+fusion-core[ \t]*\r?$')
+                if ($n -eq 'fusion-updater' -and $coreLine.Success) {
+                    # before fusion-core, so it can repair an interrupted update before Fusion loads
+                    $cfg = $cfg.Substring(0, $coreLine.Index) + "ensure $n" + $nl + $cfg.Substring($coreLine.Index)
+                } elseif ($last.Count) {
                     $m = $last[$last.Count - 1]
                     $at = $m.Index + $m.Value.TrimEnd("`r").Length
                     $cfg = $cfg.Substring(0, $at) + $nl + "ensure $n" + $cfg.Substring($at)

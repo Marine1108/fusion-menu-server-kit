@@ -106,8 +106,8 @@ The settings page appears in **F10 › Settings › Duty Bonus**, the permission
 
 ## Updating Fusion while you develop
 
-Owners update Fusion with the updater or by copying the new folders over the old ones (README › *Backups and
-updates*). What that means for your script:
+Owners update Fusion from **F10 › Updates** (automatic downloads, installed when they choose), with the updater
+script, or by copying the new folders over the old ones (README › *Backups and updates*). What that means for your script:
 
 * **Never edit Fusion's own files** to make your script work. An update keeps an edited file (the updater saves
   the new one beside it as `.new`), so your server silently stops getting fixes for that file. Use exports,

@@ -77,6 +77,14 @@ Owners install third-party scripts in `resources/[addons]` (or `[qb]` for QBCore
 - [ ] Tested on Linux (or at least: all file names lowercase and matching)
 - [ ] No resource name or global names starting with `fusion`
 
+## Fusion updates and your code
+
+`fusion-updater` replaces Fusion's files while the server runs: it stops every Fusion module (and so every
+resource that depends on them), installs, and starts them again. Your resources get a normal stop and start, so
+handle `onResourceStop` / `onResourceStart` like for any restart. Never keep a modified copy of a Fusion file:
+the updater keeps your edited version and puts Fusion's new one beside it as `.new`, so the edited file stops
+getting fixes.
+
 ## Shipping updates of your own script
 
 * Keep settings in Fusion (F10 › Settings) or in a `config.lua` with simple `Config.X = value` lines: owners update
