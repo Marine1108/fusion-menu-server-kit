@@ -809,6 +809,14 @@ Fusion Menu is licensed, not sold (see `LICENSE`). You may use and modify it on 
 
 ## 13. Troubleshooting
 
+**Asking for help:** open a ticket on our Discord (https://discord.gg/kVRqwDPsnJ) and attach a support file:
+1. **F10 › Support › Create support file**, or type `fusionsupport` in the server console if F10 won't open.
+2. It's saved as `resources/[fusion]/fusion-core/support/fusion-support-<date>.txt`. F10 also has **Copy everything**.
+
+It holds your Fusion build number (also shown at the bottom right of the loading screen), the FXServer and txAdmin
+versions, every resource and whether it started, the latest Fusion log and the latest 2500 lines of the server
+console. Passwords, license keys, database logins, webhooks and players' IP addresses are blanked out.
+
 | Problem | Fix |
 |---|---|
 | Console: *You lack the required entitlement* for a fusion resource | The server's license key belongs to a different Cfx.re account than the one that bought Fusion Menu. Use a key from the buying account |
