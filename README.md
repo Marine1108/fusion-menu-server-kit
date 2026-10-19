@@ -879,7 +879,32 @@ The updater:
 * **keeps everything you changed or added**: logos, loading screen media, item / vehicle / weapon / uniform pictures, and any file you edited;
 * refuses to install an older version over a newer one (add `-Force` / `--force` if you really mean to).
 
-Your settings, roles, jobs, items, characters and vehicles live in the database and are untouched; new settings simply appear with their defaults. Never replace the `[fusion]` folders by hand. That throws away your pictures and media.
+Your settings, roles, jobs, items, characters and vehicles live in the database and are untouched; new settings simply appear with their defaults. Never delete the `[fusion]` folders and put new ones in their place: that throws away your pictures and media. Copying the new files *over* them is fine (next section).
+
+### Updating by hand (game server hosts, FTP, file manager)
+
+For servers where you can't run the updater (ZAP-Hosting and other txAdmin hosts, or if you prefer to do it yourself):
+
+1. Back up first: F10 › Settings › **Export**, the database (your host's panel or phpMyAdmin › Export), and download a copy of `resources/[fusion]`.
+2. Stop the server.
+3. Unzip the new Fusion zip on your PC.
+4. Upload every folder from the zip over the folder of the same name on the server, **replacing files but not deleting the old folders first**:
+   * the `fusion-…` folders go into `resources/[fusion]`;
+   * `qb-core`, `qb-menu`, `qb-input` and `progressbar` go wherever they already are: `resources/[fusion]/[compat]` if you have that folder, otherwise straight into `resources/[fusion]`. Never end up with two copies of the same folder name anywhere in `resources`: the server refuses to start a resource it finds twice.
+5. **Don't** upload over or delete: `server.cfg`, `resources/[qb]`, `resources/[addons]`, `resources/[standalone]`, and inside `fusion-core` the folders `support`, `permissions`, `media-clips` and `config-backups`. If you replaced a built-in picture (an item, vehicle or weapon picture with the same name as Fusion's), skip that one file when your FTP program asks.
+6. Start the server.
+
+### After updating
+
+* The server console prints the version and build number at start (`Fusion Menu v1.0.0 build …`), and the loading screen and F10 show it too. Check it's the new one.
+* New Fusion modules start by themselves and get their `ensure` line in `server.cfg` about 20 seconds after start. Nothing to edit.
+* New settings appear with their defaults in F10 › Settings. Read the release notes for anything worth switching on.
+* **Linux:** if you uploaded the files as a different user than the one the server runs as (e.g. SFTP as `ubuntu`, or `root`), give them back to the server's user so Fusion can save files: `sudo chown -R <user>:<user> /home/fivem/fusion` (the user the `fusion` service runs as, normally the one who ran the installer).
+* **Clips as MP4:** the Fusion Recorder needs ffmpeg on the server once (`winget install ffmpeg` on Windows, `sudo apt install -y ffmpeg` on Linux). Without it clips stay WebM.
+
+### Updating the installer tools
+
+The updater and script installer (`update-fusion.*`, `install-script.*`, `install/`) come from the free server kit. To get their newest version, download the kit zip from https://github.com/Marine1108/fusion-menu-server-kit/releases/latest and copy `install/`, `update-fusion.bat`, `update-fusion.sh`, `install-script.bat` and `install-script.sh` over your server folder. Nothing else in the kit needs copying on an existing server.
 
 ### Upgrading QBCore scripts and packs
 

@@ -76,3 +76,12 @@ Owners install third-party scripts in `resources/[addons]` (or `[qb]` for QBCore
 - [ ] Cleans up on resource stop and character switch
 - [ ] Tested on Linux (or at least: all file names lowercase and matching)
 - [ ] No resource name or global names starting with `fusion`
+
+## Shipping updates of your own script
+
+* Keep settings in Fusion (F10 › Settings) or in a `config.lua` with simple `Config.X = value` lines: owners update
+  your script with `install-script.bat` / `install-script.sh`, which keeps their edited `config.lua` and puts yours
+  beside it as `config.lua.new`.
+* Add new config keys with safe defaults, so an owner's old `config.lua` keeps working.
+* Bump `version` in your `fxmanifest.lua`: the Fusion support file and F10 › Script Configs show it.
+* Never rename your resource folder in an update: owners' `ensure` lines and saved settings use the name.

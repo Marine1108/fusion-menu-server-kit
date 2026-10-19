@@ -13,3 +13,9 @@ You can organise scripts into sub-folders, e.g. [jobs]/my-police-job.
 Grouping folders MUST have square brackets ([jobs], not jobs), and each resource folder
 must have its fxmanifest.lua directly inside it. Folders the server cannot see are listed
 in the server console at startup as "... does not have a resource manifest". See README.md section 8.
+
+UPDATING A SCRIPT
+-----------------
+Drag the new version's zip onto install-script.bat (Windows) or run: bash install-script.sh new-version.zip
+Your edited config.lua / locales are kept and the new ones are saved beside them as .new files.
+Fusion updates never touch this folder. Change a script's settings in game: F10 > Script Configs.

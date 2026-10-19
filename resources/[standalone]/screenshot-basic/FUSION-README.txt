@@ -9,3 +9,6 @@ so it is always running before the scripts that need it. Keep that line above "e
 
 This copy is already built (dist/), so the server doesn't run yarn / webpack for it.
 License: MIT (LICENSE). Original source: https://github.com/citizenfx/screenshot-basic
+
+Updating: a newer copy comes with the free server kit (resources/[standalone]/screenshot-basic). Stop the server,
+copy the kit's folder over this one, start the server. Fusion updates don't change it.

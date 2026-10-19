@@ -103,3 +103,18 @@ end, false)
 ```
 
 The settings page appears in **F10 › Settings › Duty Bonus**, the permission in **F10 › Roles & Permissions**, and owners never edit a config file.
+
+## Updating Fusion while you develop
+
+Owners update Fusion with the updater or by copying the new folders over the old ones (README › *Backups and
+updates*). What that means for your script:
+
+* **Never edit Fusion's own files** to make your script work. An update keeps an edited file (the updater saves
+  the new one beside it as `.new`), so your server silently stops getting fixes for that file. Use exports,
+  events, settings and `Fusion.*` instead; ask for a hook if one is missing.
+* Your resources in `[qb]`, `[addons]` and `[standalone]` are never touched by a Fusion update.
+* Settings you register keep their saved values across updates; new fields in your schema appear with their defaults.
+* After an update, check the build number in the console (`Fusion Menu v… build …`) and re-run your script's
+  checks. `exports['fusion-core']:IsModuleEnabled(name)` tells you whether a module you rely on is running.
+* New Fusion modules start by themselves after an update. A resource of yours that must start before Fusion still
+  needs its own `ensure` line above `ensure fusion-core` in server.cfg.

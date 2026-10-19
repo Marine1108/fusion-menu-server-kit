@@ -14,3 +14,10 @@ You can organise packs into sub-folders, e.g. [cars]/[police]/lspd-pack.
 Grouping folders MUST have square brackets ([cars], not cars), and each resource folder
 must have its fxmanifest.lua directly inside it. Folders the server cannot see are listed
 in the server console at startup as "... does not have a resource manifest". See README.md section 8.
+
+UPDATING A PACK
+---------------
+Drag the new version's zip onto install-script.bat (Windows) or run: bash install-script.sh new-version.zip
+Files you changed (e.g. a handling.meta edited in Admin > Handling) are kept, the pack's new ones saved as .new.
+Fusion updates never touch this folder. After updating a vehicle pack, restart the server once before using
+the handling editor or the carcols fixer on it.
