@@ -129,7 +129,7 @@ Phone numbers are `PlayerData.charinfo.phone`.
 
 ## Emergency services (`fusion-emergency`)
 
-`exports['fusion-emergency']:AddBolo(plate, reason)` (server) adds a plate to the radar BOLO list; police radars flag it. Emergency vehicles are recognised by GTA vehicle class 18 plus owner settings.
+`exports['fusion-emergency']:AddBolo(plate, reason)` (server) adds a plate to the radar BOLO list; police radars flag it. PIT rules are the `emergency.pitRules` setting: a list of `{ job, enabled, authorizeAfter (seconds), maxSpeed (0 = none, server speed unit), commandGrade }`, changed in game through the `fusion:emergency:setPitRule` callback (department command only). Emergency vehicles are recognised by GTA vehicle class 18 plus owner settings.
 
 ## Hospital (`fusion-hospital`)
 

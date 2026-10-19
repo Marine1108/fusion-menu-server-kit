@@ -241,12 +241,12 @@ Fusion mirrors every role to FiveM's ACE system as `group.fusion_<role>`, so sta
 | General | `menu.open`, `server.whitelisted`, `server.maintenance`, `characters.extraslots`, `guide.open`, `reports.create` |
 | Player menu | `player.menu`, `player.godmode`, `player.invisible`, `player.heal`, `player.stamina`, `player.fastrun`, `player.superjump`, `player.noragdoll`, `player.walkstyle`, `player.scenarios` |
 | Misc | `misc.tpwaypoint`, `misc.teleports`, `misc.coords`, `misc.nightvision`, `misc.thermal` |
-| Admin | `admin.panel`, `admin.players`, `admin.kick`, `admin.ban`, `admin.unban`, `admin.warn`, `admin.money`, `admin.items`, `admin.setjob`, `admin.roles`, `admin.permissions`, `admin.settings`, `admin.jobs`, `admin.registry`, `admin.logs`, `admin.resources`, `admin.noclip`, `admin.spectate`, `admin.blips`, `admin.names`, `admin.reports`, `admin.handling`, `admin.carcols`, `admin.anticheat` |
+| Admin | `admin.panel`, `admin.players`, `admin.kick`, `admin.ban`, `admin.unban`, `admin.warn`, `admin.money`, `admin.items`, `admin.setjob`, `admin.roles`, `admin.permissions`, `admin.settings`, `admin.jobs`, `admin.registry`, `admin.logs`, `admin.resources`, `admin.noclip`, `admin.spectate`, `admin.blips`, `admin.names`, `admin.reports`, `admin.handling`, `admin.carcols`, `admin.scriptconfig`, `admin.anticheat` |
 | Vehicles | `vehicles.spawn`, `vehicles.spawn.byname`, `vehicles.spawn.free`, `vehicles.class.<class>` (e.g. `vehicles.class.emergency`), `vehicles.addons`, `vehicles.extras`, `vehicles.livery`, `vehicles.mods`, `vehicles.godmode`, `vehicles.performance`, `vehicles.garage`, `vehicles.keys.all` |
 | Weapons | `weapons.spawn`, `weapons.category.<category>` (e.g. `weapons.category.heavy`), `weapons.all`, `weapons.attachments`, `weapons.unlimitedammo`, `weapons.loadouts` |
 | Appearance | `appearance.anywhere`, `appearance.face`, `appearance.peds`, `appearance.uniforms`, `appearance.uniforms.manage`, `appearance.free` |
 | Anticheat | `anticheat.bypass` (never flagged; admins by default), `anticheat.manage` (delete detections), `admin.anticheat` (Anticheat tab and staff alerts) |
-| Emergency | `emergency.siren`, `emergency.radar`, `emergency.bolo` |
+| Emergency | `emergency.siren`, `emergency.radar`, `emergency.bolo`, `emergency.pit` |
 | Phone | `phone.use`, `phone.amber`, `admin.alerts` |
 | Other | `inventory.search`, `stores.free`, `fuel.free`, `hospital.revive`, `jail.use`, `weather.change`, `weather.events`, `time.change` |
 
@@ -303,6 +303,8 @@ Every module has a page in **F10 › Settings**, and the first switch on it turn
 * Players see their server ID, cash, bank, job and status (noclip, jail…). In a vehicle they get the **vehicle HUD**: speed, gear, RPM, fuel (or battery), engine warning, seatbelt, lock status, street and compass.
 * **Every player can move their own HUD:** *Menu › Misc Settings › Edit HUD Layout* or `/hud`. Drag anything (cash, bank, job, status, vehicle HUD, notifications, progress bar, prompts) where you want it, and right-click to hide or show it. **Reset** restores the defaults. Layouts are saved per player.
 * **Settings › Interface › HUD:** turn the HUD, vehicle HUD and street/compass on or off, and decide whether players may move the HUD. Speed units (MPH / KM/H) are in **Settings › Vehicles**.
+* **Speedometer styles:** *Classic card*, *Analog dial* (needle gauge with an RPM ring), *Digital (LCD)*, *Sport* (shift-light ribbon) and *Minimal*. The server picks one in **Settings › Interface › HUD › Speedometer style**; with *Players can pick their own speedometer* on, each player chooses theirs in *Menu › Misc Settings › Speedometer*.
+* **Windshield HUD:** driving or riding in **first person** (press V until you're in the cockpit), the speedometer is replaced by a see-through display low on the windshield: speed, gear, RPM bar, turn signals, high beams, compass and street, fuel, and blinking *FASTEN SEATBELT* / *ENGINE DAMAGE* warnings. It works in every vehicle. The server can switch it off (**Settings › Interface › HUD**) and each player can too (*Menu › Misc Settings › Windshield HUD*). Players can move it with `/hud`.
 
 ### Reports and admin requests
 
@@ -407,13 +409,18 @@ The vanilla ambulance and lifeguard are EMS and the fire truck is fire; addon ve
 | F5 | Radar power on / off |
 | Numpad 8 / Numpad 5 | Lock / unlock the **front** / **rear** speed |
 | Numpad 9 / Numpad 6 | Lock / unlock the **front** / **rear** plate |
+| Numpad 0 | Start / reset the **PIT timer** |
 | F6 | Radar remote (and the siren controller) with the mouse |
 
 Front and rear lock separately, like a real unit: locking the front never locks the rear. The on-screen **radar unit** shows your patrol speed and, for each antenna, the nearest target's speed, the fastest vehicle in the beam, lock lamps and the plate. The **radar remote** (F6) has every button: power, front / rear antenna on-off, the four locks, auto-lock and the speed alarm. Hide the radar display from **Menu › Emergency** or with `/hud`. The plate reader shows the nearest front and rear plates. **Menu › Emergency** adds a speed alarm (with optional auto-lock), **Run plate** (registered owner and model from the database), and the **BOLO list**: when the reader sees a BOLO plate it locks, beeps and shows the reason.
 
+**PIT timer:** when a pursuit starts, press **Numpad 0** (or *START PIT* on the remote, or *Menu › Emergency › Start PIT Timer*). A strip under the radar windows counts the pursuit time: amber *WAIT 0:32* until the department's time is up, then green **PIT AUTHORIZED** with a chime. If the department sets a top PIT speed it shows *SLOW TO 60 MPH* in red while you're going faster, and it shows *PIT NOT ALLOWED* when the department doesn't allow PITs at all. Press Numpad 0 again to stop and reset it.
+
+**Each department controls its own PIT rules.** Its command staff (any boss grade, or the department's *command grade* and up, grade 3 by default) open *Menu › Emergency › Department PIT Rules* and set: whether PITs are allowed, how many seconds into a pursuit they're authorized, the top speed for a PIT (0 = no limit) and, for bosses only, which grade counts as command. Changes apply straight away, and everyone in that department gets a message with the new rules. Admins set every department in **Settings › Emergency Vehicles › PIT timer** (also the default time for departments without their own rule, and the switch for the whole feature). Staff with `emergency.pit` can change their own department's rules without command rank.
+
 **Settings › Emergency Vehicles:** turn the siren controller and radar on or off; which jobs may use each (empty = anyone for sirens; police by default for the radar) and whether they must be on duty; extra models for unmarked cars and addon packs outside the emergency class; whether the front passenger can work the siren; what happens when the driver gets out; the **siren tones** (name, sound, and optional sound set / audio bank for server-side siren packs, limited to certain models if you like); the air horn sound; radar range and beam width; plate reader range; and the BOLO list.
 
-Permissions: `emergency.siren` (everyone by default), `emergency.radar` and `emergency.bolo` (radar and BOLOs regardless of job; admins by default). Everyone can rebind the keys in *GTA Settings › Key Bindings › FiveM*, and move both panels with `/hud`.
+Permissions: `emergency.siren` (everyone by default), `emergency.radar` and `emergency.bolo` (radar and BOLOs regardless of job; admins by default), `emergency.pit` (change your department's PIT rules without command rank; admins by default). Everyone can rebind the keys in *GTA Settings › Key Bindings › FiveM*, and move both panels with `/hud`.
 
 ### Phone
 
@@ -718,6 +725,8 @@ Fusion backs this up in two ways (**Settings › Server › Resources**):
 * 15 seconds after boot it starts anything in sub-folders of `[qb]` / `[addons]` that didn't start (switch this off, or list resources to leave stopped);
 * folders the server can't see, like the two ✗ examples above, are listed in the server console when it starts, as *"&lt;folder&gt; does not have a resource manifest"*.
 
+**New Fusion modules start by themselves.** A `fusion-…` module copied into `resources/[fusion]` (by hand, your host's file manager or an update) is started 20 seconds after boot, and its `ensure` line is added to `server.cfg` after the other Fusion lines, so it starts normally from then on (the old file is kept as `server.cfg.bak-fusion`). If Fusion can't write `server.cfg`, the console prints the exact lines to add. Servers that start the whole folder with `ensure [fusion]` are left as they are. Turn this off in **Settings › Server › Resources**. To stop using a module, turn it off in **Settings › Modules** rather than deleting its line.
+
 Vehicles, EUP, weapons, the carcols fixer and the handling editor all find packs in sub-folders automatically. **New vehicle packs and the carcols fixer / handling editor:** after adding a pack, restart the whole server once before fixing or editing it. FiveM only lets Fusion save into packs it knew about when the server started. Then fix, and restart again so players download the fixed pack. To install straight into a sub-folder: `install/update.ps1 -Mode script -Source pack.zip -Target "[addons]/[cars]"` (Linux: `bash install-script.sh pack.zip --target "[addons]/[cars]"`), or install normally and move the folder afterwards: upgrades find it wherever it is.
 
 Your own pictures and media stay yours: Fusion updates never overwrite them, and they are never part of a Fusion release.
@@ -742,6 +751,19 @@ Fusion provides the full QBCore API:
 * Items and jobs a QBCore script registers through `exports['qb-core']:AddItem` / `AddJob` are saved and then editable in the admin panel.
 * QBCore permission levels map to the nodes `qbcore.mod`, `qbcore.admin` and `qbcore.god`.
 * Most QBCore scripts work as-is, but a script that relies on the internals of a specific QB resource may need small fixes.
+
+### Script Configs (F10 › Script Configs)
+
+Every script you add (anything outside `[fusion]`) is listed with its config files (`config.lua`, `shared/config.lua`, `config/*.lua`, `settings.json` and the like). Scripts new since the last start are marked **New**.
+
+* **Settings:** every simple setting in the file (`Config.UseTarget = true`, `Config.Pay = 250`, `Config.Truck.Model = 'trash'` …) is listed with the comment written next to it in the file. Change values with switches and boxes, then **Save changes**. Only the value changes; the rest of the line, comments and layout stay exactly as they were.
+* **Edit as text:** the whole file in an editor, for lists, tables and anything else. A Lua file with an error (or broken JSON) is refused instead of saved, so a typo can't stop the script from loading.
+* **Auto-configure for Fusion:** Fusion answers to the QBCore names, so most scripts just need pointing at them. Fusion suggests the values: framework → the QBCore word the script itself checks for (`qb`, `qbcore` …), core resource → `qb-core`, inventory → `qb-inventory` / `qb`, target → `qb-target` (and *UseTarget* on), fuel → `LegacyFuel`, voice → `pma-voice`, keys → `qb-vehiclekeys`, notifications → `qb`, and so on. Untick anything you don't want and press **Apply selected**. Suggestions only appear for Fusion modules that are running.
+* **Restart the script after saving** is ticked for running scripts, so changes apply straight away. **Restart script** is also on the page.
+* **Backups / undo:** every save keeps a copy of the old file in `fusion-core/config-backups` first. Undo puts it back (and backs up the current file too). Backups are never part of a release or an update.
+* **Auto-configure new scripts by themselves:** **Settings › Server › Resources › Auto-configure newly added scripts for Fusion** (off by default). When it's on, a script that wasn't there at the last start is configured for Fusion and restarted when the server boots, and each change is written to the console and the log. When it's off, the console just tells you a new script has settings to point at Fusion.
+
+Like the handling editor, Fusion can only save into scripts the server knew about when it started: after adding a script, restart the server once before saving its config. Permission: `admin.scriptconfig`.
 
 ---
 
@@ -771,6 +793,7 @@ Every key below is a FiveM key binding: each player can change it in *GTA Settin
 | **F5** | Police radar power | Per job / permission |
 | **Numpad 8 / 5** | Lock front / rear radar speed | Per job / permission |
 | **Numpad 9 / 6** | Lock front / rear radar plate | Per job / permission |
+| **Numpad 0** | Start / reset the PIT timer | Per job / permission |
 | **F6** | Siren controller / radar remote with the mouse | Per job / permission |
 | **F11** | Voice range (whisper / normal / shout) | Everyone |
 | **Caps Lock** (hold) | Talk on the radio | Everyone with a radio |
@@ -828,7 +851,7 @@ In the menu: **↑↓** move, **←→** change values, **Enter** select, **Back
 The updater:
 
 * backs up every Fusion resource, your `server.cfg` and the **database** to `backups/<date>/` first (the database backup needs `mysqldump`, which XAMPP and MariaDB include);
-* replaces the framework files, removes files the new version no longer uses, and installs new modules (adding their `ensure` line to `server.cfg`);
+* replaces the framework files, removes files the new version no longer uses, and installs new modules (adding any missing `ensure fusion-…` line to `server.cfg`, in order after your other Fusion lines);
 * **keeps everything you changed or added**: logos, loading screen media, item / vehicle / weapon / uniform pictures, and any file you edited;
 * refuses to install an older version over a newer one (add `-Force` / `--force` if you really mean to).
 

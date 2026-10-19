@@ -255,16 +255,29 @@ try {
             if (Merge-Resource $r $dest $name) { $attention = $true }
         }
 
-        # new resources need an ensure line
-        if ($cfg -and $newResources.Count) {
-            Copy-Item -LiteralPath $cfgPath -Destination (Join-Path $BackupDir 'server.cfg')
+        # every Fusion module needs an ensure line (new ones, and any an earlier install missed),
+        # added in order after the last "ensure fusion-..." line
+        $modules = @($found | ForEach-Object { [IO.Path]::GetFileName($_) } | Where-Object { $_ -like 'fusion-*' })
+        if ($cfg -and $modules.Count -and $cfg -notmatch '(?m)^\s*ensure\s+\[fusion\]\s*$') {
             $nl = if ($cfg.Contains("`r`n")) { "`r`n" } else { "`n" }
-            foreach ($n in $newResources) {
+            $added = @()
+            foreach ($n in $modules) {
                 if ($cfg -match "(?m)^\s*(ensure|start)\s+$([regex]::Escape($n))\s*$") { continue }
-                $cfg = [regex]::Replace($cfg, '(?m)^(\s*ensure\s+fusion-core\s*)$', "`$1$nl" + "ensure $n", 1)
+                $last = [regex]::Matches($cfg, '(?m)^[ \t]*ensure[ \t]+fusion-[\w-]+[ \t]*\r?$')
+                if ($last.Count) {
+                    $m = $last[$last.Count - 1]
+                    $at = $m.Index + $m.Value.TrimEnd("`r").Length
+                    $cfg = $cfg.Substring(0, $at) + $nl + "ensure $n" + $cfg.Substring($at)
+                } else {
+                    $cfg = $cfg.TrimEnd() + $nl + "ensure $n" + $nl
+                }
+                $added += $n
                 Say "  Added 'ensure $n' to server.cfg" 'Green'
             }
-            [IO.File]::WriteAllText($cfgPath, $cfg)
+            if ($added.Count) {
+                Copy-Item -LiteralPath $cfgPath -Destination (Join-Path $BackupDir 'server.cfg')
+                [IO.File]::WriteAllText($cfgPath, $cfg)
+            }
         }
     } else {
         # ---------------------------------------------------------- Scripts

@@ -226,11 +226,21 @@ if [[ $MODE == fusion ]]; then
         merge_resource "$r" "$dest" "$name"
     done
 
-    if [[ -f $CFG && ${#NEW_RESOURCES[@]} -gt 0 ]]; then
-        cp "$CFG" "$BACKUP_DIR/server.cfg"
-        for n in "${NEW_RESOURCES[@]}"; do
-            grep -Eq "^[[:space:]]*(ensure|start)[[:space:]]+$n[[:space:]]*\$" "$CFG" && continue
-            awk -v add="ensure $n" '{ print } !done && /^[[:space:]]*ensure[[:space:]]+fusion-core[[:space:]]*\r?$/ { print add (/\r$/ ? "\r" : ""); done = 1 }' "$CFG" > "$CFG.tmp" && mv "$CFG.tmp" "$CFG"
+    # every Fusion module needs an ensure line (new ones, and any an earlier install missed),
+    # added in order after the last "ensure fusion-..." line
+    if [[ -f $CFG ]] && ! grep -Eq '^[[:space:]]*ensure[[:space:]]+\[fusion\][[:space:]]*'$'\r''?$' "$CFG"; then
+        backed_up=0
+        for r in "${FOUND[@]}"; do
+            n="$(basename "$r")"
+            [[ $n == fusion-* ]] || continue
+            grep -Eq "^[[:space:]]*(ensure|start)[[:space:]]+$n[[:space:]]*"$'\r'"?\$" "$CFG" && continue
+            [[ $backed_up == 1 ]] || { cp "$CFG" "$BACKUP_DIR/server.cfg"; backed_up=1; }
+            last="$(grep -nE '^[[:space:]]*ensure[[:space:]]+fusion-[A-Za-z0-9_-]+[[:space:]]*'$'\r''?$' "$CFG" | tail -n1 | cut -d: -f1)"
+            if [[ -n $last ]]; then
+                awk -v add="ensure $n" -v at="$last" '{ print } NR == at { print add (/\r$/ ? "\r" : "") }' "$CFG" > "$CFG.tmp" && mv "$CFG.tmp" "$CFG"
+            else
+                printf '\nensure %s\n' "$n" >> "$CFG"
+            fi
             say "  Added 'ensure $n' to server.cfg" "$c_grn"
         done
     fi
