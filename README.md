@@ -460,8 +460,10 @@ The pause map is Fusion's own illustrated map, with the postal codes and place n
 The sign on the hill is Fusion's own: two rows of up to **12 characters** (letters, numbers and `! ? . - ' &`), the back row higher up the hill behind the front row. Pick a colour per row (or a fade from one colour to another), the night effect (steady glow, slow pulse, chasing lights, sparkle, rainbow or none), whether it lights up the hillside at night, the hand-built look (slightly uneven letters like the real sign) and the daytime brightness. The editor shows a live day and night preview; **Save to the sign** changes it for everyone straight away. The letters stand on legs that run into the hill, so nothing floats, and GTA's own sign is gone at every distance while the Vinewood module runs (turn the module off to get GTA's VINEWOOD back).
 
 **Settings › Vinewood Sign › Letters** picks how they're made:
-* **3D models** (default): solid letters that look like the real sign, lit by the sun by day and glowing by themselves at night. One colour per row; at night steady, pulse, rainbow or off.
-* **Drawn letters**: any letter size, colour fades along a row, and the chasing-lights and sparkle effects.
+* **3D models** (default): solid letters in a real sign typeface (Oswald Bold), lit by the sun by day and glowing by themselves at night, with every colour, fade and night effect.
+* **Drawn letters**: simple flat-shaded letters, with adjustable letter sizes.
+
+Colours: click a colour box to open the colour picker (any colour, plus quick swatches). The same picker is used for every colour in F10.
 
 Slurs and hate words are always refused (also when spelled with numbers or symbols, spaced out or split over both rows), and online staff get a warning naming who tried. **Settings › Vinewood Sign** sets letter sizes and positions, also blocking swear words, your own blocked and always-allowed words, and the staff warning. Permission: `admin.vinewood`.
 
