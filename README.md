@@ -445,6 +445,23 @@ Fusion has its own voice system built on FiveM's voice chat, so no pma-voice is 
 
 **Settings › Voice & Radio:** turn Fusion Voice on or off, the ranges and distances, the starting range, the HUD, radios on or off, the radio item, the highest channel, restricted channels and their jobs, radio and call volume, the radio effect, mic clicks and the radio animation. If pma-voice is running, Fusion Voice switches itself off.
 
+**Using pma-voice instead of Fusion Voice:**
+1. Download pma-voice from https://github.com/AvarianKnight/pma-voice (**Code › Download ZIP**), unzip it into `resources/[standalone]` and rename the folder from `pma-voice-main` to `pma-voice`.
+2. In `server.cfg`, above `ensure [qb]`, add pma-voice's settings and start it:
+   ```
+   setr voice_useNativeAudio true
+   setr voice_useSendingRangeOnly true
+   setr voice_defaultCycle "GRAVE"
+   ensure pma-voice
+   ```
+3. **F10 › Settings › Modules**: turn **Voice and radio** off (or just leave it: Fusion Voice turns itself off while pma-voice runs).
+4. Restart the server.
+
+Phone calls switch to pma-voice by themselves, and scripts written for pma-voice talk to the real pma-voice. Fusion's
+own radio (`/radio`, the radio in the M menu, restricted police channels) and the voice indicator on Fusion's HUD
+belong to Fusion Voice, so with pma-voice use a pma-voice radio script (e.g. qb-radio in `[qb]`) instead. To go back,
+remove pma-voice and its `server.cfg` lines and turn **Voice and radio** on again.
+
 ### Postal codes
 
 The nearest **postal code** shows next to the street name on the vehicle HUD and on the on-foot location line (*Menu › Misc › Show Location*), and on reports and 911 calls. Type `/postal 1234` to set a waypoint to a postal, or `/postal` to clear it.
