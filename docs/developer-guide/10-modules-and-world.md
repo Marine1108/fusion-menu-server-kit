@@ -23,6 +23,7 @@ if exports['fusion-core']:IsModuleEnabled('fusion-phone') then … end
 | `fusion-stores` | stores and their stock |
 | `fusion-postalmap` | the pause map with postal codes |
 | `fusion-vinewood` | the hillside sign |
+| `fusion-housing` | apartments and houses, keys, doorbells, storage |
 | `fusion-anticheat` | server-side anticheat |
 
 **Also on every Fusion server:** `screenshot-basic` (screenshots of the game view, started before `[qb]` / `[addons]`), `oxmysql` (database) and the standard FiveM resources (`chat`, `spawnmanager`, `mapmanager`, …).
@@ -187,6 +188,18 @@ Client: `SpawnWeapon(name)` (respects the owner's permissions), `OpenWheel()`, `
 ## Stores (`fusion-stores`)
 
 Owners create stores in game. To open a store-like list from your script, use `exports['fusion-inventory']:OpenShop(...)` ([chapter 5](05-items-and-inventory.md)). `exports['qb-inventory']:OpenShop(src, name)` opens a store an owner created with that name.
+
+## Housing (`fusion-housing`)
+
+| Server export | |
+|---|---|
+| `GetProperty(id)` | `{ id, label, kind = 'apartment'/'house', interior, coords = {x,y,z,w}, price, owner (citizenid), ownerName, locked }` |
+| `GetOwnedProperties(citizenid)` | that character's homes |
+| `HasKey(src, id)` | the player owns it or holds a key |
+| `GetInside(src)` | the home id the player is in, or `nil` |
+
+`GlobalState.fusionHousing` lists every home (`id, label, kind, coords, price, owned`) without owners. Inside a home
+the player is in routing bucket `50000 + id`. Stashes are `home_<id>_<owner citizenid>` (fusion-inventory).
 
 ## Vinewood sign (`fusion-vinewood`)
 

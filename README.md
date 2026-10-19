@@ -50,6 +50,7 @@ FusionMenu/                          ← your server data folder
    │  ├─ fusion-voice                proximity voice, radio and phone call audio (pma-voice compatible)
    │  ├─ fusion-postalmap            the illustrated pause map with postal codes and place names (F10 › Postal Map)
    │  ├─ fusion-vinewood             the hillside sign: your own text, colours and night glow (F10 › Vinewood Sign)
+   │  ├─ fusion-housing              apartments and houses with real interiors, keys and doorbells (F10 › Housing)
    │  ├─ fusion-weapons              weapon spawner, loadouts, weapon wheel
    │  ├─ fusion-appearance           character creator, clothing, EUP uniforms
    │  ├─ fusion-stores               shops
@@ -471,6 +472,35 @@ The nearest **postal code** shows next to the street name on the vehicle HUD and
 ### Postal map (F10 › Postal Map)
 
 The pause map is Fusion's own illustrated map, with the postal codes and place names drawn on by the server. In **F10 › Postal Map** you can drag postals and names around, add a postal by clicking the map or **where you stand**, rename or delete them, and start from the New, OCRP or Old set. **Save & redraw map** redraws it (a few seconds) and reloads it for every player; the HUD, `/postal`, reports and 911 calls use the same postals. **Settings › Postal Map** turns the place names on or off and sets the postal badge size and colour.
+
+### Housing (F10 › Housing)
+
+Apartments and houses players buy and live in, with real GTA interiors they walk around in. Every home is its own
+private copy of its interior, so a hundred homes can use the same style without anyone meeting.
+
+**Placing homes (staff, `admin.housing`):** stand at a door, open **F10 › Housing** and press **Add a home here**:
+give it a name, choose apartment or house, an interior style and a price. Each home has **Edit**, **Move here**
+(moves its door to where you stand), **Go to**, **Preview** (walk around its interior), **Evict** (puts it back on
+sale) and **Delete**. **Preview style** tries any interior before you use it.
+
+**Interior styles** (Settings › Housing › Interior styles): a studio and a mid-range apartment, five high-rise
+apartments (4 Integrity Way, Del Perro Heights, Richards Majestic, Tinsel Towers, the Eclipse Towers penthouse) and eight
+Vinewood Hills houses come ready. Add your own (any GTA interior or an MLO you've installed): stand inside, press
+**Use my position** on *Arrive at*, and set its storage size. *Arrive at* is also the way out.
+
+**For players:**
+* A green marker is a home for sale: **Look inside**, then **Buy** (or **Claim** when the economy is off).
+  One owner per home; a character can own up to *Properties one character can own* (default 2).
+* At their own door: **Go inside**, **Lock / Unlock**. Locked homes let in only the owner and key holders;
+  everyone else **Rings the doorbell**, and whoever's inside sees **Let in** in **M › My Home**.
+* **M › My Home** (shown once you own a home or hold a key): inside, **Storage**, **Wardrobe**, visitors to
+  let in and **Leave**; for each home, **Set waypoint**, **Give a key** (to someone standing next to you),
+  **Key holders** (see who has one and **Take back** keys) and **Sell** (refunds *Selling back refunds* % of the price).
+* **Spawn at home:** owned homes are listed on the spawn screen; picking one starts you inside.
+* Police (*Jobs that can force entry*, on duty) get **Force entry** at locked doors; the owner is told.
+
+Logging off inside brings you back outside your door. Selling, eviction and deletion put everyone inside out and
+every key stops working; storage belongs to the owner, so a new owner starts with an empty one.
 
 ### Vinewood sign (F10 › Vinewood Sign)
 
