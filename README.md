@@ -506,32 +506,50 @@ The pause map is Fusion's own illustrated map, with the postal codes and place n
 
 ### Housing (F10 › Housing)
 
-Apartments and houses players buy and live in, with real GTA interiors they walk around in. Every home is its own
-private copy of its interior, so a hundred homes can use the same style without anyone meeting.
+Apartments and houses players buy and live in, with real GTA interiors they walk around in. Every apartment and
+house is its own private copy of its interior, so a hundred homes can use the same style without anyone meeting.
 
-**Placing homes (staff, `admin.housing`):** stand at a door, open **F10 › Housing** and press **Add a home here**:
-give it a name, choose apartment or house, an interior style and a price. Each home has **Edit**, **Move here**
-(moves its door to where you stand), **Go to**, **Preview** (walk around its interior), **Evict** (puts it back on
-sale) and **Delete**. **Preview style** tries any interior before you use it.
+**Two kinds of location:**
+* **Apartment building:** one entrance, as many apartments as you allow (*Apartments in this building*, 0 = no
+  limit). Each player buys their own apartment there; each one has its own owner, keys, lock, doorbell, storage
+  and garage.
+* **House:** one owner.
+
+**Placing a home (staff, `admin.housing`):**
+1. Stand **outside at the real front door** (the building's lobby door, the house's front door) and press
+   **F10 › Housing › Add a home here**: name, apartment building or house, how many apartments, interior style and
+   price. Fusion refuses to place an entrance inside a home, a preview or an interior.
+2. **Garage:** sit in a car where vehicles should come out, facing the way they should drive off, and press
+   **Set garage here** on that home. Homes without one show *No garage yet*.
+3. **Front doors inside:** each interior style has one *front door inside*, where everyone arrives and where the
+   way out is. Set it once per style: **Preview style**, walk to the inside of its front door and face it, open
+   **F10 › Housing** and press **Set the door here**.
+
+Each home also has **Edit**, **Move entrance here**, **Go to**, **Preview**, **Residents** (apartment buildings:
+who lives there, **Evict** one apartment), **Evict** (houses) and **Delete**.
 
 **Interior styles** (Settings › Housing › Interior styles): a studio and a mid-range apartment, five high-rise
 apartments (4 Integrity Way, Del Perro Heights, Richards Majestic, Tinsel Towers, the Eclipse Towers penthouse) and eight
-Vinewood Hills houses come ready. Add your own (any GTA interior or an MLO you've installed): stand inside, press
-**Use my position** on *Arrive at*, and set its storage size. *Arrive at* is also the way out.
+Vinewood Hills houses come ready. Add your own (any GTA interior or an MLO you've installed) and set its front door
+the same way.
 
 **For players:**
-* A green marker is a home for sale: **Look inside**, then **Buy** (or **Claim** when the economy is off).
-  One owner per home; a character can own up to *Properties one character can own* (default 2).
-* At their own door: **Go inside**, **Lock / Unlock**. Locked homes let in only the owner and key holders;
-  everyone else **Rings the doorbell**, and whoever's inside sees **Let in** in **M › My Home**.
-* **M › My Home** (shown once you own a home or hold a key): inside, **Storage**, **Wardrobe**, visitors to
-  let in and **Leave**; for each home, **Set waypoint**, **Give a key** (to someone standing next to you),
-  **Key holders** (see who has one and **Take back** keys) and **Sell** (refunds *Selling back refunds* % of the price).
+* A green marker is something for sale: **Look inside**, then **Buy** (or **Claim** when the economy is off). A
+  character can own up to *Homes one character can own* (default 2), and one apartment per building.
+* At an entrance: **Go inside** and **Lock / Unlock** your own home; homes you hold a key to; and in apartment
+  buildings **Residents**, to ring someone's doorbell (or walk into an unlocked apartment). Whoever is inside sees
+  **Let in** in **M › My Home**.
+* **Garage:** at the home's garage spot, **park** your vehicle (in it) or **take one out** (on foot). Owners and key
+  holders can use it; everyone only sees their own vehicles there. *My Vehicles* shows them as *Garage: <home>*.
+* **M › My Home**: inside, **Storage**, **Wardrobe**, visitors to let in and **Leave**; for each home, waypoints to
+  it and its garage, **Give a key**, **Key holders** (and **Take back**) and **Sell** (refunds *Selling back refunds*
+  % of the price).
 * **Spawn at home:** owned homes are listed on the spawn screen; picking one starts you inside.
 * Police (*Jobs that can force entry*, on duty) get **Force entry** at locked doors; the owner is told.
 
-Logging off inside brings you back outside your door. Selling, eviction and deletion put everyone inside out and
-every key stops working; storage belongs to the owner, so a new owner starts with an empty one.
+Logging off inside brings you back outside the entrance. Selling, eviction and deletion put everyone inside out,
+every key stops working, and vehicles in that home's garage move to the first public garage. Storage belongs to
+the owner, so a new owner starts with an empty one.
 
 ### Vinewood sign (F10 › Vinewood Sign)
 

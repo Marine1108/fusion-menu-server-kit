@@ -192,15 +192,22 @@ Owners create stores in game. To open a store-like list from your script, use `e
 
 ## Housing (`fusion-housing`)
 
+A **location** (placed in F10 › Housing) is a house or an apartment building. A **unit** is one home in it: a
+house has at most one, a building as many as its limit. Units have the owner, keys, lock and garage.
+
 | Server export | |
 |---|---|
-| `GetProperty(id)` | `{ id, label, kind = 'apartment'/'house', interior, coords = {x,y,z,w}, price, owner (citizenid), ownerName, locked }` |
-| `GetOwnedProperties(citizenid)` | that character's homes |
-| `HasKey(src, id)` | the player owns it or holds a key |
-| `GetInside(src)` | the home id the player is in, or `nil` |
+| `GetProperty(id)` | a location: `{ id, label, kind = 'apartment'/'house', interior, coords = {x,y,z,w}, price, capacity, garage = {x,y,z,w} or nil }` |
+| `GetUnit(unitId)` | `{ id, property, owner (citizenid), ownerName, locked }` |
+| `GetOwnedProperties(citizenid)` | that character's homes: `{ unit, id, label, kind, coords, locked, garage }` |
+| `HasKey(src, unitId)` | the player owns the unit or holds a key |
+| `GetInside(src)` | the unit the player is in, or `nil` |
+| `GetGarage('home_<unitId>')` / `CanUseGarage(src, 'home_<unitId>')` | a home's garage, as fusion-vehicles uses it |
 
-`GlobalState.fusionHousing` lists every home (`id, label, kind, coords, price, owned`) without owners. Inside a home
-the player is in routing bucket `50000 + id`. Stashes are `home_<id>_<owner citizenid>` (fusion-inventory).
+Client export `MyGarages()` lists the garages of the player's homes. `GlobalState.fusionHousing` lists every location
+(`id, label, kind, coords, price, owned = nothing left for sale, taken, capacity`) without owners. Inside a home the
+player is in routing bucket `50000 + unit id`. Stashes are `home_<location id>_<owner citizenid>`. Vehicles parked in
+a home garage have `player_vehicles.garage = 'home_<unit id>'`.
 
 ## Vinewood sign (`fusion-vinewood`)
 
