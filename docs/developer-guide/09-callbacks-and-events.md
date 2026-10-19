@@ -49,7 +49,8 @@ QBCore callbacks (`QBCore.Functions.CreateCallback` / `TriggerCallback`, and cli
 |---|---|
 | `fusion:client:ready` | — the UI and settings are ready |
 | `fusion:client:playerLoaded` | `PlayerData, isNew` |
-| `fusion:client:spawned` | `isNew` |
+| `fusion:client:spawned` | `isNew, home` (`home` = the housing id when they chose to spawn at home, else `nil`) |
+| `fusion:client:privacyChanged` | `hidden, videoMode`: streamer / video mode changed (see chapter 8) |
 | `fusion:client:playerDataUpdated` | `PlayerData` |
 | `fusion:client:playerUnloaded` | — |
 | `fusion:client:moneyChanged` | `account, amount, 'add'/'remove', newBalance` |

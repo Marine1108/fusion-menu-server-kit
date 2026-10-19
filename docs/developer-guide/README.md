@@ -19,10 +19,10 @@ Fusion Menu is a FiveM framework that is configured entirely in game (an admin p
 | 4 | [Economy](04-economy.md) | Money types, adding and removing money, reasons, "economy off" mode, paychecks, society funds, transactions |
 | 5 | [Items and inventory](05-items-and-inventory.md) | Item definitions, usable and consumable items, item metadata, stashes, shops, item pictures |
 | 6 | [Permissions and roles](06-permissions-and-roles.md) | Permission nodes, roles, wildcards, ACE groups, QBCore permission levels |
-| 7 | [In-game settings](07-settings.md) | Give your script its own page in F10 › Settings: every field type |
-| 8 | [UI](08-ui.md) | Notifications, menus and the main menu, input dialogs, confirm, progress bars, text UI, radial, context menu, HUD, key bindings, third eye |
+| 7 | [In-game settings](07-settings.md) | Give your script its own page in F10 › Settings: every field type; how F10 › Script Configs reads your config.lua |
+| 8 | [UI](08-ui.md) | Notifications, menus and the main menu, input dialogs, confirm, progress bars, text UI, radial, context menu, HUD, streamer / video mode and recording, key bindings, third eye |
 | 9 | [Callbacks and events](09-callbacks-and-events.md) | Client↔server callbacks, every event Fusion fires, state bags, logs, key/value storage |
-| 10 | [Modules and world](10-modules-and-world.md) | Vehicles, keys and fuel, garages, voice and radio, phone and alerts, emergency, hospital, jail, weather and time, postal codes, appearance, weapons, Vinewood sign, anticheat |
+| 10 | [Modules and world](10-modules-and-world.md) | Vehicles, keys and fuel, garages, voice and radio, phone and alerts, emergency (radar, BOLOs, PIT rules), hospital, jail, weather and time, postal codes, appearance, weapons, housing, Vinewood sign, anticheat |
 | 11 | [QBCore compatibility](11-qbcore-compatibility.md) | What works, what is replaced, mapped exports and events, scripts not to install |
 | 12 | [Database](12-database.md) | Tables and their columns |
 | 13 | [Best practices and checklist](13-best-practices.md) | Security, performance, naming, Linux, escrow, release checklist |

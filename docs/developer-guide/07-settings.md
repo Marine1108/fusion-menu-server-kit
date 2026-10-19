@@ -87,6 +87,44 @@ Coordinates come back as plain tables; turn them into vectors when you use them:
 
 Use one of Fusion's icon names for `icon`: `package`, `car`, `user`, `users`, `wallet`, `map`, `map-pin`, `shield`, `star`, `briefcase`, `cog`, `alert`, `flag`, `key`, `layers`, `crosshair`, `fuel`, `store`, `shirt`, `phone`, `cloud`, `wrench`, `scroll`, `info`, `home`, `zap`, `search`, `trash`, `plus`, `save`, `refresh`. Unknown names show a default icon.
 
+## Your config file in F10 › Script Configs
+
+Owners can open the config file of any script on their server in **F10 › Script Configs**. Simple lines are
+listed as settings they can change without opening the file, with the comment on (or just above) the line as the
+description:
+
+```lua
+Config = {}
+Config.UseTarget = true      -- use the third eye instead of [E] prompts
+-- What a delivery pays
+Config.Pay = 250
+Config.Truck = {
+    Model = 'boxville2',     -- shown as Config.Truck.Model
+}
+```
+
+Values that are strings, numbers or `true` / `false` are editable this way. Lists, maths and function calls are
+left to the text editor in the same page. Files are found by name: `config.lua`, `shared/config.lua`,
+`config/*.lua`, `settings.json`, `sh_config.lua` and the like.
+
+**Auto-configure** sets the usual framework keys to the values that make a script use Fusion. Keep these names
+and your script configures itself:
+
+| Key (any capitalisation) | Fusion sets it to |
+|---|---|
+| `Framework`, `Core`, `FrameworkType` | the QBCore word your own code compares with (`'qb'`, `'qbcore'` …) |
+| `CoreName`, `CoreResource` | `'qb-core'` |
+| `Inventory`, `InventoryType` | `'qb-inventory'` (or `'qb'` for short values) |
+| `Target`, `TargetType` / `UseTarget` | `'qb-target'` / `true` |
+| `Fuel`, `FuelScript` | `'LegacyFuel'` |
+| `Notify`, `NotifyType` | `'qb'` |
+| `Voice` | `'pma-voice'` |
+| `VehicleKeys`, `Keys` | `'qb-vehiclekeys'` |
+
 ## Letting owners replace your script
 
 If your script replaces a Fusion module (your own phone, inventory…), tell owners to turn Fusion's version off in **F10 › Settings › Modules**. Check from code with `exports['fusion-core']:IsModuleEnabled('fusion-phone')`.
+
+Fusion starts any `fusion-*` module in `resources/[fusion]` that server.cfg doesn't start, and adds its `ensure`
+line to server.cfg (Settings › Server › Resources). That is only for Fusion's own modules: your scripts in `[qb]`
+and `[addons]` start through `ensure [qb]` / `ensure [addons]`.
