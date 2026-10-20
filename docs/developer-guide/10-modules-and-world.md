@@ -82,6 +82,10 @@ Keys belong to characters, per plate. Owners of a `player_vehicles` row always h
 | `Entity(vehicle).state.fuel` | read anywhere |
 | `exports['fusion-vehicles']:IsSeatbeltOn()` | client |
 
+Unbelted, Fusion turns on GTA's own windscreen fly-through (ped config flag 32 and `SetFlyThroughWindscreenParams`
+at the *Ejection speed*); belted, it is off. If GTA doesn't throw the ped on a hard crash, Fusion does: windscreen
+out, ped placed above the dash, ragdoll, pre-crash velocity plus lift, damage scaled by speed (*Ejection hurts*).
+
 `exports['LegacyFuel']`, `cdn-fuel`, `ps-fuel`, `lj-fuel` and `qb-fuel` `GetFuel` / `SetFuel` are answered by fusion-fuel.
 
 ### Spawning and properties
@@ -204,8 +208,10 @@ house has at most one, a building as many as its limit. Units have the owner, ke
 | `GetInside(src)` | the unit the player is in, or `nil` |
 | `GetGarage('home_<unitId>')` / `CanUseGarage(src, 'home_<unitId>')` | a home's garage, as fusion-vehicles uses it |
 
-Interior styles have a front door (their `coords`, in Settings › Housing) plus extra exits in the table
-`fusion_interior_exits` (style, label, x, y, z, w). Client export `MyGarages()` lists the garages of the player's homes. `GlobalState.fusionHousing` lists every location
+Each location has its own ways out: its front door inside (`fusion_properties.door_x/y/z/w`, or the interior
+style's `coords` from Settings › Housing when not set) plus extra exits in `fusion_property_exits` (property_id,
+label, x, y, z, w). Exits from the older per-style table `fusion_interior_exits` are copied to every location using
+that style on start. Client export `MyGarages()` lists the garages of the player's homes. `GlobalState.fusionHousing` lists every location
 (`id, label, kind, coords, entrances = every entrance's coords, price, owned = nothing left for sale, taken, capacity`) without owners. Inside a home the
 player is in routing bucket `50000 + unit id`. Stashes are `home_<location id>_<owner citizenid>`. Vehicles parked in
 a home garage have `player_vehicles.garage = 'home_<unit id>'`.

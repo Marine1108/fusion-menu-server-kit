@@ -399,7 +399,9 @@ A short slideshow shown **once per player** (per Rockstar account) before they p
 
 ### Vehicles, garages and keys
 
-* **Spawner:** every vanilla and **addon** vehicle appears automatically, sorted by class. Addon packs (anything in `resources/[addons]` with a `vehicles.meta`) also get their own **Addon Vehicles** section. Packs started while the server is running (`ensure mypack`) show up within a few seconds, without players reconnecting. **Settings › Vehicles** controls spawning inside, replacing the previous vehicle, spawn cost (flat or catalogue price), cooldown, plate format (`#` digit, `@` letter), list or picture-grid layout, saved vehicles, keys, locking NPC cars, the seatbelt and ejection speed.
+* **Spawner:** every vanilla and **addon** vehicle appears automatically, sorted by class. Addon packs (anything in `resources/[addons]` with a `vehicles.meta`) also get their own **Addon Vehicles** section. Packs started while the server is running (`ensure mypack`) show up within a few seconds, without players reconnecting. **Settings › Vehicles** controls spawning inside, replacing the previous vehicle, spawn cost (flat or catalogue price), cooldown, plate format (`#` digit, `@` letter), list or picture-grid layout, saved vehicles, keys, locking NPC cars, the seatbelt, ejection speed and whether ejection hurts. Without a seatbelt a hard crash throws the driver or
+passenger through the windscreen at the speed they were going, over the hood, ragdolling; with the seatbelt on
+nobody goes through.
 * **Vehicles tab:** rename vehicles, set brand, price and class, hide a vehicle from the spawner, or restrict it to a permission or job (e.g. police cars for `police` only).
 * **Vehicle Options** (in a vehicle): repair, wash, flip, god mode, engine, doors, windows, seats, **extras**, **liveries**, mod menu, wheels, colours, neon and headlights, plate text and style, torque/power, speed limiter, give keys, delete.
 * **Settings › Garages & Impound:** garage and impound locations (car, air or boat; optional job), shared garages, **storing spawned vehicles** (they become owned, mods and all), max owned per character, impound fee, and sending vehicles left out to the impound on restart.
@@ -521,10 +523,12 @@ house is its own private copy of its interior, so a hundred homes can use the sa
    price. Fusion refuses to place an entrance inside a home, a preview or an interior.
 2. **Garage:** sit in a car where vehicles should come out, facing the way they should drive off, and press
    **Set garage here** on that home. Homes without one show *No garage yet*.
-3. **Ways out inside:** go into any home (or **Preview style**) and open **F10 › Housing**: the *Inside* panel lists
-   that interior's exits. Stand just inside the front door, facing it, and press **Move the front door here**
-   (everyone arrives there too). Add more exits for balconies or back doors with **Add an exit here**, and
-   **Remove** them again. Exits belong to the interior style, so every home using it gets them.
+3. **Ways out inside (Exits):** press **Go inside** on the home, then open **F10 › Housing › Exits** on it (or the
+   **Exits** button in the *Inside* bar at the top). Stand just inside the front door, facing it, and press **Move it
+   here** (players arrive there too). Add more exits for balconies or back doors with **Add an exit where I stand**,
+   and **Remove** them again. Every home location has its own exits, like its own entrances. Until a home's front
+   door is set, it uses the interior style's default (set with **Preview style › Move the front door here**);
+   **Reset** goes back to that default.
 
 **More ways in:** a building with a front door and a garage around the back gets an entrance at each. Press
 **Entrances** on the home, stand outside at the other door and press **Add an entrance where I stand** (give it a
