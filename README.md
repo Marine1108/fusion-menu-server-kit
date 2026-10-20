@@ -2,6 +2,8 @@
 
 Fusion Menu is a complete FiveM server: a framework that **plays like vMenu**, **runs QBCore scripts without modification**, and is **configured entirely in game**. Settings, permissions, locations, jobs, items, vehicles, prices and every feature toggle live in the admin panel. The only files you ever add are pictures, music and new resources.
 
+**For your players:** the [Fusion Player Guide (PDF)](docs/player-guide/Fusion-Player-Guide.pdf) explains the keys, the menu, the phone, vehicles, homes, jobs and how to get help. Share it on your Discord or website; it is also in the Fusion Menu zip as `Fusion-Player-Guide.pdf`.
+
 ---
 
 ## Contents
@@ -356,7 +358,9 @@ Media goes in `resources/[fusion]/fusion-loadscreen/html/media/`. After adding f
 
 ### Player guide
 
-A short slideshow shown **once per player** (per Rockstar account) before they pick a character.
+A short slideshow shown **once per player** (per Rockstar account) before they pick a character. The default pages
+cover the same ground as the [Fusion Player Guide PDF](docs/player-guide/Fusion-Player-Guide.pdf): first join,
+controls, the menu, money and inventory, vehicles, phone and voice, homes, jobs, streaming and getting help.
 
 * **Settings › Player Guide:** title, pages (title, text, picture), whether it can be skipped, and whether it appears in the main menu as *Server Guide*.
 * **Formatting in page text:** `**bold**`, lines starting with `- ` become bullet points, `[M]` shows a key cap, a blank line starts a new paragraph. `{server}` and `{player}` are replaced with the server and player name.

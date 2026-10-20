@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fusion Menu Player Guide</title>
+</head>
+<body>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: a dashboard-instrument feel. Left rail of sections (top chips on phones), one readable column,
+   keys drawn as real keycaps, each section copyable as Discord text. */
+:root {
+  --bg: #f4f3f8;
+  --surface: #ffffff;
+  --ink: #1b1a24;
+  --muted: #5d5a6e;
+  --line: #dedbe8;
+  --accent: #6a4ff0;
+  --accent-ink: #ffffff;
+  --accent-soft: #ece8fe;
+  --cap: #fbfaff;
+  --cap-edge: #c9c4da;
+  --warn: #9a5b00;
+  --warn-soft: #fff3df;
+  --font-display: "Saira", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12111a; --surface: #1a1925; --ink: #ebe9f5; --muted: #a29fb6; --line: #2d2b3c;
+    --accent: #9b85ff; --accent-ink: #120f22; --accent-soft: #241f3f; --cap: #22202f; --cap-edge: #3a3750;
+    --warn: #f0b75a; --warn-soft: #2b2214; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12111a; --surface: #1a1925; --ink: #ebe9f5; --muted: #a29fb6; --line: #2d2b3c;
+  --accent: #9b85ff; --accent-ink: #120f22; --accent-soft: #241f3f; --cap: #22202f; --cap-edge: #3a3750;
+  --warn: #f0b75a; --warn-soft: #2b2214; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 400 16px/1.6 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+}
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+.wrap { max-width: 1120px; margin: 0 auto; }
+
+header.top { padding-block: 40px 28px; display: grid; gap: 14px; border-bottom: 1px solid var(--line); }
+.eyebrow { font: 600 12px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+h1 { font: 800 clamp(34px, 6vw, 56px)/1.02 var(--font-display); letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+.lede { max-width: 62ch; color: var(--muted); margin: 0; font-size: 17px; }
+.quick { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 6px; color: var(--muted); font-size: 14px; }
+.quick span { display: inline-flex; align-items: center; gap: 8px; }
+
+.layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; padding-top: 32px; }
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); align-self: start; display: grid; gap: 2px; }
+nav.toc .label { font: 600 11px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding: 0 10px 10px; }
+nav.toc a { color: var(--muted); text-decoration: none; font-size: 14px; padding: 6px 10px; border-radius: 6px; }
+nav.toc a:hover { color: var(--ink); background: var(--accent-soft); }
+
+main { display: grid; gap: 56px; min-width: 0; }
+section { display: grid; gap: 14px; scroll-margin-top: 16px; min-width: 0; }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+h2 { font: 700 28px/1.15 var(--font-display); margin: 0; letter-spacing: .005em; text-wrap: balance; }
+h3 { font: 600 18px/1.3 var(--font-display); margin: 8px 0 0; }
+p { margin: 0; max-width: 68ch; }
+ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 68ch; }
+li::marker { color: var(--accent); }
+.muted { color: var(--muted); }
+
+.copy {
+  font: 600 12px/1 var(--font-mono); letter-spacing: .04em;
+  background: transparent; color: var(--accent); border: 1px solid var(--line);
+  padding: 7px 10px; border-radius: 6px; cursor: pointer; white-space: nowrap;
+}
+.copy:hover { border-color: var(--accent); }
+.copy[data-done] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+kbd {
+  display: inline-block; min-width: 1.9em; text-align: center;
+  font: 600 13px/1 var(--font-mono); color: var(--ink);
+  background: var(--cap); border: 1px solid var(--cap-edge); border-bottom-width: 3px;
+  border-radius: 6px; padding: 5px 7px 4px; margin: 1px 0; white-space: nowrap;
+}
+code { font: 500 14px var(--font-mono); background: var(--accent-soft); padding: 1px 6px; border-radius: 4px; overflow-wrap: anywhere; }
+
+.keys { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0 28px; }
+.key-row { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--line); }
+.key-row .k { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.table-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th { text-align: left; font: 600 11px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 0 12px 10px 0; }
+td { padding: 10px 12px 10px 0; border-top: 1px solid var(--line); vertical-align: top; }
+td:first-child { white-space: nowrap; }
+
+.note { background: var(--warn-soft); color: var(--ink); border-left: 3px solid var(--warn); padding: 12px 14px; border-radius: 0 8px 8px 0; max-width: 68ch; }
+.note b { color: var(--warn); }
+
+.apps { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.app { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; }
+.app b { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+.app span { color: var(--muted); font-size: 14px; line-height: 1.45; }
+
+footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+
+@media (max-width: 860px) {
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  nav.toc { position: static; display: flex; flex-wrap: wrap; gap: 6px; }
+  nav.toc .label { width: 100%; padding: 0 0 4px; }
+  nav.toc a { border: 1px solid var(--line); background: var(--surface); padding: 5px 10px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+.screen-only { }
+@page { size: Letter; margin: 14mm 15mm 16mm; }
+@media print {
+  :root {
+    --bg: #ffffff; --surface: #ffffff; --ink: #1b1a24; --muted: #55526a; --line: #dcd9e6;
+    --accent: #5a3fe0; --accent-ink: #ffffff; --accent-soft: #efebff; --cap: #f7f6fc; --cap-edge: #bdb7d2;
+    --warn: #8a5000; --warn-soft: #fff4e2; color-scheme: light;
+  }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { padding: 0; font-size: 10.5pt; line-height: 1.5; }
+  .screen-only, .copy { display: none !important; }
+  .wrap { max-width: none; }
+  header.top { padding-block: 0 14px; }
+  h1 { font-size: 30pt; }
+  .lede { font-size: 11.5pt; }
+  .layout { display: block; padding-top: 14px; }
+  nav.toc { position: static; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px 14px; margin-bottom: 18px;
+            border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+  nav.toc .label { grid-column: 1 / -1; padding: 0 0 6px; }
+  nav.toc a { padding: 2px 0; font-size: 10pt; color: var(--ink); }
+  main { display: block; }
+  section { display: block; margin-bottom: 20px; }
+  section > * + * { margin-top: 10px; }
+  h2 { font-size: 17pt; }
+  .sec-head { break-after: avoid; page-break-after: avoid; }
+  h2, h3 { break-after: avoid; page-break-after: avoid; }
+  .key-row, tr, .app, li, .note, p { break-inside: avoid; page-break-inside: avoid; }
+  .keys { display: block; columns: 2; column-gap: 28px; }
+  .key-row { break-inside: avoid; page-break-inside: avoid; -webkit-column-break-inside: avoid; }
+  h3 { margin-top: 14px; }
+  .apps { grid-template-columns: repeat(3, 1fr); }
+  a { text-decoration: none; }
+  footer { margin-top: 24px; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Fusion Menu · for players</div>
+    <h1>How to play on a Fusion server</h1>
+    <p class="lede">Everything you need on your first night in the city: the keys, the menu, your phone, cars, homes, jobs and how to get help. <span class="screen-only">Every section can be copied straight into Discord.</span></p>
+    <div class="quick">
+      <span><kbd>M</kbd> menu</span>
+      <span><kbd>I</kbd> inventory</span>
+      <span><kbd>F1</kbd> phone</span>
+      <span><kbd>E</kbd> interact</span>
+      <span><kbd>B</kbd> seatbelt</span>
+      <span><code>/calladmin</code> help</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Sections">
+      <div class="label">Sections</div>
+      <a href="#start">First join</a>
+      <a href="#keys">Keys</a>
+      <a href="#menu">The menu</a>
+      <a href="#hud">Your HUD</a>
+      <a href="#money">Money</a>
+      <a href="#inventory">Inventory</a>
+      <a href="#vehicles">Vehicles</a>
+      <a href="#phone">Phone</a>
+      <a href="#voice">Voice & radio</a>
+      <a href="#housing">Homes</a>
+      <a href="#jobs">Jobs</a>
+      <a href="#emergency">Police, fire & EMS</a>
+      <a href="#hurt">Getting hurt</a>
+      <a href="#weather">Weather</a>
+      <a href="#video">Streaming & video</a>
+      <a href="#help">Getting help</a>
+      <a href="#commands">Commands</a>
+    </nav>
+
+    <main>
+      <section id="start" data-title="First join">
+        <div class="sec-head"><h2>First join</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li>The first time you join, a short <b>server guide</b> shows before you pick a character. Open it again any time with <code>/guide</code> or <b>M › Server Guide</b>.</li>
+          <li><b>Create a character</b>: name, date of birth, nationality. New characters usually open the appearance editor so you can dress them.</li>
+          <li><b>Pick where to spawn</b> from the spawn screen: city locations, your last location, or one of your homes once you own one.</li>
+          <li>Change character later with <b>M › Switch Character</b> or <code>/logout</code>.</li>
+        </ul>
+        <p class="note"><b>Every server is set up differently.</b> Owners can rename things, change keys, turn features off or limit them to certain jobs. If something here is missing on your server, it has been switched off.</p>
+      </section>
+
+      <section id="keys" data-title="Keys">
+        <div class="sec-head"><h2>Keys</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <p>Change any of these in <b>GTA Settings › Key Bindings › FiveM</b> (the names start with <b>Fusion</b>). Prompts on screen always show the key you picked.</p>
+        <div class="keys">
+          <div class="key-row"><div class="k"><kbd>M</kbd></div><div>Main menu</div></div>
+          <div class="key-row"><div class="k"><kbd>I</kbd></div><div>Inventory</div></div>
+          <div class="key-row"><div class="k"><kbd>1</kbd>–<kbd>5</kbd></div><div>Use hotbar slot 1 to 5</div></div>
+          <div class="key-row"><div class="k"><kbd>E</kbd></div><div>Interact: stores, garages, ATMs, pumps, doors, check-in</div></div>
+          <div class="key-row"><div class="k"><kbd>G</kbd></div><div>Second option: boss menu, buy a jerry can</div></div>
+          <div class="key-row"><div class="k"><kbd>X</kbd></div><div>Cancel what you're doing</div></div>
+          <div class="key-row"><div class="k"><kbd>L</kbd></div><div>Lock or unlock your vehicle</div></div>
+          <div class="key-row"><div class="k"><kbd>B</kbd></div><div>Seatbelt</div></div>
+          <div class="key-row"><div class="k"><kbd>Left Alt</kbd></div><div>Hold for third eye (look, then click an option)</div></div>
+          <div class="key-row"><div class="k"><kbd>F1</kbd></div><div>Phone</div></div>
+          <div class="key-row"><div class="k"><kbd>F11</kbd></div><div>Voice range: whisper, normal, shout</div></div>
+          <div class="key-row"><div class="k"><kbd>Caps Lock</kbd></div><div>Hold to talk on the radio; tap for the mouse in menus</div></div>
+          <div class="key-row"><div class="k"><kbd>TAB</kbd></div><div>Weapon wheel (if your server uses Fusion's)</div></div>
+          <div class="key-row"><div class="k"><kbd>V</kbd></div><div>Camera view (first person shows the windshield HUD)</div></div>
+        </div>
+        <h3>In menus</h3>
+        <p><kbd>↑</kbd> <kbd>↓</kbd> move, <kbd>←</kbd> <kbd>→</kbd> change a value, <kbd>Enter</kbd> select, <kbd>Backspace</kbd> back, <kbd>Esc</kbd> close. You can keep walking and driving with a menu open.</p>
+      </section>
+
+      <section id="menu" data-title="The menu">
+        <div class="sec-head"><h2>The menu</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <p>Press <kbd>M</kbd>. What you see depends on your job and what the server allows. The usual entries:</p>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Entry</th><th>What's in it</th></tr></thead>
+          <tbody>
+            <tr><td>Player Options</td><td>Your character and appearance options the server allows</td></tr>
+            <tr><td>Vehicle Options</td><td>Doors, windows, engine, seats, extras, liveries and more, while you're in a vehicle</td></tr>
+            <tr><td>Weapons</td><td>Weapon loadouts, attachments and tints, on servers that allow them</td></tr>
+            <tr><td>Job</td><td>Go on or off duty, the job center, and the boss menu for bosses</td></tr>
+            <tr><td>Radio</td><td>Join a radio channel</td></tr>
+            <tr><td>My Home</td><td>Storage, wardrobe, visitors, keys and selling, once you own a home</td></tr>
+            <tr><td>Emergency</td><td>Siren, radar and PIT tools for police, fire and EMS</td></tr>
+            <tr><td>Streaming &amp; Video</td><td>Streamer mode, video mode, free camera and the recorder</td></tr>
+            <tr><td>Misc Settings</td><td>HUD layout, speedometer style, windshield HUD, show location and more</td></tr>
+            <tr><td>Help &amp; Reports</td><td>Call an admin, report a player, ask a question</td></tr>
+            <tr><td>Switch Character</td><td>Back to the character screen</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section id="hud" data-title="Your HUD">
+        <div class="sec-head"><h2>Your HUD</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li>On foot you see your server ID, cash, bank, job and status. In a vehicle you also get speed, gear, fuel, seatbelt, lock, street, compass and postal code.</li>
+          <li><b>Move it:</b> <code>/hud</code> or <b>M › Misc Settings › Edit HUD Layout</b>. Drag anything where you want it, right-click to hide it, <b>Reset</b> to start over. Your layout is saved.</li>
+          <li><b>Speedometer style:</b> Classic, Analog dial, Digital, Sport or Minimal in <b>M › Misc Settings › Speedometer</b> (if the server lets players choose).</li>
+          <li><b>Windshield HUD:</b> drive in first person (<kbd>V</kbd>) and your speed, gear, signals and warnings show low on the windshield. Turn it off in <b>M › Misc Settings</b>.</li>
+        </ul>
+      </section>
+
+      <section id="money" data-title="Money">
+        <div class="sec-head"><h2>Money</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li>You have <b>cash</b> and a <b>bank</b> account. Check them with <code>/cash</code> and <code>/bank</code>, or on the HUD.</li>
+          <li>Use any <b>bank or ATM</b> with <kbd>E</kbd> to deposit, withdraw and transfer.</li>
+          <li>Send money to another player's phone number in the phone's <b>Bank</b> app.</li>
+          <li>Jobs pay a <b>paycheck</b> every so often while you're on duty.</li>
+        </ul>
+      </section>
+
+      <section id="inventory" data-title="Inventory">
+        <div class="sec-head"><h2>Inventory</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li><kbd>I</kbd> opens it. Drag items to move them, <b>right-click</b> to use one, and drop items on <b>Use</b>, <b>Give</b> or <b>Drop</b>. Type an amount to split a stack.</li>
+          <li>The first five slots are your <b>hotbar</b>: <kbd>1</kbd>–<kbd>5</kbd> uses them.</li>
+          <li>At a car's boot, <kbd>I</kbd> opens the <b>trunk</b>. Inside a car, it opens the <b>glovebox</b>.</li>
+          <li>Food and drinks keep your hunger and thirst up. You can only carry so much weight.</li>
+          <li><b>Third eye:</b> hold <kbd>Left Alt</kbd> and look at a person, car or object to see what you can do with it, then click.</li>
+        </ul>
+      </section>
+
+      <section id="vehicles" data-title="Vehicles">
+        <div class="sec-head"><h2>Vehicles</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li><kbd>L</kbd> locks and unlocks a car you have keys for. Give keys to a friend in <b>M › Vehicle Options</b>.</li>
+          <li><b>Wear your seatbelt</b> (<kbd>B</kbd>). Without it, a hard crash throws you through the windscreen, and the faster you were going, the more it hurts. You can't get out while you're buckled.</li>
+          <li><b>Garages:</b> at a garage marker press <kbd>E</kbd>: in a car to park it, on foot to take one out. Cars left out may go to the <b>impound</b> after a restart; getting them back costs a fee.</li>
+          <li><b>Fuel:</b> pull up to a pump and press <kbd>E</kbd>. Press <kbd>G</kbd> there to buy a jerry can. Electric cars charge at chargers.</li>
+          <li><b>Weather matters:</b> rain makes the roads slippery, snow and ice more so, and deep water makes you aquaplane. The HUD says <i>Wet roads</i>, <i>Snow on roads</i> or <i>Icy roads</i>.</li>
+        </ul>
+      </section>
+
+      <section id="phone" data-title="Phone">
+        <div class="sec-head"><h2>Phone</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <p><kbd>F1</kbd> opens it (or use the <b>phone</b> item). Every character has their own number.</p>
+        <div class="apps">
+          <div class="app"><b>Phone</b><span>Call players; the call connects with voice</span></div>
+          <div class="app"><b>Messages</b><span>Text conversations with unread counts</span></div>
+          <div class="app"><b>Contacts</b><span>Save numbers, call or text in one tap</span></div>
+          <div class="app"><b>911</b><span>Call or text emergency services; they get your postal and a map marker</span></div>
+          <div class="app"><b>Bank</b><span>Your balances, and send money to a number</span></div>
+          <div class="app"><b>Alerts</b><span>Every emergency and AMBER alert you received</span></div>
+          <div class="app"><b>Weather</b><span>Now, what's coming next, and storm warnings</span></div>
+          <div class="app"><b>Web</b><span>The server's links: Discord, rules, store</span></div>
+          <div class="app"><b>Settings</b><span>Your number, wallpaper, AMBER alerts on or off</span></div>
+        </div>
+      </section>
+
+      <section id="voice" data-title="Voice and radio">
+        <div class="sec-head"><h2>Voice &amp; radio</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li>Talk with your normal push-to-talk key (<b>GTA Settings › Voice Chat</b>).</li>
+          <li><kbd>F11</kbd> switches between whisper, normal and shout. A circle shows how far you carry.</li>
+          <li><b>Radio:</b> <b>M › Radio</b> or <code>/radio 12</code> to join channel 12, <code>/radio 0</code> to turn it off. Hold <kbd>Caps Lock</kbd> to talk; everyone on the channel hears you anywhere on the map. Low channels are often reserved for police and EMS.</li>
+          <li>Phone calls are heard clearly from anywhere.</li>
+        </ul>
+      </section>
+
+      <section id="housing" data-title="Homes">
+        <div class="sec-head"><h2>Homes</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li>A <b>green marker</b> at a door means something is for sale. Press <kbd>E</kbd> to <b>Look inside</b>, then <b>Buy</b>. Apartment buildings have one apartment per player; a house has one owner.</li>
+          <li>At your door: <b>Go inside</b> and <b>Lock / Unlock</b>. In apartment buildings, <b>Residents</b> lets you ring someone's doorbell; they let you in from <b>M › My Home</b>.</li>
+          <li><b>M › My Home</b>: storage, wardrobe, visitors, waypoints, <b>Give a key</b>, take keys back, and <b>Sell</b>.</li>
+          <li><b>Your garage:</b> every home can have one. Park and take out your cars there; key holders can use it too, and each person only sees their own cars.</li>
+          <li><b>Leaving:</b> at any exit (front door, balcony, back door) pick where you come out: any entrance of the home, or straight to its garage.</li>
+          <li>Your homes appear on the spawn screen, so you can start the day at home. Log off inside and you come back outside the door.</li>
+        </ul>
+      </section>
+
+      <section id="jobs" data-title="Jobs">
+        <div class="sec-head"><h2>Jobs</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li><b>M › Job</b> (or <code>/duty</code>) puts you on or off duty. You're paid while on duty.</li>
+          <li>The <b>job center</b> in <b>M › Job</b> lists jobs you can take yourself. Others are given by a boss.</li>
+          <li>Bosses get a <b>boss menu</b> (<b>M › Job</b>, or <kbd>G</kbd> at the duty point): hire, promote, demote, fire and manage the company's money.</li>
+          <li><code>/job</code> shows your job and rank.</li>
+        </ul>
+      </section>
+
+      <section id="emergency" data-title="Police, fire and EMS">
+        <div class="sec-head"><h2>Police, fire &amp; EMS</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <div class="keys">
+          <div class="key-row"><div class="k"><kbd>Q</kbd></div><div>Emergency lights on or off</div></div>
+          <div class="key-row"><div class="k"><kbd>R</kbd></div><div>Siren on or off</div></div>
+          <div class="key-row"><div class="k"><kbd>Y</kbd></div><div>Next siren tone</div></div>
+          <div class="key-row"><div class="k"><kbd>E</kbd> hold</div><div>Air horn</div></div>
+          <div class="key-row"><div class="k"><kbd>F6</kbd></div><div>Use the siren controller and radar remote with the mouse</div></div>
+          <div class="key-row"><div class="k"><kbd>F5</kbd></div><div>Radar power (police)</div></div>
+          <div class="key-row"><div class="k"><kbd>Num 8</kbd> <kbd>Num 5</kbd></div><div>Lock front / rear speed</div></div>
+          <div class="key-row"><div class="k"><kbd>Num 9</kbd> <kbd>Num 6</kbd></div><div>Lock front / rear plate</div></div>
+          <div class="key-row"><div class="k"><kbd>Num 0</kbd></div><div>Start or reset the PIT timer</div></div>
+        </div>
+        <ul>
+          <li>Each service has its own tones: police wail, yelp and priority; EMS hi-lo and phaser; fire the mechanical wail.</li>
+          <li>The <b>PIT timer</b> counts the pursuit and turns green with <b>PIT AUTHORIZED</b> when your department allows it. Your department's command sets the rules.</li>
+          <li><b>M › Emergency</b> has the speed alarm, <b>Run plate</b> and the BOLO list. The plate reader beeps when it sees a BOLO plate.</li>
+        </ul>
+      </section>
+
+      <section id="hurt" data-title="Getting hurt">
+        <div class="sec-head"><h2>Getting hurt</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li>Depending on the server, you either <b>respawn</b> at a hospital after a short timer, or go <b>down</b> and wait for EMS to revive you before a timer runs out.</li>
+          <li>Call EMS from the phone's <b>911</b> app. On-duty EMS get your location.</li>
+          <li>No EMS around? Use the <b>hospital check-in</b> desk (<kbd>E</kbd>) for treatment, for a fee.</li>
+          <li>Bleeding out usually costs a hospital bill, and some servers take items.</li>
+        </ul>
+      </section>
+
+      <section id="weather" data-title="Weather">
+        <div class="sec-head"><h2>Weather</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li>The weather changes through the day, and the phone's <b>Weather</b> app shows what's coming.</li>
+          <li><b>Severe weather</b> (thunderstorm, flood, hurricane, tornado, blizzard) comes with a warning banner and a countdown. Outdoor sirens sound for tornadoes and hurricanes.</li>
+          <li>Floods raise the water, tornadoes pick up cars and people, and lightning can hurt you on foot. Get indoors or drive away from the danger zone on the map.</li>
+        </ul>
+      </section>
+
+      <section id="video" data-title="Streaming and video">
+        <div class="sec-head"><h2>Streaming &amp; video</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li><b>Streamer mode</b> (<code>/streamer</code>) hides what you choose from your screen: chat, names and IDs, money, location, minimap, phone numbers and more.</li>
+          <li><b>Video mode</b> (<code>/videomode</code>) clears the screen for filming, with letterbox bars, colour filters and slow motion.</li>
+          <li><b>Free camera</b> (<code>/freecam</code>): fly the camera near your character. Save shot A and shot B and play a smooth move between them.</li>
+          <li><b>Recorder</b> (<code>/record</code>): records just the game picture, without your HUD or menus. Clips appear in <b>My Clips</b> (<code>/clips</code>), where you can play, trim, add slow motion, join clips and download them. Clips have no sound.</li>
+        </ul>
+      </section>
+
+      <section id="help" data-title="Getting help">
+        <div class="sec-head"><h2>Getting help</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li><b>M › Help &amp; Reports</b>: ask for an admin, report a player, or send a question or bug report. Staff can see your location and claim your request.</li>
+          <li>Quick versions: <code>/calladmin &lt;reason&gt;</code> and <code>/report &lt;message&gt;</code>.</li>
+          <li>Stuck in a menu? <kbd>Esc</kbd> closes it, <kbd>X</kbd> cancels an action.</li>
+        </ul>
+      </section>
+
+      <section id="commands" data-title="Commands">
+        <div class="sec-head"><h2>Commands</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><code>/guide</code></td><td>Open the server guide</td></tr>
+            <tr><td><code>/hud</code></td><td>Move or hide parts of your HUD</td></tr>
+            <tr><td><code>/calladmin</code>, <code>/report</code></td><td>Ask staff for help</td></tr>
+            <tr><td><code>/duty</code>, <code>/job</code></td><td>Go on or off duty, see your job</td></tr>
+            <tr><td><code>/cash</code>, <code>/bank</code></td><td>Your money</td></tr>
+            <tr><td><code>/radio 12</code></td><td>Join a radio channel (<code>/radio 0</code> leaves)</td></tr>
+            <tr><td><code>/postal 1234</code></td><td>Waypoint to a postal code (<code>/postal</code> clears it)</td></tr>
+            <tr><td><code>/wheel</code></td><td>Weapon wheel</td></tr>
+            <tr><td><code>/streamer</code>, <code>/videomode</code>, <code>/freecam</code></td><td>Streaming and filming tools</td></tr>
+            <tr><td><code>/record</code>, <code>/clips</code></td><td>Start or stop recording, open My Clips</td></tr>
+            <tr><td><code>/logout</code></td><td>Back to character selection</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <footer>Fusion Menu {{VERSION}} player guide · default keys and menu names. Your server's owner may have changed some of them.</footer>
+    </main>
+  </div>
+</div>
+
+<script>
+// Each section's "Copy for Discord" turns that section into Discord markdown (under 2000 characters).
+(function () {
+  function inline(node) {
+    var out = '';
+    node.childNodes.forEach(function (n) {
+      if (n.nodeType === 3) { out += n.textContent; return; }
+      if (n.nodeType !== 1) return;
+      var t = n.tagName;
+      if (t === 'KBD') out += '`' + n.textContent + '`';
+      else if (t === 'CODE') out += '`' + n.textContent + '`';
+      else if (t === 'B' || t === 'STRONG') out += '**' + inline(n) + '**';
+      else if (t === 'I' || t === 'EM') out += '*' + inline(n) + '*';
+      else out += inline(n);
+    });
+    return out.replace(/\s+/g, ' ');
+  }
+  function toDiscord(sec) {
+    var lines = ['## ' + sec.querySelector('h2').textContent.trim()];
+    sec.querySelectorAll(':scope > p, :scope > ul, :scope > h3, :scope > .keys, :scope > .table-scroll, :scope > .apps').forEach(function (el) {
+      if (el.matches('p')) lines.push(inline(el).trim());
+      else if (el.matches('h3')) lines.push('**' + el.textContent.trim() + '**');
+      else if (el.matches('ul')) el.querySelectorAll('li').forEach(function (li) { lines.push('• ' + inline(li).trim()); });
+      else if (el.matches('.keys')) el.querySelectorAll('.key-row').forEach(function (r) {
+        lines.push(inline(r.querySelector('.k')).trim() + ' — ' + inline(r.children[1]).trim());
+      });
+      else if (el.matches('.apps')) el.querySelectorAll('.app').forEach(function (a) {
+        lines.push('• **' + a.querySelector('b').textContent + '** — ' + a.querySelector('span').textContent);
+      });
+      else el.querySelectorAll('tbody tr').forEach(function (tr) {
+        lines.push('• ' + inline(tr.children[0]).trim() + ' — ' + inline(tr.children[1]).trim());
+      });
+    });
+    var text = lines.join('\n');
+    return text.length > 1990 ? text.slice(0, 1985) + '…' : text;
+  }
+  document.querySelectorAll('section .copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = toDiscord(btn.closest('section'));
+      var done = function () {
+        btn.setAttribute('data-done', '');
+        btn.textContent = 'Copied';
+        setTimeout(function () { btn.removeAttribute('data-done'); btn.textContent = 'Copy for Discord'; }, 1600);
+      };
+      var fallback = function () {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) { btn.textContent = 'Select and copy'; }
+        document.body.removeChild(ta);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+      else fallback();
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
