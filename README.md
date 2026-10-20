@@ -522,7 +522,8 @@ house is its own private copy of its interior, so a hundred homes can use the sa
    **F10 › Housing › Add a home here**: name, apartment building or house, how many apartments, interior style and
    price. Fusion refuses to place an entrance inside a home, a preview or an interior.
 2. **Garage:** sit in a car where vehicles should come out, facing the way they should drive off, and press
-   **Set garage here** on that home. Homes without one show *No garage yet*.
+   **Set garage here** on that home. Homes without one show *No garage yet*. Staff see every home's garage spot as a
+   purple car marker; players see it once they own the home or hold a key.
 3. **Ways out inside (Exits):** press **Go inside** on the home, then open **F10 › Housing › Exits** on it (or the
    **Exits** button in the *Inside* bar at the top). Stand just inside the front door, facing it, and press **Move it
    here** (players arrive there too). Add more exits for balconies or back doors with **Add an exit where I stand**,
@@ -533,6 +534,8 @@ house is its own private copy of its interior, so a hundred homes can use the sa
 **More ways in:** a building with a front door and a garage around the back gets an entrance at each. Press
 **Entrances** on the home, stand outside at the other door and press **Add an entrance where I stand** (give it a
 name like *Garage side*). Every entrance works the same, and players come back out where they went in.
+A **balcony** can be an entrance too: walk out onto it (also from inside the house) and add it there. Fusion
+only refuses spots the game says are indoors. Residents then pick *Leave by the balcony* at an exit to step out onto it.
 
 Each home also has **Edit**, **Move entrance here**, **Entrances**, **Go to**, **Preview**, **Residents** (apartment buildings:
 who lives there, **Evict** one apartment), **Evict** (houses) and **Delete**.
