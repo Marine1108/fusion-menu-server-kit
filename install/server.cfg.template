@@ -75,3 +75,7 @@ ensure fusion-weather
 ensure screenshot-basic
 ensure [qb]
 ensure [addons]
+
+# Scripts set to "Start with the server" in F10 > Script Configs (Fusion writes this file, in the right
+# start order). Keep this line LAST.
+exec resources/[fusion]/fusion-core/permissions/startup.cfg

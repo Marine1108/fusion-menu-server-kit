@@ -247,6 +247,12 @@ if [[ $MODE == fusion ]]; then
             fi
             say "  Added 'ensure $n' to server.cfg" "$c_grn"
         done
+    # F10 > Script Configs "Start with the server": server.cfg runs Fusion's start list at its very end
+    if ! grep -Eq '^[[:space:]]*exec[[:space:]]+resources/\[fusion\]/fusion-core/permissions/startup\.cfg' "$CFG"; then
+        [[ $backed_up == 1 ]] || { cp "$CFG" "$BACKUP_DIR/server.cfg"; backed_up=1; }
+        printf '\n# Scripts set to "Start with the server" in F10 > Script Configs. Keep this line LAST.\nexec resources/[fusion]/fusion-core/permissions/startup.cfg\n' >> "$CFG"
+        say "  Added 'exec resources/[fusion]/fusion-core/permissions/startup.cfg' to the end of server.cfg" "$c_grn"
+    fi
     fi
 else
     echo

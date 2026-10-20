@@ -823,8 +823,11 @@ Every script you add (anything outside `[fusion]`) is listed with its config fil
 * **Start order:** Fusion reads what each script needs (its manifest's dependencies and the scripts it calls through
   `exports[...]`) and keeps your scripts' ensure lines in that order: a script starts after the scripts it needs.
   This happens when you add a line and at every server start; Fusion's own lines and folder lines don't move.
-* **When server.cfg can't be written** from the server (some hosts block it), the button still works: Fusion keeps
-  its own start list and starts those scripts at every boot, in the same order. The console says why.
+* **When server.cfg can't be written** from the server (FiveM blocks scripts from files outside the resources on
+  many servers), the button still works: Fusion writes the scripts, in start order, as `ensure` lines into
+  `resources/[fusion]/fusion-core/permissions/startup.cfg`, and server.cfg runs that file with one line at its very
+  end: `exec resources/[fusion]/fusion-core/permissions/startup.cfg` (new installs and the updaters add it). Without
+  that line Fusion starts them itself 20 seconds after boot, and the console shows the line to add.
 * **Free script updates:** scripts published on GitHub are found by themselves (from their manifest, or the version
   check in their own code, e.g. ULC) and compared with their latest GitHub release at every start and every 6 hours.
   The script's page shows *GitHub owner/repo · you have 1.8.0 · latest v1.9.0* with **Update to …**, **Check**,

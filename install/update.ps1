@@ -278,6 +278,13 @@ try {
                 $added += $n
                 Say "  Added 'ensure $n' to server.cfg" 'Green'
             }
+            # F10 > Script Configs "Start with the server": server.cfg runs Fusion's start list at its very end
+            $execLine = 'exec resources/[fusion]/fusion-core/permissions/startup.cfg'
+            if ($cfg -notmatch '(?m)^\s*exec\s+resources/\[fusion\]/fusion-core/permissions/startup\.cfg\s*$') {
+                $cfg = $cfg.TrimEnd() + $nl + $nl + '# Scripts set to "Start with the server" in F10 > Script Configs. Keep this line LAST.' + $nl + $execLine + $nl
+                $added += 'startup.cfg'
+                Say "  Added '$execLine' to the end of server.cfg" 'Green'
+            }
             if ($added.Count) {
                 Copy-Item -LiteralPath $cfgPath -Destination (Join-Path $BackupDir 'server.cfg')
                 [IO.File]::WriteAllText($cfgPath, $cfg)
