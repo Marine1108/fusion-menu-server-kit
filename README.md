@@ -2,6 +2,10 @@
 
 Fusion Menu is a complete FiveM server: a framework that **plays like vMenu**, **runs QBCore scripts without modification**, and is **configured entirely in game**. Settings, permissions, locations, jobs, items, vehicles, prices and every feature toggle live in the admin panel. The only files you ever add are pictures, music and new resources.
 
+**As a PDF:** this guide is also the [Fusion Server Owner's Guide (PDF)](docs/owner-guide/Fusion-Server-Owner-Guide.pdf), in the Fusion Menu zip too.
+
+**For your staff:** the [Fusion Management Guide (PDF)](docs/management-guide/Fusion-Management-Guide.pdf) is the day-to-day handbook: reports, moderation, the anticheat, managing players and staff, departments, upkeep, updates and backups.
+
 **For your players:** the [Fusion Player Guide (PDF)](docs/player-guide/Fusion-Player-Guide.pdf) explains the keys, the menu, the phone, vehicles, homes, jobs and how to get help. Share it on your Discord or website; it is also in the Fusion Menu zip as `Fusion-Player-Guide.pdf`.
 
 ---
@@ -972,7 +976,7 @@ For servers where you can't run the updater (ZAP-Hosting and other txAdmin hosts
 ### After updating
 
 * The server console prints the version and build number at start (`Fusion Menu v1.0.0 build …`), and the loading screen and F10 show it too. Check it's the new one.
-* New Fusion modules start by themselves and get their `ensure` line in `server.cfg` about 20 seconds after start. Nothing to edit.
+* New Fusion modules start by themselves about 20 seconds after start. `update-fusion` also adds their `ensure` line to `server.cfg`; hosted servers can add it by hand or leave it (Fusion keeps starting them).
 * New settings appear with their defaults in F10 › Settings. Read the release notes for anything worth switching on.
 * **Linux:** if you uploaded the files as a different user than the one the server runs as (e.g. SFTP as `ubuntu`, or `root`), give them back to the server's user so Fusion can save files: `sudo chown -R <user>:<user> /home/fivem/fusion` (the user the `fusion` service runs as, normally the one who ran the installer).
 * **Clips as MP4:** the Fusion Recorder needs ffmpeg on the server once (`winget install ffmpeg` on Windows, `sudo apt install -y ffmpeg` on Linux). Without it clips stay WebM.

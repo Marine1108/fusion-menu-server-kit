@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fusion Menu Management Guide</title>
+</head>
+<body>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: a dashboard-instrument feel. Left rail of sections (top chips on phones), one readable column,
+   keys drawn as real keycaps, each section copyable as Discord text. */
+:root {
+  --bg: #f4f3f8;
+  --surface: #ffffff;
+  --ink: #1b1a24;
+  --muted: #5d5a6e;
+  --line: #dedbe8;
+  --accent: #6a4ff0;
+  --accent-ink: #ffffff;
+  --accent-soft: #ece8fe;
+  --cap: #fbfaff;
+  --cap-edge: #c9c4da;
+  --warn: #9a5b00;
+  --warn-soft: #fff3df;
+  --font-display: "Saira", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12111a; --surface: #1a1925; --ink: #ebe9f5; --muted: #a29fb6; --line: #2d2b3c;
+    --accent: #9b85ff; --accent-ink: #120f22; --accent-soft: #241f3f; --cap: #22202f; --cap-edge: #3a3750;
+    --warn: #f0b75a; --warn-soft: #2b2214; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12111a; --surface: #1a1925; --ink: #ebe9f5; --muted: #a29fb6; --line: #2d2b3c;
+  --accent: #9b85ff; --accent-ink: #120f22; --accent-soft: #241f3f; --cap: #22202f; --cap-edge: #3a3750;
+  --warn: #f0b75a; --warn-soft: #2b2214; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 400 16px/1.6 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+}
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+.wrap { max-width: 1120px; margin: 0 auto; }
+
+header.top { padding-block: 40px 28px; display: grid; gap: 14px; border-bottom: 1px solid var(--line); }
+.eyebrow { font: 600 12px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+h1 { font: 800 clamp(34px, 6vw, 56px)/1.02 var(--font-display); letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+.lede { max-width: 62ch; color: var(--muted); margin: 0; font-size: 17px; }
+.quick { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 6px; color: var(--muted); font-size: 14px; }
+.quick span { display: inline-flex; align-items: center; gap: 8px; }
+
+.layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; padding-top: 32px; }
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); align-self: start; display: grid; gap: 2px; }
+nav.toc .label { font: 600 11px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding: 0 10px 10px; }
+nav.toc a { color: var(--muted); text-decoration: none; font-size: 14px; padding: 6px 10px; border-radius: 6px; }
+nav.toc a:hover { color: var(--ink); background: var(--accent-soft); }
+
+main { display: grid; gap: 56px; min-width: 0; }
+section { display: grid; gap: 14px; scroll-margin-top: 16px; min-width: 0; }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+h2 { font: 700 28px/1.15 var(--font-display); margin: 0; letter-spacing: .005em; text-wrap: balance; }
+h3 { font: 600 18px/1.3 var(--font-display); margin: 8px 0 0; }
+p { margin: 0; max-width: 68ch; }
+ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 68ch; }
+li::marker { color: var(--accent); }
+.muted { color: var(--muted); }
+
+.copy {
+  font: 600 12px/1 var(--font-mono); letter-spacing: .04em;
+  background: transparent; color: var(--accent); border: 1px solid var(--line);
+  padding: 7px 10px; border-radius: 6px; cursor: pointer; white-space: nowrap;
+}
+.copy:hover { border-color: var(--accent); }
+.copy[data-done] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+kbd {
+  display: inline-block; min-width: 1.9em; text-align: center;
+  font: 600 13px/1 var(--font-mono); color: var(--ink);
+  background: var(--cap); border: 1px solid var(--cap-edge); border-bottom-width: 3px;
+  border-radius: 6px; padding: 5px 7px 4px; margin: 1px 0; white-space: nowrap;
+}
+code { font: 500 14px var(--font-mono); background: var(--accent-soft); padding: 1px 6px; border-radius: 4px; overflow-wrap: anywhere; }
+
+.keys { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0 28px; }
+.key-row { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--line); }
+.key-row .k { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.table-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th { text-align: left; font: 600 11px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 0 12px 10px 0; }
+td { padding: 10px 12px 10px 0; border-top: 1px solid var(--line); vertical-align: top; }
+td:first-child { white-space: nowrap; }
+
+.note { background: var(--warn-soft); color: var(--ink); border-left: 3px solid var(--warn); padding: 12px 14px; border-radius: 0 8px 8px 0; max-width: 68ch; }
+.note b { color: var(--warn); }
+
+.apps { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.app { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; }
+.app b { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+.app span { color: var(--muted); font-size: 14px; line-height: 1.45; }
+
+footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+
+@media (max-width: 860px) {
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  nav.toc { position: static; display: flex; flex-wrap: wrap; gap: 6px; }
+  nav.toc .label { width: 100%; padding: 0 0 4px; }
+  nav.toc a { border: 1px solid var(--line); background: var(--surface); padding: 5px 10px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+.screen-only { }
+@page { size: Letter; margin: 14mm 15mm 16mm; }
+@media print {
+  :root {
+    --bg: #ffffff; --surface: #ffffff; --ink: #1b1a24; --muted: #55526a; --line: #dcd9e6;
+    --accent: #5a3fe0; --accent-ink: #ffffff; --accent-soft: #efebff; --cap: #f7f6fc; --cap-edge: #bdb7d2;
+    --warn: #8a5000; --warn-soft: #fff4e2; color-scheme: light;
+  }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { padding: 0; font-size: 10.5pt; line-height: 1.5; }
+  .screen-only, .copy { display: none !important; }
+  .wrap { max-width: none; }
+  header.top { padding-block: 0 14px; }
+  h1 { font-size: 30pt; }
+  .lede { font-size: 11.5pt; }
+  .layout { display: block; padding-top: 14px; }
+  nav.toc { position: static; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px 14px; margin-bottom: 18px;
+            border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+  nav.toc .label { grid-column: 1 / -1; padding: 0 0 6px; }
+  nav.toc a { padding: 2px 0; font-size: 10pt; color: var(--ink); }
+  main { display: block; }
+  section { display: block; margin-bottom: 20px; }
+  section > * + * { margin-top: 10px; }
+  h2 { font-size: 17pt; }
+  .sec-head { break-after: avoid; page-break-after: avoid; }
+  h2, h3 { break-after: avoid; page-break-after: avoid; }
+  .key-row, tr, .app, li, .note, p { break-inside: avoid; page-break-inside: avoid; }
+  .keys { display: block; columns: 2; column-gap: 28px; }
+  .key-row { break-inside: avoid; page-break-inside: avoid; -webkit-column-break-inside: avoid; }
+  h3 { margin-top: 14px; }
+  .apps { grid-template-columns: repeat(3, 1fr); }
+  a { text-decoration: none; }
+  .table-scroll { overflow: visible; }
+  td:first-child { white-space: normal; width: 42%; }
+  td code { white-space: normal; }
+  footer { margin-top: 24px; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Fusion Menu · for staff and management</div>
+    <h1>Running a Fusion server</h1>
+    <p class="lede">The day-to-day handbook for your staff team: the admin panel, reports, moderation, the anticheat, managing players and staff, departments, and keeping the server healthy. Setup and every setting are in the Server Owner's Guide.</p>
+    <div class="quick">
+      <span><kbd>F10</kbd> admin panel</span>
+      <span><kbd>Home</kbd> noclip</span>
+      <span><code>/reports</code> open reports</span>
+      <span><code>/announce</code> message everyone</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Sections">
+      <div class="label">Sections</div>
+      <a href="#ranks">Staff ranks</a>
+      <a href="#panel">The admin panel</a>
+      <a href="#routine">Daily routine</a>
+      <a href="#reports">Reports</a>
+      <a href="#moderation">Moderation</a>
+      <a href="#anticheat">Anticheat</a>
+      <a href="#players">Managing players</a>
+      <a href="#team">Managing the team</a>
+      <a href="#departments">Jobs & departments</a>
+      <a href="#world">Homes, weather & alerts</a>
+      <a href="#upkeep">Server upkeep</a>
+      <a href="#updates">Updates & backups</a>
+      <a href="#keys">Staff keys & commands</a>
+      <a href="#trouble">When something breaks</a>
+    </nav>
+
+    <main>
+      <section id="ranks">
+        <div class="sec-head"><h2>Staff ranks</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <p>Every staff member has one or more <b>roles</b>. A role has a <b>priority</b>, and the higher one always wins.</p>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Role</th><th>Priority</th><th>Can do</th></tr></thead>
+          <tbody>
+            <tr><td>Player</td><td>0</td><td>Everyday features. Every player has it.</td></tr>
+            <tr><td>Moderator</td><td>50</td><td>Admin panel, reports, kick, warn, freeze, revive, heal, teleport, spectate, noclip, logs</td></tr>
+            <tr><td>Admin</td><td>100</td><td>Everything admin: bans, money, items, jobs, settings, roles below their own</td></tr>
+            <tr><td>Owner</td><td>1000</td><td>Everything, always. Can't be removed.</td></tr>
+          </tbody>
+        </table></div>
+        <ul>
+          <li><b>Staff can only act on people below them.</b> Kick, ban, warn, freeze, kill and log out only work on players with a lower priority, and you can only hand out roles below your own. Owners are exempt.</li>
+          <li>The owner can rename these, change what they allow, and add roles like <i>Senior Moderator</i>, <i>LSPD Command</i> or <i>Donator</i>.</li>
+        </ul>
+      </section>
+
+      <section id="panel">
+        <div class="sec-head"><h2>The admin panel</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <p>Press <kbd>F10</kbd> or type <code>/admin</code>. You only see the tabs your role allows.</p>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Tab</th><th>Use it for</th></tr></thead>
+          <tbody>
+            <tr><td>Dashboard</td><td>Players and staff online, bans, uptime, recent activity, quick actions</td></tr>
+            <tr><td>Players</td><td>Everything you do to an online player: go to, bring, spectate, revive, freeze, message, warn, kick, ban, money, items, job, roles</td></tr>
+            <tr><td>Characters</td><td>Any character, online or offline: names, money, job, delete</td></tr>
+            <tr><td>Reports</td><td>Player reports and admin requests (red badge = open)</td></tr>
+            <tr><td>Bans</td><td>Search, unban, ban someone who is offline</td></tr>
+            <tr><td>Anticheat</td><td>What the anticheat caught and what it did</td></tr>
+            <tr><td>Logs</td><td>Every admin action, money and item change, connection and setting change</td></tr>
+            <tr><td>Alerts</td><td>Send an emergency or AMBER alert to every phone; alert history</td></tr>
+            <tr><td>Housing</td><td>Homes, their entrances, exits, garages and residents</td></tr>
+            <tr><td>Server</td><td>Announcements, clean-up tools, start / stop / restart a resource</td></tr>
+            <tr><td>Settings, Roles, Jobs, Items, Vehicles</td><td>Configuration (usually admins and the owner)</td></tr>
+            <tr><td>Script Configs, Updates, Support</td><td>Other scripts' settings, Fusion updates, support files (owner)</td></tr>
+          </tbody>
+        </table></div>
+        <p class="muted">Every location setting has a <b>Here</b> button: stand where the thing should be and click it.</p>
+      </section>
+
+      <section id="routine">
+        <div class="sec-head"><h2>Daily routine</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li><b>Reports first.</b> F10 › Reports. Claim anything open, even if you can only reply later.</li>
+          <li><b>Anticheat.</b> F10 › Anticheat: look at new detections. Most are clear-cut; check anything marked <i>Alert</i> or <i>Log</i> before acting.</li>
+          <li><b>Logs.</b> F10 › Logs: scan for large money or item changes and anything staff did that looks off.</li>
+          <li><b>Dashboard.</b> Player count, staff on duty, uptime. Use <i>Delete empty vehicles</i> if the city is cluttered.</li>
+          <li><b>Owners:</b> F10 › Updates for a waiting Fusion update, and the console for script updates or warnings.</li>
+        </ul>
+      </section>
+
+      <section id="reports">
+        <div class="sec-head"><h2>Reports</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <p>Players send reports from <b>M › Help &amp; Reports</b>, <code>/calladmin</code> or <code>/report</code>. Staff with report access hear a sound and see a red badge.</p>
+        <ul>
+          <li><b>Claim</b> it so others know it's yours. The player is told who is helping.</li>
+          <li><b>Go to</b> the player or the report location, or <b>Bring</b> them to you.</li>
+          <li><b>Message</b> them without leaving what you're doing.</li>
+          <li><b>Close</b> with a short note. The player sees it, and it's kept in the logs.</li>
+        </ul>
+        <p class="note"><b>Tip:</b> claim before you go. Two staff arriving at the same report wastes both your time.</p>
+      </section>
+
+      <section id="moderation">
+        <div class="sec-head"><h2>Moderation</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <p>Use the lightest step that fixes the problem. Every action is logged with your name.</p>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Step</th><th>How</th></tr></thead>
+          <tbody>
+            <tr><td>Talk</td><td>Message them (Players › Message) or go to them</td></tr>
+            <tr><td>Warn</td><td>Players › Warn, or <code>/warn</code>. Warnings stay on their record</td></tr>
+            <tr><td>Freeze</td><td>Stops them moving while you sort it out</td></tr>
+            <tr><td>Spectate</td><td>Watch without being seen; <kbd>Backspace</kbd> stops</td></tr>
+            <tr><td>Kick</td><td>Players › Kick, or <code>/kick</code>. They can rejoin</td></tr>
+            <tr><td>Ban</td><td><code>/ban &lt;id&gt; &lt;hours&gt; &lt;reason&gt;</code> or Players › Ban. 0 hours = permanent</td></tr>
+          </tbody>
+        </table></div>
+        <ul>
+          <li>Always give a <b>reason</b>. The player sees it, and it's what the next staff member reads.</li>
+          <li><b>Ban someone who already left</b> from F10 › Bans with their identifier.</li>
+          <li><b>Unban</b> from F10 › Bans. Check the reason and who banned them first.</li>
+        </ul>
+      </section>
+
+      <section id="anticheat">
+        <div class="sec-head"><h2>Anticheat</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <p>It runs on the server and watches for god mode, teleporting, speed hacks, entity and explosion spam, blacklisted weapons and models, injected scripts and known cheat menus.</p>
+        <ul>
+          <li>Each detection does what the owner set: <b>Log</b>, <b>Alert</b> (staff get a sound), <b>Kick</b> or <b>Ban</b>.</li>
+          <li>F10 › Anticheat lists every detection with the player and the details. Open the player, ban them, or delete a false positive.</li>
+          <li><b>A legit player was caught?</b> Unban them in Bans, delete the detection, and tell the owner which detection fired so it can be loosened.</li>
+          <li>Staff with <code>anticheat.bypass</code> (admins by default) are never flagged.</li>
+        </ul>
+      </section>
+
+      <section id="players">
+        <div class="sec-head"><h2>Managing players</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li><b>Online:</b> F10 › Players. Open someone for revive, heal, teleport, inventory, money, items, job, gang and roles, plus their identifiers and warnings.</li>
+          <li><b>Offline:</b> F10 › Characters edits names, money and job of any character.</li>
+          <li><b>Refunds</b> after a bug: check Logs for what they had, then give it back with Players › money / items (or <code>/givemoney</code>, <code>/giveitem</code>). Note it in the report.</li>
+          <li><b>Stuck players:</b> <code>/goto</code>, <code>/bring</code>, or send them to character select from Players.</li>
+          <li><b>Lost car:</b> it's usually in the impound or a garage. My Vehicles shows where.</li>
+        </ul>
+      </section>
+
+      <section id="team">
+        <div class="sec-head"><h2>Managing the team</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li><b>Add staff:</b> F10 › Roles &amp; Permissions › pick a role › Members › <b>Add online player</b>, or <b>Add by identifier</b> for someone offline.</li>
+          <li><b>Remove staff:</b> the same list, remove them. Their access ends straight away.</li>
+          <li><b>Permissions</b> have three buttons: <b>Allow</b>, <b>Inherit</b> (the role it builds on decides) and <b>Deny</b>. The most specific rule wins, and deny beats allow.</li>
+          <li><b>New role</b> (e.g. LSPD Command): create it, pick what it builds on, set its priority below the people who manage it, allow only what it needs.</li>
+          <li><b>Other scripts' permissions</b> (an MDT, CCTV): add the script's permission name as a rule on the role.</li>
+          <li><b>Locked out?</b> In the server console: <code>fusion_role &lt;your id&gt; superadmin</code>.</li>
+        </ul>
+      </section>
+
+      <section id="departments">
+        <div class="sec-head"><h2>Jobs &amp; departments</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li><b>Jobs</b> tab: grades, pay and which grades are bosses. Bosses hire, promote and fire in game from <b>M › Job</b>.</li>
+          <li><code>/setjob &lt;id&gt; &lt;job&gt; &lt;grade&gt;</code> sets anyone's job; <code>/setgang</code> their gang.</li>
+          <li><b>PIT rules</b> belong to each department: its command staff set them in <b>M › Emergency › Department PIT Rules</b> (allowed, seconds before PIT, top speed). Admins can set every department in Settings › Emergency Vehicles.</li>
+          <li><b>Jail:</b> police and staff use <code>/jail &lt;id&gt; &lt;minutes&gt; &lt;charges&gt;</code> or M › Jail; <code>/unjail</code> releases early.</li>
+        </ul>
+      </section>
+
+      <section id="world">
+        <div class="sec-head"><h2>Homes, weather &amp; alerts</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li><b>Housing</b> (F10 › Housing): <b>Add a home here</b> standing outside the real door; then <b>Set garage here</b> sitting in a car; <b>Entrances</b> for more doors outside (back door, balcony); <b>Go inside</b>, then <b>Exits</b>, for the ways out inside. Homes without a garage show <i>No garage yet</i>.</li>
+          <li><b>Residents</b> lists who lives in a building; <b>Evict</b> puts a home back on sale and moves its cars to a public garage.</li>
+          <li><b>Weather:</b> M › Weather &amp; Time, or <code>/weather</code>, <code>/time</code>, <code>/blackout</code>. Severe events: <code>/weatherevent tornado</code> (also thunderstorm, flood, hurricane, blizzard; <code>stop</code> ends it). Everyone gets a warning first.</li>
+          <li><b>Alerts:</b> F10 › Alerts sends an emergency or AMBER alert to every phone. AMBER plates go onto the police BOLO list.</li>
+          <li><b>Announcements:</b> <code>/announce &lt;message&gt;</code> or the Dashboard.</li>
+        </ul>
+      </section>
+
+      <section id="upkeep">
+        <div class="sec-head"><h2>Server upkeep</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li><b>Settings changes apply straight away</b> for everyone; no restart needed.</li>
+          <li><b>Clean-up:</b> F10 › Server removes empty vehicles, stray NPCs and props.</li>
+          <li><b>Restarting a resource</b> on the Server tab lasts until the next restart. Use the switches in Settings for permanent changes.</li>
+          <li><b>Script Configs</b> (owner): change other scripts' settings, start them with the server (the green / red button), and update free scripts from GitHub. Every change is backed up.</li>
+          <li><b>Vehicle packs:</b> F10 › Server › Vehicle meta fixer fixes clashing sirens and liveries; the Handling tab tunes addon cars.</li>
+        </ul>
+      </section>
+
+      <section id="updates">
+        <div class="sec-head"><h2>Updates &amp; backups</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li><b>Fusion updates</b> (F10 › Updates): new versions download and check themselves. Pick <b>Install</b> (players get a countdown), <b>When the server is empty</b>, or <b>At this time</b>. If a version doesn't start, the old one comes back by itself, and <b>Undo</b> is in the history.</li>
+          <li><b>Free scripts</b> update themselves at start or while the server is empty. Edited config files are kept, with the new defaults beside them as <code>.new</code>.</li>
+          <li><b>Back up settings</b> before big changes: F10 › Settings › <b>Export</b>. <b>Import</b> restores them.</li>
+          <li>Back up the <b>database</b> regularly (phpMyAdmin › Export, or your host's panel). Characters, money and homes live there.</li>
+          <li><b>Never</b> delete the <code>[fusion]</code> folders to update by hand: that throws away pictures and media. Copy new files over them.</li>
+        </ul>
+      </section>
+
+      <section id="keys">
+        <div class="sec-head"><h2>Staff keys &amp; commands</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <div class="keys">
+          <div class="key-row"><div class="k"><kbd>F10</kbd></div><div>Admin panel</div></div>
+          <div class="key-row"><div class="k"><kbd>Home</kbd></div><div>Noclip on / off</div></div>
+          <div class="key-row"><div class="k"><kbd>Q</kbd> <kbd>E</kbd></div><div>Noclip down / up</div></div>
+          <div class="key-row"><div class="k"><kbd>Shift</kbd> <kbd>Ctrl</kbd></div><div>Noclip faster / slower</div></div>
+          <div class="key-row"><div class="k"><kbd>Backspace</kbd></div><div>Stop spectating</div></div>
+          <div class="key-row"><div class="k"><kbd>Delete</kbd></div><div>Delete what the entity laser points at</div></div>
+        </div>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><code>/admin</code>, <code>/reports</code>, <code>/noclip</code></td><td>Panel, reports, noclip</td></tr>
+            <tr><td><code>/kick</code>, <code>/warn</code>, <code>/ban &lt;id&gt; &lt;hours&gt; &lt;reason&gt;</code></td><td>Moderation (0 hours = permanent)</td></tr>
+            <tr><td><code>/revive</code>, <code>/heal</code>, <code>/goto</code>, <code>/bring</code>, <code>/freeze</code>, <code>/kill</code></td><td>Player actions on a player's id (<code>/revive</code> and <code>/heal</code> alone do yourself)</td></tr>
+            <tr><td><code>/givemoney &lt;id&gt; &lt;account&gt; &lt;amount&gt;</code>, <code>/setmoney</code>, <code>/giveitem &lt;id&gt; &lt;item&gt; &lt;amount&gt;</code></td><td>Money and items</td></tr>
+            <tr><td><code>/setjob &lt;id&gt; &lt;job&gt; &lt;grade&gt;</code>, <code>/setgang</code></td><td>Jobs and gangs</td></tr>
+            <tr><td><code>/setrole &lt;id&gt; &lt;role&gt;</code>, <code>/removerole</code></td><td>Roles (below your own)</td></tr>
+            <tr><td><code>/car &lt;model&gt;</code>, <code>/dv</code>, <code>/fix</code>, <code>/setfuel</code></td><td>Vehicles</td></tr>
+            <tr><td><code>/announce &lt;message&gt;</code></td><td>Message everyone</td></tr>
+            <tr><td><code>/jail</code>, <code>/unjail</code></td><td>Jail</td></tr>
+            <tr><td><code>/weather</code>, <code>/time</code>, <code>/blackout</code>, <code>/weatherevent</code></td><td>Weather and time</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section id="trouble">
+        <div class="sec-head"><h2>When something breaks</h2><button class="copy" type="button">Copy for Discord</button></div>
+        <ul>
+          <li><b>Write down what happened</b>: who, when, what they did, the exact message. Screenshots help.</li>
+          <li><b>Support file:</b> F10 › Support › <b>Create support file</b> (or <code>fusionsupport</code> in the server console). Passwords, keys and IP addresses are blanked out.</li>
+          <li><b>Open a ticket</b> on the Fusion Menu Discord with the support file: discord.gg/kVRqwDPsnJ</li>
+          <li>A script misbehaving after an update? Look for <code>.new</code> files in its folder, or use <b>Undo update</b> in Script Configs.</li>
+          <li>Something wrong straight after a Fusion update? F10 › Updates › <b>Undo</b>.</li>
+        </ul>
+      </section>
+
+      <footer>Fusion Menu {{VERSION}} management guide · default ranks, keys and commands. Your owner may have changed some of them.</footer>
+    </main>
+  </div>
+</div>
+
+<script>
+// Each section's "Copy for Discord" turns that section into Discord markdown (under 2000 characters).
+(function () {
+  function inline(node) {
+    var out = '';
+    node.childNodes.forEach(function (n) {
+      if (n.nodeType === 3) { out += n.textContent; return; }
+      if (n.nodeType !== 1) return;
+      var t = n.tagName;
+      if (t === 'KBD') out += '`' + n.textContent + '`';
+      else if (t === 'CODE') out += '`' + n.textContent + '`';
+      else if (t === 'B' || t === 'STRONG') out += '**' + inline(n) + '**';
+      else if (t === 'I' || t === 'EM') out += '*' + inline(n) + '*';
+      else out += inline(n);
+    });
+    return out.replace(/\s+/g, ' ');
+  }
+  function toDiscord(sec) {
+    var lines = ['## ' + sec.querySelector('h2').textContent.trim()];
+    sec.querySelectorAll(':scope > p, :scope > ul, :scope > h3, :scope > .keys, :scope > .table-scroll, :scope > .apps').forEach(function (el) {
+      if (el.matches('p')) lines.push(inline(el).trim());
+      else if (el.matches('h3')) lines.push('**' + el.textContent.trim() + '**');
+      else if (el.matches('ul')) el.querySelectorAll('li').forEach(function (li) { lines.push('• ' + inline(li).trim()); });
+      else if (el.matches('.keys')) el.querySelectorAll('.key-row').forEach(function (r) {
+        lines.push(inline(r.querySelector('.k')).trim() + ' — ' + inline(r.children[1]).trim());
+      });
+      else if (el.matches('.apps')) el.querySelectorAll('.app').forEach(function (a) {
+        lines.push('• **' + a.querySelector('b').textContent + '** — ' + a.querySelector('span').textContent);
+      });
+      else el.querySelectorAll('tbody tr').forEach(function (tr) {
+        lines.push('• ' + inline(tr.children[0]).trim() + ' — ' + inline(tr.children[1]).trim());
+      });
+    });
+    var text = lines.join('\n');
+    return text.length > 1990 ? text.slice(0, 1985) + '…' : text;
+  }
+  document.querySelectorAll('section .copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = toDiscord(btn.closest('section'));
+      var done = function () {
+        btn.setAttribute('data-done', '');
+        btn.textContent = 'Copied';
+        setTimeout(function () { btn.removeAttribute('data-done'); btn.textContent = 'Copy for Discord'; }, 1600);
+      };
+      var fallback = function () {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) { btn.textContent = 'Select and copy'; }
+        document.body.removeChild(ta);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+      else fallback();
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
