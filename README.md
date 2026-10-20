@@ -815,12 +815,16 @@ Every script you add (anything outside `[fusion]`) is listed with its config fil
 * **Edit as text:** the whole file in an editor, for lists, tables and anything else. A Lua file with an error (or broken JSON) is refused instead of saved, so a typo can't stop the script from loading.
 * **Auto-configure for Fusion:** Fusion answers to the QBCore names, so most scripts just need pointing at them. Fusion suggests the values: framework → the QBCore word the script itself checks for (`qb`, `qbcore` …), core resource → `qb-core`, inventory → `qb-inventory` / `qb`, target → `qb-target` (and *UseTarget* on), fuel → `LegacyFuel`, voice → `pma-voice`, keys → `qb-vehiclekeys`, notifications → `qb`, and so on. Untick anything you don't want and press **Apply selected**. Suggestions only appear for Fusion modules that are running.
 * **Restart the script after saving** is ticked for running scripts, so changes apply straight away. **Restart script** is also on the page.
-* **Start with the server:** each script shows whether `server.cfg` starts it: by its own `ensure` line, or with
-  its whole folder (`ensure [qb]`). Once a script is set up, press **Start with the server**: Fusion adds
-  `ensure <script>` after the other ensure lines in `server.cfg` (the old file is kept as `server.cfg.bak-fusion`)
-  and starts it now. **Don't start with the server** turns the line into a `#` comment, so it can be switched back
-  on. Copied a new script onto the server? Press **Refresh** and it appears in the list. If `server.cfg` can't be
-  opened from the server, the page shows the line to add yourself.
+* **Start with the server:** next to **Backups**, each script has one button. **Red** (*Add ensure <script> to
+  server config*): it doesn't start with the server yet; press it to add `ensure <script>` to `server.cfg` and start
+  it now (the old file is kept as `server.cfg.bak-fusion`). **Green**: it already starts with the server, by its own
+  line or with its whole folder (`ensure [qb]`); press it to turn its line into a `#` comment. Vehicle packs have no
+  button (they start with their folder). Copied a new script onto the server? Press **Refresh** and it appears.
+* **Start order:** Fusion reads what each script needs (its manifest's dependencies and the scripts it calls through
+  `exports[...]`) and keeps your scripts' ensure lines in that order: a script starts after the scripts it needs.
+  This happens when you add a line and at every server start; Fusion's own lines and folder lines don't move.
+* **When server.cfg can't be written** from the server (some hosts block it), the button still works: Fusion keeps
+  its own start list and starts those scripts at every boot, in the same order. The console says why.
 * **Backups / undo:** every save keeps a copy of the old file in `fusion-core/config-backups` first. Undo puts it back (and backs up the current file too). Backups are never part of a release or an update.
 * **Auto-configure new scripts by themselves:** **Settings › Server › Resources › Auto-configure newly added scripts for Fusion** (off by default). When it's on, a script that wasn't there at the last start is configured for Fusion and restarted when the server boots, and each change is written to the console and the log. When it's off, the console just tells you a new script has settings to point at Fusion.
 
