@@ -73,6 +73,8 @@ ensure fusion-weather
 ## Your content: QBCore scripts, vehicles, EUP, maps
 # Screenshots for other scripts (CCTV, evidence, MDTs). Must start before the scripts in [qb] / [addons].
 ensure screenshot-basic
+# While one of these folders is still empty the console says "Couldn't find resource category [qb]":
+# harmless, it goes away once a script is in the folder.
 ensure [qb]
 ensure [addons]
 

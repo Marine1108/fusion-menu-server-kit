@@ -34,7 +34,7 @@ AddEventHandler('ulc:lightsOn', function()
   Lights = true
   setDefaultStages()
   -- check if parked or driving for park patterns
-  TriggerEvent('ulc:checkParkState', GetVehiclePedIsIn(PlayerPedId()), false)
+  TriggerEvent('ulc:checkParkState', false)
   SendNUIMessage({
     type = 'toggleIndicator',
     state = Lights
@@ -47,6 +47,8 @@ end)
 AddEventHandler('ulc:lightsOff', function()
   --print("Lights Off")
   Lights = false
+  -- Allow a stationary vehicle to enter the park flow again when lights are re-enabled.
+  parked = false
   SendNUIMessage({
     type = 'toggleIndicator',
     state = Lights
@@ -114,7 +116,7 @@ AddEventHandler('ulc:checkVehicle', function()
 
       -- if i am driver
       if ped == GetPedInVehicleSeat(vehicle, -1) then
-        ULC:PopulateButtons(MyVehicleConfig.buttons)
+        ULC:RefreshRequiredExtraButtons(true)
         --ShowHelp()
         if not Config.hideHud and ClientPrefs.hideUi == 0 then
           ULC:SetDisplay(true)
@@ -123,10 +125,14 @@ AddEventHandler('ulc:checkVehicle', function()
             "HUD is hidden. Type /ulc to see if you disabled it. Otherwise, the server owner may have disabled the HUD.")
         end
 
+
         TriggerEvent('ulc:CheckCruise')
         TriggerEvent('ulc:checkParkState', true)
         TriggerEvent('ulc:StartCheckingReverseState')
+        TriggerEvent("ulc:SetupSignalExtrasTable")
         currentStage = 0
+      else
+        ULC:ClearRequiredExtraButtons()
       end
     else
       MyVehicle = nil
@@ -139,6 +145,7 @@ end)
 -- used to hide the hud
 RegisterNetEvent('ulc:cleanup')
 AddEventHandler('ulc:cleanup', function()
+  ULC:ClearRequiredExtraButtons()
   -- MyVehicle = nil
   -- MyVehicleConfig = nil
   ULC:SetDisplay(false)
