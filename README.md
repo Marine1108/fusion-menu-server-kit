@@ -825,6 +825,16 @@ Every script you add (anything outside `[fusion]`) is listed with its config fil
   This happens when you add a line and at every server start; Fusion's own lines and folder lines don't move.
 * **When server.cfg can't be written** from the server (some hosts block it), the button still works: Fusion keeps
   its own start list and starts those scripts at every boot, in the same order. The console says why.
+* **Free script updates:** scripts published on GitHub are found by themselves (from their manifest, or the version
+  check in their own code, e.g. ULC) and compared with their latest GitHub release at every start and every 6 hours.
+  The script's page shows *GitHub owner/repo · you have 1.8.0 · latest v1.9.0* with **Update to …**, **Check**,
+  **Auto-update** (per script), **Undo update** and a pencil to set or fix the GitHub page; the list marks scripts with
+  an update. **Check for updates** (top right) checks them all. Installing backs up the whole script to
+  `fusion-core/script-backups` first, **keeps your edited config files** (the release's version is saved next to them
+  as `config.lua.new` so you can compare), then restarts the script. Automatic installs happen at server start (before
+  anyone plays) or later only while the server is empty; otherwise staff are told. Settings › Server › Resources:
+  *Check free scripts for updates* and *Install free script updates automatically* (both on). Paid / escrowed
+  scripts (`.fxap`), git checkouts and vehicle packs are never touched.
 * **Backups / undo:** every save keeps a copy of the old file in `fusion-core/config-backups` first. Undo puts it back (and backs up the current file too). Backups are never part of a release or an update.
 * **Auto-configure new scripts by themselves:** **Settings › Server › Resources › Auto-configure newly added scripts for Fusion** (off by default). When it's on, a script that wasn't there at the last start is configured for Fusion and restarted when the server boots, and each change is written to the console and the log. When it's off, the console just tells you a new script has settings to point at Fusion.
 
