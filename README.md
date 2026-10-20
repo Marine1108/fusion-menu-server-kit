@@ -521,9 +521,10 @@ house is its own private copy of its interior, so a hundred homes can use the sa
    price. Fusion refuses to place an entrance inside a home, a preview or an interior.
 2. **Garage:** sit in a car where vehicles should come out, facing the way they should drive off, and press
    **Set garage here** on that home. Homes without one show *No garage yet*.
-3. **Front doors inside:** each interior style has one *front door inside*, where everyone arrives and where the
-   way out is. Set it once per style: **Preview style**, walk to the inside of its front door and face it, open
-   **F10 › Housing** and press **Set the door here**.
+3. **Ways out inside:** go into any home (or **Preview style**) and open **F10 › Housing**: the *Inside* panel lists
+   that interior's exits. Stand just inside the front door, facing it, and press **Move the front door here**
+   (everyone arrives there too). Add more exits for balconies or back doors with **Add an exit here**, and
+   **Remove** them again. Exits belong to the interior style, so every home using it gets them.
 
 **More ways in:** a building with a front door and a garage around the back gets an entrance at each. Press
 **Entrances** on the home, stand outside at the other door and press **Add an entrance where I stand** (give it a
@@ -551,7 +552,8 @@ the same way.
 * **Spawn at home:** owned homes are listed on the spawn screen; picking one starts you inside.
 * Police (*Jobs that can force entry*, on duty) get **Force entry** at locked doors; the owner is told.
 
-Logging off inside brings you back outside the entrance. Selling, eviction and deletion put everyone inside out,
+**Leaving:** at any exit, players choose where they come out: any of the home's entrances, or straight to its
+**garage**. With only one choice they just leave. Logging off inside brings you back outside the entrance. Selling, eviction and deletion put everyone inside out,
 every key stops working, and vehicles in that home's garage move to the first public garage. Storage belongs to
 the owner, so a new owner starts with an empty one.
 

@@ -204,7 +204,8 @@ house has at most one, a building as many as its limit. Units have the owner, ke
 | `GetInside(src)` | the unit the player is in, or `nil` |
 | `GetGarage('home_<unitId>')` / `CanUseGarage(src, 'home_<unitId>')` | a home's garage, as fusion-vehicles uses it |
 
-Client export `MyGarages()` lists the garages of the player's homes. `GlobalState.fusionHousing` lists every location
+Interior styles have a front door (their `coords`, in Settings › Housing) plus extra exits in the table
+`fusion_interior_exits` (style, label, x, y, z, w). Client export `MyGarages()` lists the garages of the player's homes. `GlobalState.fusionHousing` lists every location
 (`id, label, kind, coords, entrances = every entrance's coords, price, owned = nothing left for sale, taken, capacity`) without owners. Inside a home the
 player is in routing bucket `50000 + unit id`. Stashes are `home_<location id>_<owner citizenid>`. Vehicles parked in
 a home garage have `player_vehicles.garage = 'home_<unit id>'`.
