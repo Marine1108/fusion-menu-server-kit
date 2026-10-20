@@ -197,7 +197,7 @@ house has at most one, a building as many as its limit. Units have the owner, ke
 
 | Server export | |
 |---|---|
-| `GetProperty(id)` | a location: `{ id, label, kind = 'apartment'/'house', interior, coords = {x,y,z,w}, price, capacity, garage = {x,y,z,w} or nil }` |
+| `GetProperty(id)` | a location: `{ id, label, kind = 'apartment'/'house', interior, coords = {x,y,z,w} (main entrance), extra = { {id, label, coords} } (more entrances), price, capacity, garage = {x,y,z,w} or nil }` |
 | `GetUnit(unitId)` | `{ id, property, owner (citizenid), ownerName, locked }` |
 | `GetOwnedProperties(citizenid)` | that character's homes: `{ unit, id, label, kind, coords, locked, garage }` |
 | `HasKey(src, unitId)` | the player owns the unit or holds a key |
@@ -205,7 +205,7 @@ house has at most one, a building as many as its limit. Units have the owner, ke
 | `GetGarage('home_<unitId>')` / `CanUseGarage(src, 'home_<unitId>')` | a home's garage, as fusion-vehicles uses it |
 
 Client export `MyGarages()` lists the garages of the player's homes. `GlobalState.fusionHousing` lists every location
-(`id, label, kind, coords, price, owned = nothing left for sale, taken, capacity`) without owners. Inside a home the
+(`id, label, kind, coords, entrances = every entrance's coords, price, owned = nothing left for sale, taken, capacity`) without owners. Inside a home the
 player is in routing bucket `50000 + unit id`. Stashes are `home_<location id>_<owner citizenid>`. Vehicles parked in
 a home garage have `player_vehicles.garage = 'home_<unit id>'`.
 

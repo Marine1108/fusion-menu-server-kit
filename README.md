@@ -525,7 +525,11 @@ house is its own private copy of its interior, so a hundred homes can use the sa
    way out is. Set it once per style: **Preview style**, walk to the inside of its front door and face it, open
    **F10 › Housing** and press **Set the door here**.
 
-Each home also has **Edit**, **Move entrance here**, **Go to**, **Preview**, **Residents** (apartment buildings:
+**More ways in:** a building with a front door and a garage around the back gets an entrance at each. Press
+**Entrances** on the home, stand outside at the other door and press **Add an entrance where I stand** (give it a
+name like *Garage side*). Every entrance works the same, and players come back out where they went in.
+
+Each home also has **Edit**, **Move entrance here**, **Entrances**, **Go to**, **Preview**, **Residents** (apartment buildings:
 who lives there, **Evict** one apartment), **Evict** (houses) and **Delete**.
 
 **Interior styles** (Settings › Housing › Interior styles): a studio and a mid-range apartment, five high-rise
