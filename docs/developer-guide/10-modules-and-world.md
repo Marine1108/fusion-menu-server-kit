@@ -31,7 +31,7 @@ if exports['fusion-core']:IsModuleEnabled('fusion-phone') then … end
 
 ## Vehicles
 
-### The vehicle catalogue
+### The vehicle catalog
 
 `exports['fusion-core']:GetRegistry('vehicles')` lists every vanilla and addon vehicle (discovered automatically), keyed by model:
 
@@ -82,8 +82,8 @@ Keys belong to characters, per plate. Owners of a `player_vehicles` row always h
 | `Entity(vehicle).state.fuel` | read anywhere |
 | `exports['fusion-vehicles']:IsSeatbeltOn()` | client |
 
-Unbelted, Fusion turns on GTA's own windscreen fly-through (ped config flag 32 and `SetFlyThroughWindscreenParams`
-at the *Ejection speed*); belted, it is off. If GTA doesn't throw the ped on a hard crash, Fusion does: windscreen
+Unbelted, Fusion turns on GTA's own windshield fly-through (ped config flag 32 and `SetFlyThroughWindscreenParams`
+at the *Ejection speed*); belted, it is off. If GTA doesn't throw the ped on a hard crash, Fusion does: windshield
 out, ped placed above the dash, ragdoll, pre-crash velocity plus lift, damage scaled by speed (*Ejection hurts*).
 
 `exports['LegacyFuel']`, `cdn-fuel`, `ps-fuel`, `lj-fuel` and `qb-fuel` `GetFuel` / `SetFuel` are answered by fusion-fuel.
@@ -92,7 +92,7 @@ out, ped placed above the dash, ragdoll, pre-crash velocity plus lift, damage sc
 
 Client helpers on `fusion-core`: `GetVehicleProperties(vehicle)`, `SetVehicleProperties(vehicle, props)` (QBCore format), `LoadModel(model)`, `GetVehicleInFront(distance)`, `GetClosestPlayer(coords, maxDistance)`, `Teleport(coords)`. QBCore's `QBCore.Functions.SpawnVehicle` (client) and `CreateVehicle` (server) work.
 
-**Anticheat and spawning:** entities created **on the server** (`CreateVehicleServerSetter`, `CreateVehicle` server-side) are never checked. Entities created by a player's **client** count towards the owner's spam limit (default 20 of a type per 10 seconds) and are blocked if their model is on the owner's blacklist. To let a player spawn one blacklisted model from your client code, approve it from the server first (valid for 20 seconds):
+**Anticheat and spawning:** entities created **on the server** (`CreateVehicleServerSetter`, `CreateVehicle` server-side) are never checked. Entities created by a player's **client** count toward the owner's spam limit (default 20 of a type per 10 seconds) and are blocked if their model is on the owner's blacklist. To let a player spawn one blacklisted model from your client code, approve it from the server first (valid for 20 seconds):
 
 ```lua
 TriggerEvent('fusion:anticheat:allowModel', src, 'rhino')   -- server, before the client spawns it
@@ -134,7 +134,7 @@ Phone numbers are `PlayerData.charinfo.phone`.
 
 ## Emergency services (`fusion-emergency`)
 
-`exports['fusion-emergency']:AddBolo(plate, reason)` (server) adds a plate to the radar BOLO list; police radars flag it. PIT rules are the `emergency.pitRules` setting: a list of `{ job, enabled, authorizeAfter (seconds), maxSpeed (0 = none, server speed unit), commandGrade }`, changed in game through the `fusion:emergency:setPitRule` callback (department command only). Emergency vehicles are recognised by GTA vehicle class 18 plus owner settings.
+`exports['fusion-emergency']:AddBolo(plate, reason)` (server) adds a plate to the radar BOLO list; police radars flag it. PIT rules are the `emergency.pitRules` setting: a list of `{ job, enabled, authorizeAfter (seconds), maxSpeed (0 = none, server speed unit), commandGrade }`, changed in game through the `fusion:emergency:setPitRule` callback (department command only). Emergency vehicles are recognized by GTA vehicle class 18 plus owner settings.
 
 ## Hospital (`fusion-hospital`)
 
@@ -218,11 +218,11 @@ a home garage have `player_vehicles.garage = 'home_<unit id>'`.
 
 ## Vinewood sign (`fusion-vinewood`)
 
-Server: `GetSign()` (current text and colours), `SetSign(data)` (same shape; passes the word filter, returns `ok, message`), `IsTextAllowed(row1, row2)`.
+Server: `GetSign()` (current text and colors), `SetSign(data)` (same shape; passes the word filter, returns `ok, message`), `IsTextAllowed(row1, row2)`.
 
 ## Anticheat (`fusion-anticheat`)
 
-Report suspicious behaviour your script detects (e.g. a client asking for a reward it can't have earned):
+Report suspicious behavior your script detects (e.g. a client asking for a reward it can't have earned):
 
 ```lua
 exports['fusion-anticheat']:Flag(src, 'courier_exploit', 'Claimed 50 parcels in 10 seconds')

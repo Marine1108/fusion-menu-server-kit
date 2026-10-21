@@ -13,7 +13,7 @@
 #   - files the new version no longer has are removed, unless you edited them
 #   - files you added yourself are never touched
 # The whole resource folder is backed up to backups/<date>/ first (and the database, for Fusion updates).
-# Same behaviour and file format as install/update.ps1 on Windows.
+# Same behavior and file format as install/update.ps1 on Windows.
 
 set -euo pipefail
 

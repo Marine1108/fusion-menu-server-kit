@@ -4,9 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Fusion Menu Management Guide</title>
-</head>
-<body>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@500;600&display=swap">
 <style>
@@ -159,7 +156,25 @@ footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--line);
   td code { white-space: normal; }
   footer { margin-top: 24px; }
 }
+
+/* Printed PDF (the build lays the pages out): page numbers in the footer, page numbers in the contents */
+@page {
+  @bottom-left { content: "Fusion Menu · Management Guide"; font: 400 8pt "IBM Plex Sans", sans-serif; color: #55526a; }
+  @bottom-right { content: "Page " counter(page) " of " counter(pages); font: 400 8pt "IBM Plex Sans", sans-serif; color: #55526a; }
+}
+@page :first { @bottom-left { content: none; } @bottom-right { content: none; } }
+/* page numbers in the contents (only the print layout understands target-counter; browsers skip it) */
+nav.toc a::after { content: target-counter(attr(href), page); margin-left: auto; font: 500 9pt var(--font-mono); color: var(--muted); }
+@media print {
+  nav.toc { display: block; columns: 2; column-gap: 28px; }
+  nav.toc .label { column-span: all; }
+  nav.toc a { display: flex; gap: 6px; border-bottom: 1px dotted var(--line); padding: 3px 0; break-inside: avoid; }
+  .keys { display: block; columns: auto; }
+  .apps { break-inside: avoid; }
+}
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <header class="top">
@@ -361,7 +376,7 @@ footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--line);
         <div class="keys">
           <div class="key-row"><div class="k"><kbd>F10</kbd></div><div>Admin panel</div></div>
           <div class="key-row"><div class="k"><kbd>Home</kbd></div><div>Noclip on / off</div></div>
-          <div class="key-row"><div class="k"><kbd>Q</kbd> <kbd>E</kbd></div><div>Noclip down / up</div></div>
+          <div class="key-row"><div class="k"><kbd>Q</kbd> <kbd>E</kbd></div><div>Noclip up / down</div></div>
           <div class="key-row"><div class="k"><kbd>Shift</kbd> <kbd>Ctrl</kbd></div><div>Noclip faster / slower</div></div>
           <div class="key-row"><div class="k"><kbd>Backspace</kbd></div><div>Stop spectating</div></div>
           <div class="key-row"><div class="k"><kbd>Delete</kbd></div><div>Delete what the entity laser points at</div></div>
@@ -457,5 +472,6 @@ footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--line);
 })();
 </script>
 
+<!--PRINT-->
 </body>
 </html>

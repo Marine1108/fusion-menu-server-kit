@@ -103,14 +103,14 @@ Config.Truck = {
 }
 ```
 
-Values that are strings, numbers or `true` / `false` are editable this way. Lists, maths and function calls are
+Values that are strings, numbers or `true` / `false` are editable this way. Lists, math and function calls are
 left to the text editor in the same page. Files are found by name: `config.lua`, `shared/config.lua`,
 `config/*.lua`, `settings.json`, `sh_config.lua` and the like.
 
 **Auto-configure** sets the usual framework keys to the values that make a script use Fusion. Keep these names
 and your script configures itself:
 
-| Key (any capitalisation) | Fusion sets it to |
+| Key (any capitalization) | Fusion sets it to |
 |---|---|
 | `Framework`, `Core`, `FrameworkType` | the QBCore word your own code compares with (`'qb'`, `'qbcore'` …) |
 | `CoreName`, `CoreResource` | `'qb-core'` |
@@ -125,6 +125,7 @@ and your script configures itself:
 
 If your script replaces a Fusion module (your own phone, inventory…), tell owners to turn Fusion's version off in **F10 › Settings › Modules**. Check from code with `exports['fusion-core']:IsModuleEnabled('fusion-phone')`.
 
-Fusion starts any `fusion-*` module in `resources/[fusion]` that server.cfg doesn't start, and adds its `ensure`
-line to server.cfg (Settings › Server › Resources). That is only for Fusion's own modules: your scripts in `[qb]`
+Fusion starts any `fusion-*` module in `resources/[fusion]` that server.cfg doesn't start (Settings › Server ›
+Resources), and adds its `ensure` line to server.cfg where the server allows a resource to edit that file (most
+don't; FiveM keeps resources out of files outside their folders). That is only for Fusion's own modules: your scripts in `[qb]`
 and `[addons]` start through `ensure [qb]` / `ensure [addons]`.

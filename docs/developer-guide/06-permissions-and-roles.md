@@ -11,7 +11,7 @@ Fusion has its own role and permission system, edited in **F10 › Roles & Permi
 | `admin` | 100 | moderator | `admin.*` |
 | `superadmin` (Owner) | 1000 | admin | `*` (everything) |
 
-Owners can rename, re-prioritise and add roles (e.g. *LSPD Command*, *Donator*). A player can have several roles. **Priority** decides who outranks whom (`exports['fusion-core']:CanTarget(src, target)`).
+Owners can rename, re-prioritize and add roles (e.g. *LSPD Command*, *Donator*). A player can have several roles. **Priority** decides who outranks whom (`exports['fusion-core']:CanTarget(src, target)`).
 
 ## Permission nodes
 

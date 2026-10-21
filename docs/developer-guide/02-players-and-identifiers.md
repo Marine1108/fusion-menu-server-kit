@@ -74,7 +74,7 @@ On the client, `Fusion.GetPlayerData()` returns the local player's data. It is k
 |---|---|---|---|
 | `hunger`, `thirst` | number | 100 | 0–100, clamped. Changing them updates the HUD. |
 | `stress` | number | 0 | 0–100 |
-| `armor` | number | 0 | Saved armour |
+| `armor` | number | 0 | Saved armor |
 | `isdead`, `inlaststand` | boolean | false | Set by the hospital module |
 | `ishandcuffed` | boolean | false | |
 | `injail` | number | 0 | Minutes left in jail |

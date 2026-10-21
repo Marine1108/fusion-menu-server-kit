@@ -55,7 +55,7 @@ FusionMenu/                          ← your server data folder
    │  ├─ fusion-phone                phone: calls, texts, contacts, 911, bank, weather, web, emergency / AMBER alerts
    │  ├─ fusion-voice                proximity voice, radio and phone call audio (pma-voice compatible)
    │  ├─ fusion-postalmap            the illustrated pause map with postal codes and place names (F10 › Postal Map)
-   │  ├─ fusion-vinewood             the hillside sign: your own text, colours and night glow (F10 › Vinewood Sign)
+   │  ├─ fusion-vinewood             the hillside sign: your own text, colors and night glow (F10 › Vinewood Sign)
    │  ├─ fusion-housing              apartments and houses with real interiors, keys and doorbells (F10 › Housing)
    │  ├─ fusion-updater              automatic Fusion updates: signed, checksummed, scheduled, rolled back if needed (F10 › Updates)
    │  ├─ fusion-weapons              weapon spawner, loadouts, weapon wheel
@@ -188,9 +188,9 @@ Open with **F10** or `/admin`. Each tab only appears for staff with the matching
 | **Bans** | Search bans, unban, ban an identifier of someone who is offline |
 | **Roles & Permissions** | Create roles, set allow/deny rules, manage members, add permission nodes for other scripts ([section 5](#5-roles-and-permissions)) |
 | **Settings** | One page per module, plus every location in the server. Export / Import backs up all settings |
-| **Jobs / Gangs** | Create and edit jobs and gangs: grades, paychecks, boss grades, duty behaviour, whitelisting |
-| **Items** | Create and edit items: label, weight, picture, description, usable, unique, and what happens when used (hunger, thirst, health, armour, stress, animation) |
-| **Vehicles** | The vehicle catalogue (every vanilla and addon vehicle): names, brands, prices, class, picture, hidden, permission or job restrictions |
+| **Jobs / Gangs** | Create and edit jobs and gangs: grades, paychecks, boss grades, duty behavior, whitelisting |
+| **Items** | Create and edit items: label, weight, picture, description, usable, unique, and what happens when used (hunger, thirst, health, armor, stress, animation) |
+| **Vehicles** | The vehicle catalog (every vanilla and addon vehicle): names, brands, prices, class, picture, hidden, permission or job restrictions |
 | **Handling** | In-game handling editor for addon vehicles. Saves straight into the vehicle's `handling.meta` |
 | **Anticheat** | Every detection with player, details and the action taken. Filter by detection, search, open the player, ban them, delete false positives, clear old detections |
 | **Logs** | Searchable history of admin actions, money, items, connections, jobs, settings and permission changes |
@@ -217,13 +217,13 @@ Each role has a **priority**. Staff can only kick, ban, warn, freeze, kill or lo
 | **Admin** | 100 | Moderator | `admin.*` (everything admin) |
 | **Owner** (`superadmin`) | 1000 | Admin | `*` (everything). Cannot be deleted |
 
-You can rename, recolour, re-prioritise and re-wire all of these, and create as many new roles as you like (e.g. *LSPD Command*, *Trusted*, *Donator*).
+You can rename, recolour, re-prioritize and re-wire all of these, and create as many new roles as you like (e.g. *LSPD Command*, *Trusted*, *Donator*).
 
 ### How a permission is decided
 
 On the **Permissions** tab, every permission has three buttons: **Allow**, **Inherit** and **Deny**.
 
-* **Inherit** means the role doesn't decide it; the role it inherits from does. The grey/green text shows the current result and which role it came from.
+* **Inherit** means the role doesn't decide it; the role it inherits from does. The gray/green text shows the current result and which role it came from.
 * **Wildcards:** `admin.*` covers every node starting with `admin.`, and `*` covers everything. Add them under *Wildcard & custom rules*.
 * **The most specific rule wins.** `vehicles.godmode = Deny` beats `vehicles.* = Allow`. A deny beats an allow when they are equally specific.
 * A player with several roles gets the combination of all of them.
@@ -259,7 +259,7 @@ Fusion mirrors every role to FiveM's ACE system as `group.fusion_<role>`, so sta
 | Streaming & video | `media.streamer`, `media.videomode`, `media.freecam`, `media.freecam.unlimited`, `media.record`, `media.rockstar` |
 | Other | `inventory.search`, `stores.free`, `fuel.free`, `hospital.revive`, `jail.use`, `weather.change`, `weather.events`, `time.change` |
 
-The **Permissions** tab lists every node with a description, so you don't need to memorise these.
+The **Permissions** tab lists every node with a description, so you don't need to memorize these.
 
 ---
 
@@ -304,7 +304,7 @@ Every module has a page in **F10 › Settings**, and the first switch on it turn
 ### Server, branding and interface
 
 * **Settings › Server:** server name, server-list description and tags (update live), Discord link, autosave interval, **whitelist** (only `server.whitelisted` can join), **maintenance mode** (only `server.maintenance` can join), join/leave messages.
-* **Settings › Interface:** menu title, subtitle and logo, accent colours, panel colour and opacity, menu position (left/right/center) and size, notification position, money pop-ups, HUD, menu sounds, and whether players can walk/drive with the menu open.
+* **Settings › Interface:** menu title, subtitle and logo, accent colors, panel color and opacity, menu position (left/right/center) and size, notification position, money pop-ups, HUD, menu sounds, and whether players can walk/drive with the menu open.
 * **Logo:** the menu shows the Fusion logo until you set your own: put a PNG in `resources/[fusion]/fusion-core/html/img/`, run `ensure fusion-core`, and type the file name in *Logo*. To show no logo at all, leave *Logo* empty and turn off *Show the Fusion logo when no logo is set*.
 
 ### HUD and vehicle HUD
@@ -317,11 +317,11 @@ Every module has a page in **F10 › Settings**, and the first switch on it turn
 
 ### Streaming & video (M › Streaming & Video)
 
-**Streamer mode** hides what each player chooses from their own screen, so it never shows on their stream or in their recordings: the chat box, names and IDs above players, names and IDs in menus, their own server ID, cash and bank, job, street / postal / compass, the minimap, phone numbers, the voice and radio channel, and notifications. *What To Hide* has a tick box for each. Bind *Fusion: streamer mode, show everything while held* in the key bindings to see it all for a moment without it staying on screen. Also `/streamer`.
+**Streamer mode** hides what each player chooses from their own screen, so it never shows on their stream or in their recordings: the chat box, names and IDs above players, names and IDs in menus, their own server ID, cash and bank, job, street / postal / compass, the minimap, phone numbers, the voice and radio channel, and notifications. *What To Hide* has a checkbox for each. Bind *Fusion: streamer mode, show everything while held* in the key bindings to see it all for a moment without it staying on screen. Also `/streamer`.
 
 Streaming software (OBS, Streamlabs, Discord) records exactly what is on your screen, so anything hidden for your viewers is hidden for you too. The **Fusion Recorder** is different: it records only the game picture, so your HUD, chat, phone and menus are never in its clips even while you can see them.
 
-**Video mode** gives a clean screen for filming: no HUD, chat, minimap, name tags, prompts or notifications. *Video Mode Options* add letterbox bars (1.85:1 or 2.39:1), colour filters (filmic, warm, cool, faded, high contrast, black & white …) with a strength setting, and slow motion (50 %, 25 %, 10 %; only on your own screen). Also `/videomode`.
+**Video mode** gives a clean screen for filming: no HUD, chat, minimap, name tags, prompts or notifications. *Video Mode Options* add letterbox bars (1.85:1 or 2.39:1), color filters (filmic, warm, cool, faded, high contrast, black & white …) with a strength setting, and slow motion (50 %, 25 %, 10 %; only on your own screen). Also `/videomode`.
 
 **Free camera** (`/freecam`): fly the camera with WASD and the mouse, Q / E down / up, Shift fast, Ctrl slow, scroll to zoom, Z / C to tilt, X to level it, Backspace to leave. Save **shot A** and **shot B** and **Play Camera Move** for a smooth glide between them (3 to 25 seconds); start recording first to film it. Players' cameras stay within *Free camera range* of their character (40 m by default) so it can't be used to spy; staff with `media.freecam.unlimited` have no limit.
 
@@ -347,8 +347,8 @@ Permissions: `media.streamer`, `media.videomode`, `media.freecam`, `media.record
 **Settings › Map Blips** comes with every vanilla police and fire station already on the map.
 
 * **Add a location** (e.g. a new Paleto Bay police MLO): stand at it, click **Add**, give it a name and pick a **Type** (police, sheriff, fire, hospital, courthouse, city hall, mechanic, or custom). The icon appears on everyone's map **immediately**, with no restart.
-* **Moved or removed a station?** Click **Here** to move it, untick **Shown** to hide it, or delete the entry.
-* **Custom** blips take any icon and colour number from the [FiveM blip list](https://docs.fivem.net/docs/game-references/blips/).
+* **Moved or removed a station?** Click **Here** to move it, uncheck **Shown** to hide it, or delete the entry.
+* **Custom** blips take any icon and color number from the [FiveM blip list](https://docs.fivem.net/docs/game-references/blips/).
 * A blip can be limited to one job (e.g. a private police garage only police see).
 * *Only show on the minimap when nearby* keeps the minimap tidy. Blips always show on the full map.
 
@@ -356,7 +356,7 @@ Banks, garages, stores, gas stations and hospitals put their own blips on the ma
 
 ### Loading screen
 
-**Settings › Loading Screen:** title, subtitle, logo, accent colour, layout (left / centered / minimal), background images (slideshow), background video, darkness, music playlist and volume, rotating tips, rules, staff list and links.
+**Settings › Loading Screen:** title, subtitle, logo, accent color, layout (left / centered / minimal), background images (slideshow), background video, darkness, music playlist and volume, rotating tips, rules, staff list and links.
 
 Media goes in `resources/[fusion]/fusion-loadscreen/html/media/`. After adding files, run `ensure fusion-loadscreen`, then type the file names (e.g. `city.jpg`, `theme.mp3`). URLs work too. Reconnect to see it.
 
@@ -392,9 +392,9 @@ controls, the menu, money and inventory, vehicles, phone and voice, homes, jobs,
 ### Inventory and items
 
 * **Settings › Inventory:** carry weight and slots, hotbar, giving and dropping items, drop despawn time, trunk and glovebox sizes, which jobs may search players, robbing downed players, and **stashes**. A stash can be shared or **personal** (every character gets their own), and limited to a job or permission.
-* **Items tab:** create any item. To make it consumable, fill in *When used*: hunger/thirst/health/armour/stress amounts, *Consume* = 1 to use it up, and an animation (eat, drink, smoke, bandage, pills).
+* **Items tab:** create any item. To make it consumable, fill in *When used*: hunger/thirst/health/armor/stress amounts, *Consume* = 1 to use it up, and an animation (eat, drink, smoke, bandage, pills).
 * **Item pictures:** they live in `resources/[fusion]/fusion-inventory/html/images/`.
-  1. Create the item in **F10 › Items › New item**. Its *Internal name* (the small grey text on each tile) is what the picture is matched to, e.g. `energy_drink`.
+  1. Create the item in **F10 › Items › New item**. Its *Internal name* (the small gray text on each tile) is what the picture is matched to, e.g. `energy_drink`.
   2. Put a PNG named after it in that folder: `energy_drink.png`. A transparent background around 100×100 pixels looks best.
   3. Type `ensure fusion-inventory` in the txAdmin console. New files are only picked up when the resource restarts.
 
@@ -403,15 +403,15 @@ controls, the menu, money and inventory, vehicles, phone and voice, homes, jobs,
   Weapons share one picture per type (handguns, SMGs, rifles, shotguns, snipers, machine guns, heavy, melee, throwables, misc), saved as `weapon_<name>.png` so you can replace any single weapon's picture. Addon weapons added in game use `weapontype_<type>.png` until you give them their own. An item with no picture shows its category's picture (`category_<category>.png`), and if that is missing too, an icon.
 
   The picture then shows everywhere: inventory, item pop-ups, stores and the admin panel. To use a different file name, or a web link (no restart needed), open the item in **F10 › Items** and set **Image**. Names must match exactly, including lowercase: on a Linux VPS `Energy_Drink.png` and `energy_drink.png` are different files. Until an item has a picture it shows its category icon. Items added by QBCore scripts use the same folder (copy in the images that come with the script), and qb-inventory's pictures work as-is because Fusion uses the same item names.
-* Players: **I** opens the inventory. Drag to move, right-click to use, drop items on *Use / Give / Drop*, set an amount to split a stack. At a vehicle's boot it opens the trunk; inside a vehicle, the glovebox.
+* Players: **I** opens the inventory. Drag to move, right-click to use, drop items on *Use / Give / Drop*, set an amount to split a stack. At a vehicle's trunk it opens the trunk; inside a vehicle, the glovebox.
 
 ### Vehicles, garages and keys
 
-* **Spawner:** every vanilla and **addon** vehicle appears automatically, sorted by class. Addon packs (anything in `resources/[addons]` with a `vehicles.meta`) also get their own **Addon Vehicles** section. Packs started while the server is running (`ensure mypack`) show up within a few seconds, without players reconnecting. **Settings › Vehicles** controls spawning inside, replacing the previous vehicle, spawn cost (flat or catalogue price), cooldown, plate format (`#` digit, `@` letter), list or picture-grid layout, saved vehicles, keys, locking NPC cars, the seatbelt, ejection speed and whether ejection hurts. Without a seatbelt a hard crash throws the driver or
-passenger through the windscreen at the speed they were going, over the hood, ragdolling; with the seatbelt on
+* **Spawner:** every vanilla and **addon** vehicle appears automatically, sorted by class. Addon packs (anything in `resources/[addons]` with a `vehicles.meta`) also get their own **Addon Vehicles** section. Packs started while the server is running (`ensure mypack`) show up within a few seconds, without players reconnecting. **Settings › Vehicles** controls spawning inside, replacing the previous vehicle, spawn cost (flat or catalog price), cooldown, plate format (`#` digit, `@` letter), list or picture-grid layout, saved vehicles, keys, locking NPC cars, the seatbelt, ejection speed and whether ejection hurts. Without a seatbelt a hard crash throws the driver or
+passenger through the windshield at the speed they were going, over the hood, ragdolling; with the seatbelt on
 nobody goes through.
 * **Vehicles tab:** rename vehicles, set brand, price and class, hide a vehicle from the spawner, or restrict it to a permission or job (e.g. police cars for `police` only).
-* **Vehicle Options** (in a vehicle): repair, wash, flip, god mode, engine, doors, windows, seats, **extras**, **liveries**, mod menu, wheels, colours, neon and headlights, plate text and style, torque/power, speed limiter, give keys, delete.
+* **Vehicle Options** (in a vehicle): repair, wash, flip, god mode, engine, doors, windows, seats, **extras**, **liveries**, mod menu, wheels, colors, neon and headlights, plate text and style, torque/power, speed limiter, give keys, delete.
 * **Settings › Garages & Impound:** garage and impound locations (car, air or boat; optional job), shared garages, **storing spawned vehicles** (they become owned, mods and all), max owned per character, impound fee, and sending vehicles left out to the impound on restart.
 * **Vehicle pictures:** `resources/[fusion]/fusion-vehicles/html/images/<model>.png`, then `ensure fusion-vehicles`.
 
@@ -512,7 +512,7 @@ The nearest **postal code** shows next to the street name on the vehicle HUD and
 
 ### Postal map (F10 › Postal Map)
 
-The pause map is Fusion's own illustrated map, with the postal codes and place names drawn on by the server. In **F10 › Postal Map** you can drag postals and names around, add a postal by clicking the map or **where you stand**, rename or delete them, and start from the New, OCRP or Old set. **Save & redraw map** redraws it (a few seconds) and reloads it for every player; the HUD, `/postal`, reports and 911 calls use the same postals. **Settings › Postal Map** turns the place names on or off and sets the postal badge size and colour.
+The pause map is Fusion's own illustrated map, with the postal codes and place names drawn on by the server. In **F10 › Postal Map** you can drag postals and names around, add a postal by clicking the map or **where you stand**, rename or delete them, and start from the New, OCRP or Old set. **Save & redraw map** redraws it (a few seconds) and reloads it for every player; the HUD, `/postal`, reports and 911 calls use the same postals. **Settings › Postal Map** turns the place names on or off and sets the postal badge size and color.
 
 ### Housing (F10 › Housing)
 
@@ -545,8 +545,9 @@ name like *Garage side*). Every entrance works the same, and players come back o
 A **balcony** can be an entrance too: walk out onto it (also from inside the house) and add it there. Fusion
 only refuses spots the game says are indoors. Residents then pick *Leave by the balcony* at an exit to step out onto it.
 
-Each home also has **Edit**, **Move entrance here**, **Entrances**, **Go to**, **Preview**, **Residents** (apartment buildings:
-who lives there, **Evict** one apartment), **Evict** (houses) and **Delete**.
+Each home also has **Edit**, **Move entrance here**, **Entrances**, **Exits**, **Set / Move garage here**, **Go to**,
+**Go inside** (that home's own interior, to set its exits), **Residents** (apartment buildings: who lives there,
+**Evict** one apartment), **Evict** (houses) and **Delete**.
 
 **Interior styles** (Settings › Housing › Interior styles): a studio and a mid-range apartment, five high-rise
 apartments (4 Integrity Way, Del Perro Heights, Richards Majestic, Tinsel Towers, the Eclipse Towers penthouse) and eight
@@ -560,7 +561,7 @@ the same way.
   buildings **Residents**, to ring someone's doorbell (or walk into an unlocked apartment). Whoever is inside sees
   **Let in** in **M › My Home**.
 * **Garage:** at the home's garage spot, **park** your vehicle (in it) or **take one out** (on foot). Owners and key
-  holders can use it; everyone only sees their own vehicles there. *My Vehicles* shows them as *Garage: <home>*.
+  holders can use it; everyone only sees their own vehicles there. *My Vehicles* shows them as *Garage: (home name)*.
 * **M › My Home**: inside, **Storage**, **Wardrobe**, visitors to let in and **Leave**; for each home, waypoints to
   it and its garage, **Give a key**, **Key holders** (and **Take back**) and **Sell** (refunds *Selling back refunds*
   % of the price).
@@ -574,13 +575,13 @@ the owner, so a new owner starts with an empty one.
 
 ### Vinewood sign (F10 › Vinewood Sign)
 
-The sign on the hill is Fusion's own: two rows of up to **12 characters** (letters, numbers and `! ? . - ' &`), the back row higher up the hill behind the front row. Pick a colour per row (or a fade from one colour to another), the night effect (steady glow, slow pulse, chasing lights, sparkle, rainbow or none), whether it lights up the hillside at night, the hand-built look (slightly uneven letters like the real sign) and the daytime brightness. The editor shows a live day and night preview; **Save to the sign** changes it for everyone straight away. The letters stand on legs that run into the hill, so nothing floats, and GTA's own sign is gone at every distance while the Vinewood module runs (turn the module off to get GTA's VINEWOOD back).
+The sign on the hill is Fusion's own: two rows of up to **12 characters** (letters, numbers and `! ? . - ' &`), the back row higher up the hill behind the front row. Pick a color per row (or a fade from one color to another), the night effect (steady glow, slow pulse, chasing lights, sparkle, rainbow or none), whether it lights up the hillside at night, the hand-built look (slightly uneven letters like the real sign) and the daytime brightness. The editor shows a live day and night preview; **Save to the sign** changes it for everyone straight away. The letters stand on legs that run into the hill, so nothing floats, and GTA's own sign is gone at every distance while the Vinewood module runs (turn the module off to get GTA's VINEWOOD back).
 
 **Settings › Vinewood Sign › Letters** picks how they're made:
-* **3D models** (default): solid letters in a real sign typeface (Oswald Bold), lit by the sun by day and glowing by themselves at night, with every colour, fade and night effect.
+* **3D models** (default): solid letters in a real sign typeface (Oswald Bold), lit by the sun by day and glowing by themselves at night, with every color, fade and night effect.
 * **Drawn letters**: simple flat-shaded letters, with adjustable letter sizes.
 
-Colours: click a colour box to open the colour picker (any colour, plus quick swatches). The same picker is used for every colour in F10.
+Colors: click a color box to open the color picker (any color, plus quick swatches). The same picker is used for every color in F10.
 
 Slurs and hate words are always refused (also when spelled with numbers or symbols, spaced out or split over both rows), and online staff get a warning naming who tried. **Settings › Vinewood Sign** sets letter sizes and positions, also blocking swear words, your own blocked and always-allowed words, and the staff warning. Permission: `admin.vinewood`.
 
@@ -589,9 +590,9 @@ Slurs and hate words are always refused (also when spelled with numbers or symbo
 **F10 › Handling** edits an addon vehicle's handling and saves it into the pack's own `handling.meta` on the server.
 
 1. Get in the vehicle and click **Load my vehicle** (or type its model name). Fusion finds its handling entry through the pack's `vehicles.meta`, even when the handling has a different name than the model.
-2. Change any line: mass, drag, centre of mass, gears, power, top speed, brakes, steering lock, grip, suspension, anti-roll bars, damage multipliers, flags and more. Each line shows what it does and its original value. Use **Filter fields** to find one quickly. Each line also shows its **safe range**; values outside it turn red and are refused, because they break the vehicle in game (for example a centre of mass far below the car makes it hover).
+2. Change any line: mass, drag, center of mass, gears, power, top speed, brakes, steering lock, grip, suspension, anti-roll bars, damage multipliers, flags and more. Each line shows what it does and its original value. Use **Filter fields** to find one quickly. Each line also shows its **safe range**; values outside it turn red and are refused, because they break the vehicle in game (for example a center of mass far below the car makes it hover).
 3. Click **Save to server files**. Only the lines you changed are rewritten, and the original file is backed up first.
-   * With **Apply now** ticked (the default), the pack is reloaded straight away and you are respawned in the vehicle with the new handling. Vehicles of that model on the server are removed first, because reloading a pack while its vehicles exist can crash players.
+   * With **Apply now** checked (the default), the pack is reloaded straight away and you are respawned in the vehicle with the new handling. Vehicles of that model on the server are removed first, because reloading a pack while its vehicles exist can crash players.
    * Without it, the change applies at the next restart.
 4. **Backups / undo** restores any earlier save with one click.
 
@@ -631,11 +632,11 @@ When two vehicle packs use the same **siren**, **light settings** or **modkit** 
 
 ### Stores
 
-**Settings › Stores:** **catalogues** (what is sold, prices, and an optional licence such as `weapon`) and **store locations** (catalogue, blip, optional shopkeeper ped, optional job). Choose between a menu list and the inventory shop screen (drag to buy). Paying by card when cash is short is optional.
+**Settings › Stores:** **catalogs** (what is sold, prices, and an optional license such as `weapon`) and **store locations** (catalog, blip, optional shopkeeper ped, optional job). Choose between a menu list and the inventory shop screen (drag to buy). Paying by card when cash is short is optional.
 
 ### Fuel
 
-**Settings › Fuel & Gas Stations:** consumption overall and per vehicle class, price per litre, jerry can price, refuel speed, pump and EV-charger props, electric vehicles, low-fuel warning, NPC vehicle fuel, and station blips. Pumps work at every gas station automatically.
+**Settings › Fuel & Gas Stations:** consumption overall and per vehicle class, price per liter, jerry can price, refuel speed, pump and EV-charger props, electric vehicles, low-fuel warning, NPC vehicle fuel, and station blips. Pumps work at every gas station automatically.
 
 ### Hospital and death
 
@@ -655,7 +656,7 @@ When two vehicle packs use the same **siren**, **light settings** or **modkit** 
 
 **Road conditions.** Weather changes how vehicles handle: rain makes the roads wet (grip and braking drop, and roads take a few minutes to dry once it stops), snow cuts grip further, a blizzard leaves the roads icy, and driving fast through standing or flood water makes a car aquaplane. Off-road vehicles and SUVs cope better in snow. The HUD shows *Wet roads*, *Snow on roads* or *Icy roads* while you drive. Adjust or turn it off in **Settings › Weather & Time › Road conditions**: grip on wet, snowy and icy roads, drying time, the off-road bonus, aquaplaning and the HUD label. Only grip and braking change, scaled from each vehicle's own handling, and they return to normal when conditions clear or you get out.
 
-**Outdoor warning sirens.** Civil-defence sirens on poles around the map sound for tornadoes and hurricanes (choose which events in settings). You hear the nearest one, from its direction, quieter indoors. Fusion makes the siren sound itself (*wail*, *steady*, *hi-lo* or *whoop*), or plays a recording you add to `fusion-core/html/sounds` (or a web link). **Settings › Weather & Time › Outdoor sirens:** the events, the signal for tornadoes and for other events, recordings, how long they sound and how often they repeat, volume, the siren poles (name, position, range) and showing them on the map.
+**Outdoor warning sirens.** Civil-defense sirens on poles around the map sound for tornadoes and hurricanes (choose which events in settings). You hear the nearest one, from its direction, quieter indoors. Fusion makes the siren sound itself (*wail*, *steady*, *hi-lo* or *whoop*), or plays a recording you add to `fusion-core/html/sounds` (or a web link). **Settings › Weather & Time › Outdoor sirens:** the events, the signal for tornadoes and for other events, recordings, how long they sound and how often they repeat, volume, the siren poles (name, position, range) and showing them on the map.
 
 **Severe weather events.** Staff start them from **Menu › Weather & Time › Severe Weather** (or `/weatherevent <type>` / `/weatherevent stop`), or let them happen at random. Everyone gets an alert banner with a countdown first, the HUD shows the time left, and every player sees the same event:
 
@@ -664,7 +665,7 @@ When two vehicle packs use the same **siren**, **light settings** or **modkit** 
 | **Thunderstorm** | Heavy rain, strong wind, rough sea and lightning strikes around players (they can hurt people on foot and stall cars) |
 | **Flood** | Torrential rain while the sea, rivers and lakes rise (3 m by default): the docks, low coastal roads and riverbanks go under, then the water drains away |
 | **Hurricane** | Winds build to maximum, huge waves, a storm surge, a power cut across the city, lightning, and gusts that shove vehicles sideways |
-| **Tornado** | A spinning funnel travels across the map towards players, shown on the map with a danger zone. It pulls in and lifts vehicles, people and loose objects, and hurts anyone caught inside |
+| **Tornado** | A spinning funnel travels across the map toward players, shown on the map with a danger zone. It pulls in and lifts vehicles, people and loose objects, and hurts anyone caught inside |
 | **Blizzard** | Heavy snow, snow covering the ground and roads, strong wind and low visibility, with optional icy roads |
 
 **Settings › Weather & Time › Severe weather:** turn events on or off, the warning time, random events (chance per hour, which types, minimum players), each event's length, lightning strikes and damage, flood height and how fast it rises, hurricane surge, gusts and power cut, tornado size, speed, strength and damage, and icy roads. Permission: `weather.events` (admins by default).
@@ -684,7 +685,7 @@ Fusion's anticheat runs mostly on the server, reading what the game reports abou
 | Detection | Default action | How |
 |---|---|---|
 | God mode | Kick | Player is invincible without `player.godmode` (downed/dead players are ignored) |
-| Health / armour above maximum | Kick | More health or armour than the game allows |
+| Health / armor above maximum | Kick | More health or armor than the game allows |
 | Invisible | Alert | Invisible without `player.invisible`, noclip or spectate permission |
 | Teleport / speed hack on foot | Log | Moved further than possible. Logs only by default, because some QBCore housing and apartment scripts teleport players |
 | Impossible vehicle speed | Alert | Cars and bikes faster than the limit (aircraft and boats are ignored) |
@@ -767,7 +768,7 @@ Many scripts take screenshots of the game view: CCTV and evidence scripts (e.g. 
 * **Don't install a second copy** in `[qb]` or `[addons]`. Two resources with the same name conflict. If a script's instructions tell you to install screenshot-basic, it's already done.
 * **Servers set up before it was included:** copy `resources/[standalone]/screenshot-basic` from the latest server kit into your server, and add `ensure screenshot-basic` just above `ensure [qb]` in `server.cfg`.
 
-### Organising [qb] and [addons] into sub-folders
+### Organizing [qb] and [addons] into sub-folders
 
 You can group content into sub-folders, as deep as you like, as long as **every grouping folder has square brackets**:
 
@@ -781,16 +782,16 @@ resources/[addons]/
 └─ mypack/mypack/              ✗ zip extracted one folder too deep: move the inner folder up
 ```
 
-A folder **with** brackets is a category (just for organising). A folder **without** brackets is a resource and must contain `fxmanifest.lua` directly. Resource names must be unique across the whole server, wherever they sit.
+A folder **with** brackets is a category (just for organizing). A folder **without** brackets is a resource and must contain `fxmanifest.lua` directly. Resource names must be unique across the whole server, wherever they sit.
 
 Fusion backs this up in two ways (**Settings › Server › Resources**):
 
 * 15 seconds after boot it starts anything in sub-folders of `[qb]` / `[addons]` that didn't start (switch this off, or list resources to leave stopped);
 * folders the server can't see, like the two ✗ examples above, are listed in the server console when it starts, as *"&lt;folder&gt; does not have a resource manifest"*.
 
-**New Fusion modules start by themselves.** A `fusion-…` module copied into `resources/[fusion]` (by hand, your host's file manager or an update) is started 20 seconds after boot, and its `ensure` line is added to `server.cfg` after the other Fusion lines, so it starts normally from then on (the old file is kept as `server.cfg.bak-fusion`). If Fusion can't write `server.cfg`, the console prints the exact lines to add. Servers that start the whole folder with `ensure [fusion]` are left as they are. Turn this off in **Settings › Server › Resources**. To stop using a module, turn it off in **Settings › Modules** rather than deleting its line.
+**New Fusion modules start by themselves.** A `fusion-…` module copied into `resources/[fusion]` (by hand, your host's file manager or an update) is started 20 seconds after boot, every time, so it works without touching `server.cfg`. Where the server lets Fusion edit `server.cfg`, it also adds the module's `ensure` line after the other Fusion lines (the old file is kept as `server.cfg.bak-fusion`); most servers don't allow that, and then the console shows the line once so you can add it yourself. `update-fusion` adds it too. Servers that start the whole folder with `ensure [fusion]` are left as they are. Turn this off in **Settings › Server › Resources**. To stop using a module, turn it off in **Settings › Modules** rather than deleting its line.
 
-Vehicles, EUP, weapons, the carcols fixer and the handling editor all find packs in sub-folders automatically. **New vehicle packs and the carcols fixer / handling editor:** after adding a pack, restart the whole server once before fixing or editing it. FiveM only lets Fusion save into packs it knew about when the server started. Then fix, and restart again so players download the fixed pack. To install straight into a sub-folder: `install/update.ps1 -Mode script -Source pack.zip -Target "[addons]/[cars]"` (Linux: `bash install-script.sh pack.zip --target "[addons]/[cars]"`), or install normally and move the folder afterwards: upgrades find it wherever it is.
+Vehicles, EUP, weapons, the carcols fixer and the handling editor all find packs in sub-folders automatically. **New vehicle packs and the carcols fixer / handling editor:** after adding a pack, restart the whole server once before fixing or editing it. FiveM only lets Fusion save into packs it knew about when the server started. Then fix, and restart again so players download the fixed pack. To install straight into a sub-folder: `install/update.ps1 -Mode script -Source pack.zip -Target "[addons]/[cars]"` (Linux: `bash install-script.sh pack.zip --target "[addons]/[cars]"`), or install normally and move the folder afterward: upgrades find it wherever it is.
 
 Your own pictures and media stay yours: Fusion updates never overwrite them, and they are never part of a Fusion release.
 
@@ -821,9 +822,9 @@ Every script you add (anything outside `[fusion]`) is listed with its config fil
 
 * **Settings:** every simple setting in the file (`Config.UseTarget = true`, `Config.Pay = 250`, `Config.Truck.Model = 'trash'` …) is listed with the comment written next to it in the file. Change values with switches and boxes, then **Save changes**. Only the value changes; the rest of the line, comments and layout stay exactly as they were.
 * **Edit as text:** the whole file in an editor, for lists, tables and anything else. A Lua file with an error (or broken JSON) is refused instead of saved, so a typo can't stop the script from loading.
-* **Auto-configure for Fusion:** Fusion answers to the QBCore names, so most scripts just need pointing at them. Fusion suggests the values: framework → the QBCore word the script itself checks for (`qb`, `qbcore` …), core resource → `qb-core`, inventory → `qb-inventory` / `qb`, target → `qb-target` (and *UseTarget* on), fuel → `LegacyFuel`, voice → `pma-voice`, keys → `qb-vehiclekeys`, notifications → `qb`, and so on. Untick anything you don't want and press **Apply selected**. Suggestions only appear for Fusion modules that are running.
-* **Restart the script after saving** is ticked for running scripts, so changes apply straight away. **Restart script** is also on the page.
-* **Start with the server:** next to **Backups**, each script has one button. **Red** (*Add ensure <script> to
+* **Auto-configure for Fusion:** Fusion answers to the QBCore names, so most scripts just need pointing at them. Fusion suggests the values: framework → the QBCore word the script itself checks for (`qb`, `qbcore` …), core resource → `qb-core`, inventory → `qb-inventory` / `qb`, target → `qb-target` (and *UseTarget* on), fuel → `LegacyFuel`, voice → `pma-voice`, keys → `qb-vehiclekeys`, notifications → `qb`, and so on. Uncheck anything you don't want and press **Apply selected**. Suggestions only appear for Fusion modules that are running.
+* **Restart the script after saving** is checked for running scripts, so changes apply straight away. **Restart script** is also on the page.
+* **Start with the server:** next to **Backups**, each script has one button. **Red** (*Add ensure (script name) to
   server config*): it doesn't start with the server yet; press it to add `ensure <script>` to `server.cfg` and start
   it now (the old file is kept as `server.cfg.bak-fusion`). **Green**: it already starts with the server, by its own
   line or with its whole folder (`ensure [qb]`); press it to turn its line into a `#` comment. Vehicle packs have no
@@ -970,7 +971,7 @@ For servers where you can't run the updater (ZAP-Hosting and other txAdmin hosts
 4. Upload every folder from the zip over the folder of the same name on the server, **replacing files but not deleting the old folders first**:
    * the `fusion-…` folders go into `resources/[fusion]`;
    * `qb-core`, `qb-menu`, `qb-input` and `progressbar` go wherever they already are: `resources/[fusion]/[compat]` if you have that folder, otherwise straight into `resources/[fusion]`. Never end up with two copies of the same folder name anywhere in `resources`: the server refuses to start a resource it finds twice.
-5. **Don't** upload over or delete: `server.cfg`, `resources/[qb]`, `resources/[addons]`, `resources/[standalone]`, and inside `fusion-core` the folders `support`, `permissions`, `media-clips` and `config-backups`. If you replaced a built-in picture (an item, vehicle or weapon picture with the same name as Fusion's), skip that one file when your FTP program asks.
+5. **Don't** upload over or delete: `server.cfg`, `resources/[qb]`, `resources/[addons]`, `resources/[standalone]`, and inside `fusion-core` the folders `support`, `permissions`, `media-clips`, `config-backups` and `script-backups`. If you replaced a built-in picture (an item, vehicle or weapon picture with the same name as Fusion's), skip that one file when your FTP program asks.
 6. Start the server.
 
 ### After updating

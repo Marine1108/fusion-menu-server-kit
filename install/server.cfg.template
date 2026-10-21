@@ -12,7 +12,7 @@ sv_enforceGameBuild 3095
 set steam_webApiKey "none"
 sv_licenseKey "{{svLicense}}"
 
-## Name shown until the server has started (afterwards: Admin > Settings > Server)
+## Name shown until the server has started (afterward: Admin > Settings > Server)
 sv_hostname "{{serverName}}"
 sets sv_projectName "{{serverName}}"
 sets sv_projectDesc "Powered by Fusion Menu"

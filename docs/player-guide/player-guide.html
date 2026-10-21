@@ -4,9 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Fusion Menu Player Guide</title>
-</head>
-<body>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@500;600&display=swap">
 <style>
@@ -159,7 +156,25 @@ footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--line);
   td code { white-space: normal; }
   footer { margin-top: 24px; }
 }
+
+/* Printed PDF (the build lays the pages out): page numbers in the footer, page numbers in the contents */
+@page {
+  @bottom-left { content: "Fusion Menu · Player Guide"; font: 400 8pt "IBM Plex Sans", sans-serif; color: #55526a; }
+  @bottom-right { content: "Page " counter(page) " of " counter(pages); font: 400 8pt "IBM Plex Sans", sans-serif; color: #55526a; }
+}
+@page :first { @bottom-left { content: none; } @bottom-right { content: none; } }
+/* page numbers in the contents (only the print layout understands target-counter; browsers skip it) */
+nav.toc a::after { content: target-counter(attr(href), page); margin-left: auto; font: 500 9pt var(--font-mono); color: var(--muted); }
+@media print {
+  nav.toc { display: block; columns: 2; column-gap: 28px; }
+  nav.toc .label { column-span: all; }
+  nav.toc a { display: flex; gap: 6px; border-bottom: 1px dotted var(--line); padding: 3px 0; break-inside: avoid; }
+  .keys { display: block; columns: auto; }
+  .apps { break-inside: avoid; }
+}
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <header class="top">
@@ -279,7 +294,7 @@ footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--line);
         <ul>
           <li><kbd>I</kbd> opens it. Drag items to move them, <b>right-click</b> to use one, and drop items on <b>Use</b>, <b>Give</b> or <b>Drop</b>. Type an amount to split a stack.</li>
           <li>The first five slots are your <b>hotbar</b>: <kbd>1</kbd>–<kbd>5</kbd> uses them.</li>
-          <li>At a car's boot, <kbd>I</kbd> opens the <b>trunk</b>. Inside a car, it opens the <b>glovebox</b>.</li>
+          <li>At a car's trunk, <kbd>I</kbd> opens the <b>trunk</b>. Inside a car, it opens the <b>glovebox</b>.</li>
           <li>Food and drinks keep your hunger and thirst up. You can only carry so much weight.</li>
           <li><b>Third eye:</b> hold <kbd>Left Alt</kbd> and look at a person, car or object to see what you can do with it, then click.</li>
         </ul>
@@ -289,7 +304,7 @@ footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--line);
         <div class="sec-head"><h2>Vehicles</h2><button class="copy" type="button">Copy for Discord</button></div>
         <ul>
           <li><kbd>L</kbd> locks and unlocks a car you have keys for. Give keys to a friend in <b>M › Vehicle Options</b>.</li>
-          <li><b>Wear your seatbelt</b> (<kbd>B</kbd>). Without it, a hard crash throws you through the windscreen, and the faster you were going, the more it hurts. You can't get out while you're buckled.</li>
+          <li><b>Wear your seatbelt</b> (<kbd>B</kbd>). Without it, a hard crash throws you through the windshield, and the faster you were going, the more it hurts. You can't get out while you're buckled.</li>
           <li><b>Garages:</b> at a garage marker press <kbd>E</kbd>: in a car to park it, on foot to take one out. Cars left out may go to the <b>impound</b> after a restart; getting them back costs a fee.</li>
           <li><b>Fuel:</b> pull up to a pump and press <kbd>E</kbd>. Press <kbd>G</kbd> there to buy a jerry can. Electric cars charge at chargers.</li>
           <li><b>Weather matters:</b> rain makes the roads slippery, snow and ice more so, and deep water makes you aquaplane. The HUD says <i>Wet roads</i>, <i>Snow on roads</i> or <i>Icy roads</i>.</li>
@@ -387,7 +402,7 @@ footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--line);
         <div class="sec-head"><h2>Streaming &amp; video</h2><button class="copy" type="button">Copy for Discord</button></div>
         <ul>
           <li><b>Streamer mode</b> (<code>/streamer</code>) hides what you choose from your screen: chat, names and IDs, money, location, minimap, phone numbers and more.</li>
-          <li><b>Video mode</b> (<code>/videomode</code>) clears the screen for filming, with letterbox bars, colour filters and slow motion.</li>
+          <li><b>Video mode</b> (<code>/videomode</code>) clears the screen for filming, with letterbox bars, color filters and slow motion.</li>
           <li><b>Free camera</b> (<code>/freecam</code>): fly the camera near your character. Save shot A and shot B and play a smooth move between them.</li>
           <li><b>Recorder</b> (<code>/record</code>): records just the game picture, without your HUD or menus. Clips appear in <b>My Clips</b> (<code>/clips</code>), where you can play, trim, add slow motion, join clips and download them. Clips have no sound.</li>
         </ul>
@@ -485,5 +500,6 @@ footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--line);
 })();
 </script>
 
+<!--PRINT-->
 </body>
 </html>

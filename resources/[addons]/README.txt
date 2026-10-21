@@ -10,7 +10,7 @@ Weapons   - add each weapon's spawn name under Admin > Settings > Weapons > Cust
 
 SUB-FOLDERS
 -----------
-You can organise packs into sub-folders, e.g. [cars]/[police]/lspd-pack.
+You can organize packs into sub-folders, e.g. [cars]/[police]/lspd-pack.
 Grouping folders MUST have square brackets ([cars], not cars), and each resource folder
 must have its fxmanifest.lua directly inside it. Folders the server cannot see are listed
 in the server console at startup as "... does not have a resource manifest". See README.md section 8.

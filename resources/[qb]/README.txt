@@ -9,7 +9,7 @@ Scripts that use PolyZone directly need the PolyZone resource in this folder too
 
 SUB-FOLDERS
 -----------
-You can organise scripts into sub-folders, e.g. [jobs]/my-police-job.
+You can organize scripts into sub-folders, e.g. [jobs]/my-police-job.
 Grouping folders MUST have square brackets ([jobs], not jobs), and each resource folder
 must have its fxmanifest.lua directly inside it. Folders the server cannot see are listed
 in the server console at startup as "... does not have a resource manifest". See README.md section 8.
