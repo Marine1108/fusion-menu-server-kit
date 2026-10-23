@@ -253,6 +253,12 @@ if [[ $MODE == fusion ]]; then
         printf '\n# Scripts set to "Start with the server" in F10 > Script Configs. Keep this line LAST.\nexec resources/[fusion]/fusion-core/permissions/startup.cfg\n' >> "$CFG"
         say "  Added 'exec resources/[fusion]/fusion-core/permissions/startup.cfg' to the end of server.cfg" "$c_grn"
     fi
+    # the updater runs 'refresh' after it installs a module that did not exist before
+    if ! grep -Eq '^[[:space:]]*add_ace[[:space:]]+resource\.fusion-updater[[:space:]]+command[[:space:]]+allow' "$CFG"; then
+        [[ $backed_up == 1 ]] || { cp "$CFG" "$BACKUP_DIR/server.cfg"; backed_up=1; }
+        printf '\n# Lets the updater refresh the resource list after it installs a new module\nadd_ace resource.fusion-updater command allow\n' >> "$CFG"
+        say "  Added 'add_ace resource.fusion-updater command allow' to server.cfg" "$c_grn"
+    fi
     fi
 else
     echo

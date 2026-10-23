@@ -285,6 +285,12 @@ try {
                 $added += 'startup.cfg'
                 Say "  Added '$execLine' to the end of server.cfg" 'Green'
             }
+            # the updater runs 'refresh' after it installs a module that did not exist before
+            if ($cfg -notmatch '(?m)^\s*add_ace\s+resource\.fusion-updater\s+command\s+allow') {
+                $cfg = $cfg.TrimEnd() + $nl + $nl + '# Lets the updater refresh the resource list after it installs a new module' + $nl + 'add_ace resource.fusion-updater command allow' + $nl
+                $added += 'ace'
+                Say "  Added 'add_ace resource.fusion-updater command allow' to server.cfg" 'Green'
+            }
             if ($added.Count) {
                 Copy-Item -LiteralPath $cfgPath -Destination (Join-Path $BackupDir 'server.cfg')
                 [IO.File]::WriteAllText($cfgPath, $cfg)

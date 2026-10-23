@@ -30,6 +30,8 @@ add_ace group.admin fusion.owner allow
 
 ## Lets Fusion mirror in-game permissions to ACE and manage resources
 add_ace resource.fusion-core command allow
+## Lets the updater refresh the resource list after it installs a new module
+add_ace resource.fusion-updater command allow
 ## Lets the carcols fixer and handling editor edit vehicle packs (file kept up to date by Fusion)
 exec resources/[fusion]/fusion-core/permissions/filesystem.cfg
 

@@ -43,7 +43,7 @@ PerformHttpRequest("https://api.github.com/repos/Flohhhhh/ultimate-lighting-cont
     ULTIMATE LIGHTING CONTROLLER
     by Dawnstar
     ^2Loaded
- ]])
+  ]])
     if myVersion and ("v" .. myVersion) == latestVersion then
       print('[ULC] Up to date!')
     else
@@ -128,19 +128,9 @@ if Config.ParkSettings.delay < 0.5 then
     'Park Pattern delay is too short! This will hurt performance! Recommended values are above 0.5s.')
 end
 
--- removed v1.7.0
--- if Config.SteadyBurnSettings.delay <= 2 then
---     TriggerEvent("ulc:error", 'Steady burn delay is too short! Steady burns will be unstable or not work!')
--- end
-
 if Config.SteadyBurnSettings.nightStartHour < Config.SteadyBurnSettings.nightEndHour then
   TriggerEvent("ulc:error", 'Steady burn night start hour should be later/higher than night end hour.')
 end
-
--- removed v1.7.0
--- if Config.SteadyBurnSettings.delay < 2 then
---     TriggerEvent("ulc:error", "Steady burn check delay can never be lower than 2 seconds. Will cause stability issues.")
--- end
 
 local function CheckData(data, resourceName)
   if not data.name and not data.names then
@@ -198,15 +188,12 @@ local function CheckData(data, resourceName)
 
   -- stages
   if data.stages then
-    -- check if stages are enabled but no keys specified
     if data.stages.useStages and #data.stages.stageKeys == 0 then
       TriggerEvent("ulc:warn",
         'A config in "' .. resourceName .. '" uses Stages, but no keys were specified.')
     end
 
-    -- check each key
     for _, v in pairs(data.stages.stageKeys) do
-      -- if key is not a numpad value
       if v > 9 then
         TriggerEvent("ulc:error",
           'A config in "' ..
@@ -215,7 +202,6 @@ local function CheckData(data, resourceName)
         break
       end
 
-      -- make sure each item in data.stages.stageKeys corresponds to a button with key = the value
       local buttonExists = false
       for _, b in pairs(data.buttons) do
         if b.key == v then
@@ -267,9 +253,7 @@ local function CheckData(data, resourceName)
     end
   end
 
-
   -- Buttons
-  -- check if vehicle uses buttons but hud is disabled
   if #data.buttons > 0 and Config.hideHud == true then
     TriggerEvent("ulc:warn",
       'A config in "' ..
@@ -281,7 +265,6 @@ local function CheckData(data, resourceName)
   local usedExtras = {}
   local managedExtras = GetManagedExtras(data)
   for i, b in ipairs(data.buttons) do
-    -- check if key is valid
     if b.key > 9 or b.key < 1 then
       TriggerEvent('ulc:error',
         'Button ' ..
@@ -290,7 +273,6 @@ local function CheckData(data, resourceName)
         resourceName .. '" has an invalid key. Key must be 1-9 representing number pad keys.')
       return false
     end
-    -- check if label is empty
     if b.label == '' then
       TriggerEvent("ulc:error",
         'A config in "' .. resourceName .. '" has an un-labeled button using extra: ' .. b.extra)
@@ -334,13 +316,11 @@ local function CheckData(data, resourceName)
         end
       end
     end
-    -- check if any keys are used twice
     if IsIntInTable(usedButtons, b.key) then
       TriggerEvent("ulc:error",
         'A config in "' .. resourceName .. '" uses key: " .. b.key .. " more than once in button config.')
       return false
     end
-    -- check if any extras are used twice
     if IsIntInTable(usedExtras, b.extra) then
       TriggerEvent("ulc:error",
         'A config in "' .. resourceName .. '" uses extra: " .. b.extra .. " more than once in button config.')
@@ -369,7 +349,6 @@ AddEventHandler('ulc:sync:send', function(vehicles)
   local players = GetPlayers()
   for i, v in ipairs(players) do
     if not v == source then
-      --print("Sending veh sync array to player: " .. v)
       TriggerClientEvent('ulc:sync:receive', vehicles)
     end
   end
@@ -404,7 +383,6 @@ local function LoadExternalVehicleConfig(resourceName)
   if not data then
     data = LoadResourceFile(resourceName, "ulc.lua")
     if not data then
-      -- Check if user accidentally created ulc.lua.txt instead of ulc.lua
       local txtFileData = LoadResourceFile(resourceName, "data/ulc.lua.txt")
       if not txtFileData then
         txtFileData = LoadResourceFile(resourceName, "ulc.lua.txt")
@@ -438,30 +416,33 @@ local function LoadExternalVehicleConfig(resourceName)
     return
   end
 
-  -- NEW STUFF FOR MULTIPLE CONFIGS
-  local configs = { f() }
-  for _, v in pairs(configs) do
-    if CheckData(v, resourceName) then
-      if v.name then      -- if using old single name
-        print('^2[ULC] Loaded external configuration for "' .. v.name .. '"^0')
-      elseif v.names then -- if using new table
-        for _, name in ipairs(v.names) do
-          print('^2[ULC] Loaded external configuration for "' .. name .. '"^0')
-        end
-      end
+  -- NEW STUFF FOR MULTIPLE CONFIGS (PATCHED FOR ARRAYS)
+  local returnedData = f()
+  local configs = {}
 
-      table.insert(Config.Vehicles, v)
-    else
-      TriggerEvent("ulc:error", '^1Could not load external configuration in "' .. resourceName .. '"^0')
-    end
+  if returnedData.names or returnedData.name then
+    table.insert(configs, returnedData)
+  else
+    configs = returnedData
   end
 
-  -- if CheckData(f(), resourceName) then
-  --   print('^2Loaded external configuration for "' .. f().name .. '"^0')
-  --   table.insert(Config.Vehicles, f())
-  -- else
-  --   TriggerEvent("ulc:error", '^1Could not load external configuration for "' .. f().name .. '"^0')
-  -- end
+  for _, v in pairs(configs) do
+    if type(v) == 'table' then
+      if CheckData(v, resourceName) then
+        if v.name then      -- if using old single name
+          print('^2[ULC] Loaded external configuration for "' .. v.name .. '"^0')
+        elseif v.names then -- if using new table
+          for _, name in ipairs(v.names) do
+            print('^2[ULC] Loaded external configuration for "' .. name .. '"^0')
+          end
+        end
+
+        table.insert(Config.Vehicles, v)
+      else
+        TriggerEvent("ulc:error", '^1Could not load vehicle configuration inside pack: "' .. resourceName .. '"^0')
+      end
+    end
+  end
 end
 
 CreateThread(function()
@@ -476,7 +457,6 @@ CreateThread(function()
     end
     LoadExternalVehicleConfig(v)
   end
-  --TriggerClientEvent('ulc:Loaded', -1)
   GlobalState.ulcloaded = true
   TriggerClientEvent("UpdateVehicleConfigs", -1, Config.Vehicles)
   print("[ULC] Loading complete: " ..

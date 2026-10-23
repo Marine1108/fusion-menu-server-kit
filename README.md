@@ -2,11 +2,11 @@
 
 Fusion Menu is a complete FiveM server: a framework that **plays like vMenu**, **runs QBCore scripts without modification**, and is **configured entirely in game**. Settings, permissions, locations, jobs, items, vehicles, prices and every feature toggle live in the admin panel. The only files you ever add are pictures, music and new resources.
 
-**As a PDF:** this guide is also the [Fusion Server Owner's Guide (PDF)](docs/owner-guide/Fusion-Server-Owner-Guide.pdf), in the Fusion Menu zip too.
+**As a PDF:** this guide is also the [Fusion Server Owner's Guide (PDF)](docs/owner-guide/Fusion-Server-Owner-Guide.pdf), which is in the server kit too.
 
 **For your staff:** the [Fusion Management Guide (PDF)](docs/management-guide/Fusion-Management-Guide.pdf) is the day-to-day handbook: reports, moderation, the anticheat, managing players and staff, departments, upkeep, updates and backups.
 
-**For your players:** the [Fusion Player Guide (PDF)](docs/player-guide/Fusion-Player-Guide.pdf) explains the keys, the menu, the phone, vehicles, homes, jobs and how to get help. Share it on your Discord or website; it is also in the Fusion Menu zip as `Fusion-Player-Guide.pdf`.
+**For your players:** the [Fusion Player Guide (PDF)](docs/player-guide/Fusion-Player-Guide.pdf) explains the keys, the menu, the phone, vehicles, homes, jobs and how to get help. Share it on your Discord or website; it is also in the server kit (`docs/player-guide`).
 
 ---
 
@@ -544,6 +544,9 @@ house is its own private copy of its interior, so a hundred homes can use the sa
 name like *Garage side*). Every entrance works the same, and players come back out where they went in.
 A **balcony** can be an entrance too: walk out onto it (also from inside the house) and add it there. Fusion
 only refuses spots the game says are indoors. Residents then pick *Leave by the balcony* at an exit to step out onto it.
+Many GTA balconies (and some roofs) have no floor you can stand on. Where an entrance has nothing under it, Fusion
+puts an invisible floor of about 3.7 x 3.1 m there, level with the marker, so nobody falls through. Stand where the
+floor should be when you add the entrance (in noclip, hover at standing height above the balcony).
 
 Each home also has **Edit**, **Move entrance here**, **Entrances**, **Exits**, **Set / Move garage here**, **Go to**,
 **Go inside** (that home's own interior, to set its exits), **Residents** (apartment buildings: who lives there,
@@ -1030,6 +1033,7 @@ console. Passwords, license keys, database logins, webhooks and players' IP addr
 | VPS: players can't connect | Open port 30120 TCP and UDP in your provider's firewall as well as `ufw` |
 | An updated script misbehaves | Look for `.new` files in its folder: the new version may need options your kept `config.lua` doesn't have. Or roll back from `backups/<date>/` |
 | The updater says the server is running | Stop it in txAdmin (or `sudo systemctl stop fusion`) and run it again |
+| F10 › Updates says *permission denied* or *FiveM refused the write* | The updater may only write Fusion's folders when `server.cfg` runs `exec resources/[fusion]/fusion-core/permissions/filesystem.cfg` **above** `ensure fusion-updater`, and the folders belong to the user the server runs as: on Linux `sudo chown -R <user>:<user> /home/fivem/fusion` (the user in `User=` of `systemctl cat fusion`). Restart, then install again |
 | Carcols fixer or handling editor says FiveM refused to edit a pack | Restart the server once (new packs need one restart). If it repeats, check `server.cfg` contains `exec resources/[fusion]/fusion-core/permissions/filesystem.cfg` |
 | Players spawn in the wrong place | Check **Settings › Spawning** (spawn mode and locations) |
 | A legit player was kicked or banned by the anticheat | Look at their row in **F10 › Anticheat** to see why. Unban them in **Bans**, then set that detection to *Log only*, raise its threshold, or give them `anticheat.bypass` |
