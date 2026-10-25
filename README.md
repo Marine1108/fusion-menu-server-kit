@@ -537,7 +537,7 @@ The nearest **postal code** shows next to the street name on the vehicle HUD and
 
 ### Postal map (F10 › Postal Map)
 
-The pause map is Fusion's own illustrated map, with the postal codes and place names drawn on by the server. In **F10 › Postal Map** you can drag postals and names around, add a postal by clicking the map or **where you stand**, rename or delete them, and start from the New, OCRP or Old set. **Save & redraw map** redraws it (a few seconds) and reloads it for every player; the HUD, `/postal`, reports and 911 calls use the same postals. **Settings › Postal Map** turns the place names on or off and sets the postal badge size and color.
+The pause map is Fusion's own illustrated map, with the postal codes and place names drawn on by the server. In **F10 › Postal Map** you can drag postals and names around, add a postal by clicking the map or **where you stand**, rename or delete them, and start from the New, OCRP or Old set. **Save & redraw map** redraws it (a few seconds) and reloads it for every player; the HUD, `/postal`, reports and 911 calls use the same postals. Players get the map as six streamed pause-map tiles (`fusion-postalmap/stream/minimap_sea_*.ytd`, about 2 MB each, made by the server from your map, so there is nothing to install). Players already in the game see a redraw after they reconnect. *Draw the postal codes on the pause map* (**Settings › Postals**) off brings back GTA's own pause map. In game, `postalmapcheck` in the F8 console shows whether a player's game has Fusion's tiles (2048×2048) or GTA's own (1024×1024). **Settings › Postal Map** turns the place names on or off and sets the postal badge size and color.
 
 ### Housing (F10 › Housing)
 
