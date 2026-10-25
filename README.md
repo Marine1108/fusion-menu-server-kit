@@ -217,7 +217,7 @@ Each role has a **priority**. Staff can only kick, ban, warn, freeze, kill or lo
 | **Admin** | 100 | Moderator | `admin.*` (everything admin) |
 | **Owner** (`superadmin`) | 1000 | Admin | `*` (everything). Cannot be deleted |
 
-You can rename, recolour, re-prioritize and re-wire all of these, and create as many new roles as you like (e.g. *LSPD Command*, *Trusted*, *Donator*).
+You can rename, recolor, re-prioritize and re-wire all of these, and create as many new roles as you like (e.g. *LSPD Command*, *Trusted*, *Donator*).
 
 ### How a permission is decided
 
@@ -419,12 +419,14 @@ nobody goes through.
 
 **Siren controller** (any vehicle in GTA's emergency class, plus models you add):
 
-| Key | Action |
-|---|---|
-| Q | Emergency lights on / off |
-| R | Siren on / off (turns the lights on too) |
-| Y | Next siren tone |
-| E (hold) | Air horn |
+| Key | Controller | Action |
+|---|---|---|
+| Q | D-pad left | Emergency lights on / off |
+| R | B | Siren on / off (turns the lights on too) |
+| Y | D-pad down | Next siren tone |
+| E (hold) | Left stick click (hold) | Air horn |
+
+Players can change all of these in **Settings › Key Bindings › FiveM**.
 
 An on-screen **siren controller** (a control head with lit LIGHTS, SIREN and HORN buttons and a button for every tone) sits next to the speedometer. Press **F6** to use it with the mouse while you keep driving; F6 again gives the mouse back. Hide it from **Menu › Emergency** (or with `/hud`). Each vehicle only gets the tones of its service, like real US units:
 
@@ -1033,7 +1035,7 @@ console. Passwords, license keys, database logins, webhooks and players' IP addr
 | VPS: players can't connect | Open port 30120 TCP and UDP in your provider's firewall as well as `ufw` |
 | An updated script misbehaves | Look for `.new` files in its folder: the new version may need options your kept `config.lua` doesn't have. Or roll back from `backups/<date>/` |
 | The updater says the server is running | Stop it in txAdmin (or `sudo systemctl stop fusion`) and run it again |
-| F10 › Updates says *permission denied* or *FiveM refused the write* | The updater may only write Fusion's folders when `server.cfg` runs `exec resources/[fusion]/fusion-core/permissions/filesystem.cfg` **above** `ensure fusion-updater`, and the folders belong to the user the server runs as: on Linux `sudo chown -R <user>:<user> /home/fivem/fusion` (the user in `User=` of `systemctl cat fusion`). Restart, then install again |
+| F10 › Updates says *permission denied*, *FiveM refused the write* or *FiveM does not let the updater write* | The updater may only write Fusion's folders when `server.cfg` runs `exec resources/[fusion]/fusion-core/permissions/filesystem.cfg` **above** `ensure fusion-updater`, and the folders belong to the user the server runs as: on Linux `sudo chown -R <user>:<user> /home/fivem/fusion` (the user in `User=` of `systemctl cat fusion`). Restart, then install again |
 | Carcols fixer or handling editor says FiveM refused to edit a pack | Restart the server once (new packs need one restart). If it repeats, check `server.cfg` contains `exec resources/[fusion]/fusion-core/permissions/filesystem.cfg` |
 | Players spawn in the wrong place | Check **Settings › Spawning** (spawn mode and locations) |
 | A legit player was kicked or banned by the anticheat | Look at their row in **F10 › Anticheat** to see why. Unban them in **Bans**, then set that detection to *Log only*, raise its threshold, or give them `anticheat.bypass` |

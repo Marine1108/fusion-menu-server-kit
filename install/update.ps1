@@ -278,18 +278,32 @@ try {
                 $added += $n
                 Say "  Added 'ensure $n' to server.cfg" 'Green'
             }
+            # file permissions (carcols fixer, handling editor, Script Configs, auto-updater): before the first ensure line
+            $fsLine = 'exec resources/[fusion]/fusion-core/permissions/filesystem.cfg'
+            if ($cfg -notmatch '(?m)^\s*exec\s+resources/\[fusion\]/fusion-core/permissions/filesystem\.cfg\s*$') {
+                $first = [regex]::Match($cfg, '(?m)^[ \t]*ensure[ \t]')
+                $block = '# Fusion file permissions (carcols fixer, handling editor, auto-updater)' + $nl + $fsLine + $nl
+                if ($first.Success) { $cfg = $cfg.Substring(0, $first.Index) + $block + $cfg.Substring($first.Index) }
+                else { $cfg = $cfg.TrimEnd() + $nl + $nl + $block }
+                $added += 'filesystem.cfg'
+                Say "  Added '$fsLine' to server.cfg" 'Green'
+            }
+            # the updater runs 'refresh' after it installs a module that did not exist before
+            $aceLine = 'add_ace resource.fusion-updater command allow'
+            if ($cfg -notmatch '(?m)^\s*add_ace\s+resource\.fusion-updater\s+command\s+allow') {
+                $first = [regex]::Match($cfg, '(?m)^[ \t]*ensure[ \t]')
+                $block = '# Lets the updater refresh the resource list after it installs a new module' + $nl + $aceLine + $nl
+                if ($first.Success) { $cfg = $cfg.Substring(0, $first.Index) + $block + $cfg.Substring($first.Index) }
+                else { $cfg = $cfg.TrimEnd() + $nl + $nl + $block }
+                $added += 'ace'
+                Say "  Added '$aceLine' to server.cfg" 'Green'
+            }
             # F10 > Script Configs "Start with the server": server.cfg runs Fusion's start list at its very end
             $execLine = 'exec resources/[fusion]/fusion-core/permissions/startup.cfg'
             if ($cfg -notmatch '(?m)^\s*exec\s+resources/\[fusion\]/fusion-core/permissions/startup\.cfg\s*$') {
                 $cfg = $cfg.TrimEnd() + $nl + $nl + '# Scripts set to "Start with the server" in F10 > Script Configs. Keep this line LAST.' + $nl + $execLine + $nl
                 $added += 'startup.cfg'
                 Say "  Added '$execLine' to the end of server.cfg" 'Green'
-            }
-            # the updater runs 'refresh' after it installs a module that did not exist before
-            if ($cfg -notmatch '(?m)^\s*add_ace\s+resource\.fusion-updater\s+command\s+allow') {
-                $cfg = $cfg.TrimEnd() + $nl + $nl + '# Lets the updater refresh the resource list after it installs a new module' + $nl + 'add_ace resource.fusion-updater command allow' + $nl
-                $added += 'ace'
-                Say "  Added 'add_ace resource.fusion-updater command allow' to server.cfg" 'Green'
             }
             if ($added.Count) {
                 Copy-Item -LiteralPath $cfgPath -Destination (Join-Path $BackupDir 'server.cfg')

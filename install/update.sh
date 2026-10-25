@@ -247,17 +247,33 @@ if [[ $MODE == fusion ]]; then
             fi
             say "  Added 'ensure $n' to server.cfg" "$c_grn"
         done
+    # file permissions (carcols fixer, handling editor, Script Configs, auto-updater): before the first ensure line
+    if ! grep -Eq '^[[:space:]]*exec[[:space:]]+resources/\[fusion\]/fusion-core/permissions/filesystem\.cfg' "$CFG"; then
+        [[ $backed_up == 1 ]] || { cp "$CFG" "$BACKUP_DIR/server.cfg"; backed_up=1; }
+        first="$(grep -nE '^[[:space:]]*ensure[[:space:]]' "$CFG" | head -n1 | cut -d: -f1)"
+        if [[ -n $first ]]; then
+            awk -v at="$first" 'NR == at { cr = (/\r$/ ? "\r" : ""); print "# Fusion file permissions (carcols fixer, handling editor, auto-updater)" cr; print "exec resources/[fusion]/fusion-core/permissions/filesystem.cfg" cr } { print }' "$CFG" > "$CFG.tmp" && mv "$CFG.tmp" "$CFG"
+        else
+            printf '\nexec resources/[fusion]/fusion-core/permissions/filesystem.cfg\n' >> "$CFG"
+        fi
+        say "  Added 'exec resources/[fusion]/fusion-core/permissions/filesystem.cfg' to server.cfg" "$c_grn"
+    fi
+    # the updater runs 'refresh' after it installs a module that did not exist before: above the first ensure line
+    if ! grep -Eq '^[[:space:]]*add_ace[[:space:]]+resource\.fusion-updater[[:space:]]+command[[:space:]]+allow' "$CFG"; then
+        [[ $backed_up == 1 ]] || { cp "$CFG" "$BACKUP_DIR/server.cfg"; backed_up=1; }
+        first="$(grep -nE '^[[:space:]]*ensure[[:space:]]' "$CFG" | head -n1 | cut -d: -f1)"
+        if [[ -n $first ]]; then
+            awk -v at="$first" 'NR == at { cr = (/\r$/ ? "\r" : ""); print "# Lets the updater refresh the resource list after it installs a new module" cr; print "add_ace resource.fusion-updater command allow" cr } { print }' "$CFG" > "$CFG.tmp" && mv "$CFG.tmp" "$CFG"
+        else
+            printf '\n# Lets the updater refresh the resource list after it installs a new module\nadd_ace resource.fusion-updater command allow\n' >> "$CFG"
+        fi
+        say "  Added 'add_ace resource.fusion-updater command allow' to server.cfg" "$c_grn"
+    fi
     # F10 > Script Configs "Start with the server": server.cfg runs Fusion's start list at its very end
     if ! grep -Eq '^[[:space:]]*exec[[:space:]]+resources/\[fusion\]/fusion-core/permissions/startup\.cfg' "$CFG"; then
         [[ $backed_up == 1 ]] || { cp "$CFG" "$BACKUP_DIR/server.cfg"; backed_up=1; }
         printf '\n# Scripts set to "Start with the server" in F10 > Script Configs. Keep this line LAST.\nexec resources/[fusion]/fusion-core/permissions/startup.cfg\n' >> "$CFG"
         say "  Added 'exec resources/[fusion]/fusion-core/permissions/startup.cfg' to the end of server.cfg" "$c_grn"
-    fi
-    # the updater runs 'refresh' after it installs a module that did not exist before
-    if ! grep -Eq '^[[:space:]]*add_ace[[:space:]]+resource\.fusion-updater[[:space:]]+command[[:space:]]+allow' "$CFG"; then
-        [[ $backed_up == 1 ]] || { cp "$CFG" "$BACKUP_DIR/server.cfg"; backed_up=1; }
-        printf '\n# Lets the updater refresh the resource list after it installs a new module\nadd_ace resource.fusion-updater command allow\n' >> "$CFG"
-        say "  Added 'add_ace resource.fusion-updater command allow' to server.cfg" "$c_grn"
     fi
     fi
 else
