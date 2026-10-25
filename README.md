@@ -192,9 +192,10 @@ Open with **F10** or `/admin`. Each tab only appears for staff with the matching
 | **Items** | Create and edit items: label, weight, picture, description, usable, unique, and what happens when used (hunger, thirst, health, armor, stress, animation) |
 | **Vehicles** | The vehicle catalog (every vanilla and addon vehicle): names, brands, prices, class, picture, hidden, permission or job restrictions |
 | **Handling** | In-game handling editor for addon vehicles. Saves straight into the vehicle's `handling.meta` |
+| **Sirens & Carcols** | Finds siren, light-settings and modkit IDs used by more than one vehicle pack (wrong sirens, lightbars or missing mods) and gives the clashing packs free IDs, with backups and undo |
 | **Anticheat** | Every detection with player, details and the action taken. Filter by detection, search, open the player, ban them, delete false positives, clear old detections |
 | **Logs** | Searchable history of admin actions, money, items, connections, jobs, settings and permission changes |
-| **Server** | Announcements, clean-up tools (empty vehicles, NPCs, props: within a distance of you, or the entire server), the **vehicle meta (carcols) fixer**, and start / stop / restart for any resource |
+| **Server** | Announcements, clean-up tools (empty vehicles, NPCs, props: within a distance of you, or the entire server), and start / stop / restart for any resource |
 
 ### Using your position in settings
 
@@ -627,7 +628,7 @@ Vanilla GTA vehicles keep their handling inside the game files, so only addon ve
 
 ### Vehicle meta (carcols) fixer
 
-When two vehicle packs use the same **siren**, **light settings** or **modkit** ID, cars get the wrong sirens or lightbar patterns, or lose liveries and mods. **F10 › Server › Vehicle meta (carcols) fixer** solves this:
+When two vehicle packs use the same **siren**, **light settings** or **modkit** ID, cars get the wrong sirens or lightbar patterns, or lose liveries and mods. **F10 › Sirens & Carcols** (its own page in the admin panel) solves this:
 
 1. **Scan vehicle packs:** reads every resource's `carcols.meta` and `carvariations.meta` and lists each clashing ID, which pack keeps it, and which packs need a new one.
 2. **Fix:** gives the clashing packs unused IDs and updates their `carcols.meta` and `carvariations.meta` together, so vehicles keep their own sirens, lights and mods. IDs keep their style: small siren/light IDs stay within 100-255 for older game builds, large ones stay large.
