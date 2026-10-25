@@ -680,9 +680,10 @@ When two vehicle packs use the same **siren**, **light settings** or **modkit** 
 * **Respawn mode (vMenu):** short timer, then respawn at the nearest hospital or where you died.
 * **Downed mode (RP):** players go down, then die after a timer. EMS revive them with the revive item (first aid kit), or they respawn after bleeding out, paying a bill and optionally losing items (with a keep list).
 * **Falling:** a fall longer than *Fatal fall height* (15 m by default) without an open parachute kills; landing in water is survivable.
-* **Pillbox Hill hospital you can walk into:** GTA has its own walk-in Pillbox lobby that multiplayer normally leaves switched off (only a painted fake interior shows behind the glass). *Open GTA's own Pillbox Hill hospital interior* (on by default, **Settings › Hospital › Locations**) switches it on, with working doors, so the default check-in desk and respawn point are inside. Turn it off if you install a Pillbox MLO.
+* **Pillbox Hill hospital you can walk into:** GTA has its own walk-in Pillbox lobby that multiplayer normally leaves switched off (only a painted fake interior shows behind the glass). *Open GTA's own Pillbox Hill hospital interior* (on by default, **Settings › Hospital › Locations**) switches it on as it was before the story mission's crash: the front doors back in place and the debris cleared away. Walk up to the front doors and press the interact key to go in or out. The default check-in desk and respawn point are inside. Turn it off if you install a Pillbox MLO.
 * **Places that need an MLO:** a teleport or respawn to a spot with no floor outside every GTA interior puts you on the nearest sidewalk instead of dropping you through the map.
 * EMS jobs, alerts to on-duty EMS, check-in desks (cost, treatment time, disabled when enough EMS are on duty), and hospital locations.
+* **Treatment beds:** a checked-in patient is taken to a free bed, lies on it while being treated, then gets up beside it. Each hospital has its own *Treatment beds* list (**Add bed here** while lying on or standing on a bed, facing the foot end); Pillbox comes with its 8 ward beds. A hospital without beds treats patients at the desk.
 
 ### Jail
 
