@@ -1025,7 +1025,57 @@ For servers where you can't run the updater (ZAP-Hosting and other txAdmin hosts
 
 ### Updating the installer tools
 
-The updater and script installer (`update-fusion.*`, `install-script.*`, `install/`) come from the free server kit. To get their newest version, download the kit zip from https://github.com/Marine1108/fusion-menu-server-kit/releases/latest and copy `install/`, `update-fusion.bat`, `update-fusion.sh`, `install-script.bat` and `install-script.sh` over your server folder. Nothing else in the kit needs copying on an existing server.
+The updater and script installer (`update-fusion.*`, `update-fxserver.*`, `install-script.*`, `install/`) come from the free server kit. To get their newest version, download the kit zip from https://github.com/Marine1108/fusion-menu-server-kit/releases/latest and copy `install/`, `update-fusion.bat`, `update-fusion.sh`, `update-fxserver.bat`, `update-fxserver.sh`, `install-script.bat` and `install-script.sh` over your server folder. Nothing else in the kit needs copying on an existing server.
+
+### Updating FiveM and txAdmin (FXServer)
+
+txAdmin is part of the FiveM server program (**FXServer**, also called the *artifacts*), so updating txAdmin means updating FXServer. When txAdmin says *"A patch update is available for txAdmin"*, this is what to do. It doesn't touch Fusion Menu, your scripts, the database, `server.cfg` or txAdmin's settings (`txData`).
+
+FiveM offers two builds:
+
+* **recommended**: tested by FiveM; the safe choice and what Fusion's installers use.
+* **latest**: the newest build, with the newest txAdmin patch. A brand-new txAdmin patch usually reaches *latest* days or weeks before *recommended*.
+
+Your txAdmin panel shows its version at the bottom of the menu, and the console prints the FXServer build when it starts.
+
+**Windows (installed with Fusion's installer)**
+
+1. Stop the server: txAdmin › **Stop Server**, or close the server window.
+2. In your server folder, double-click **`update-fxserver.bat`**. For the newest txAdmin patch, open a command prompt in the server folder and run `update-fxserver.bat latest`.
+3. When it says *FXServer updated to build …*, start the server again with the **Fusion txAdmin** (or **Start Fusion Server**) shortcut.
+
+It finds FXServer through the start shortcuts (normally `C:\FXServer`). If yours is somewhere else: `set FX_DIR=D:\path\to\FXServer` then `update-fxserver.bat`.
+
+**Linux VPS (installed with `install-linux.sh`)**
+
+Over SSH, in your server folder (e.g. `/home/fivem/fusion`):
+
+```bash
+sudo bash update-fxserver.sh          # recommended build
+sudo bash update-fxserver.sh latest   # newest build (newest txAdmin patch)
+```
+
+It stops the `fusion` service, swaps in the new FXServer, keeps txAdmin's `txData` where it is, and starts the service again. It finds FXServer through the `fusion` service (normally `/opt/fxserver`). If yours is somewhere else: `sudo FX_DIR=/path/to/fxserver bash update-fxserver.sh`.
+
+**Undo (Windows and Linux):** the previous build is kept until the next update. If the new one misbehaves, `update-fxserver.bat rollback` or `sudo bash update-fxserver.sh rollback` puts it back.
+
+**Game server hosts (ZAP-Hosting and others)**
+
+The host installs FXServer for you, so it's updated in their panel, not with files:
+
+1. Stop the server in the host's panel.
+2. Find the FiveM version setting. Hosts call it *Version*, *Server version*, *Artifact* or *FXServer build*, usually under *Settings* or the game server's *Versions* page.
+3. Choose **Recommended**, or **Latest** / the highest number for the newest txAdmin patch, and save. Some hosts reinstall the server program at this point; your files and database stay.
+4. Start the server.
+
+If you can't find the setting, ask the host's support to *"update FXServer artifacts to the latest build"*.
+
+**Installed FXServer yourself (txAdmin recipe on your own PC or VPS)**
+
+1. Stop the server.
+2. Download the build from FiveM: [Windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/) (`server.zip`) or [Linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/) (`fx.tar.xz`). The page marks the **recommended** and **latest** builds at the top.
+3. Unpack it over your FXServer folder, replacing the old files. **Don't delete the folder first** if txAdmin's `txData` is inside it.
+4. Start the server.
 
 ### Upgrading QBCore scripts and packs
 
