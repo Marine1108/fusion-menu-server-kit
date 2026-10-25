@@ -651,11 +651,18 @@ When two vehicle packs use the same **siren**, **light settings** or **modkit** 
 
 ### Stores
 
-**Settings › Stores:** **catalogs** (what is sold, prices, and an optional license such as `weapon`) and **store locations** (catalog, blip, optional shopkeeper ped, optional job). Choose between a menu list and the inventory shop screen (drag to buy). Paying by card when cash is short is optional.
+**Settings › Stores:** **catalogs** (what is sold, prices, and an optional license such as `weapon`) and **store locations** (what it sells, blip, optional shopkeeper ped, optional job). Choose between a menu list and the inventory shop screen (drag to buy). Paying by card when cash is short is optional.
+
+* Comes with 24/7 and LTD supermarkets, Rob's Liquor, You Tool hardware stores, Ammu-Nation, and Digital Den electronics, plus catalogs for each and a **Pharmacy** catalog (bandages, painkillers, first aid kits, IFAKs) ready for any store you add.
+* **Adding a store, live:** stand at the counter, click **Add store here**, name it and pick what it *Sells*. It appears for everyone straight away with its blip, prompt and shopkeeper. **Here** moves a store; delete the entry to remove it. No restart.
+* **A new kind of store:** add a catalog (e.g. *Bait Shop*) with its products, reopen F10, then add store locations that sell it.
 
 ### Fuel
 
 **Settings › Fuel & Gas Stations:** consumption overall and per vehicle class, price per liter, jerry can price, refuel speed, pump and EV-charger props, electric vehicles, low-fuel warning, NPC vehicle fuel, and station blips. Pumps work at every gas station automatically.
+
+* **Refuel points (aircraft, boats and your own stations):** areas where the driver refuels **from the seat** with the engine off: stop inside one and press the interact key. Each has a type (*Aircraft*, *Boats*, *Cars*, or *Every vehicle*), a radius, an optional job and a blip (blue for aviation fuel, teal for marine fuel). It comes with aviation fuel at LSIA, Sandy Shores Airfield, McKenzie Field and the Pillbox Hill, Mission Row and Vespucci helipads, and marine fuel at the LSYMC marina.
+* **Adding or moving them, live:** **Add refuel point here** where you stand, **Here** to move one, and the same for gas station blips (**Add blip here**). Everyone sees the change straight away, no restart.
 
 ### Hospital and death
 
