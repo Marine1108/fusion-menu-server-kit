@@ -194,7 +194,7 @@ Open with **F10** or `/admin`. Each tab only appears for staff with the matching
 | **Handling** | In-game handling editor for addon vehicles. Saves straight into the vehicle's `handling.meta` |
 | **Anticheat** | Every detection with player, details and the action taken. Filter by detection, search, open the player, ban them, delete false positives, clear old detections |
 | **Logs** | Searchable history of admin actions, money, items, connections, jobs, settings and permission changes |
-| **Server** | Announcements, clean-up tools (empty vehicles, NPCs, props), the **vehicle meta (carcols) fixer**, and start / stop / restart for any resource |
+| **Server** | Announcements, clean-up tools (empty vehicles, NPCs, props: within a distance of you, or the entire server), the **vehicle meta (carcols) fixer**, and start / stop / restart for any resource |
 
 ### Using your position in settings
 
@@ -305,7 +305,7 @@ Every module has a page in **F10 › Settings**, and the first switch on it turn
 
 * **Settings › Server:** server name, server-list description and tags (update live), Discord link, autosave interval, **whitelist** (only `server.whitelisted` can join), **maintenance mode** (only `server.maintenance` can join), join/leave messages.
 * **Settings › Interface:** menu title, subtitle and logo, accent colors, panel color and opacity, menu position (left/right/center) and size, notification position, money pop-ups, HUD, menu sounds, and whether players can walk/drive with the menu open.
-* **Logo:** the menu shows the Fusion logo until you set your own: put a PNG in `resources/[fusion]/fusion-core/html/img/`, run `ensure fusion-core`, and type the file name in *Logo*. To show no logo at all, leave *Logo* empty and turn off *Show the Fusion logo when no logo is set*.
+* **Logo:** the menu shows the Fusion logo until you set your own. Click **Upload** next to *Logo* in **Settings › Interface** and pick a picture (PNG, JPG, WebP, GIF or SVG): it shows for everyone straight away, no restart. You can also type a web link, or a file name from `resources/[fusion]/fusion-core/html/img/` (a file copied there only reaches players after `ensure fusion-core`). To show no logo at all, click **Clear** and turn off *Show the Fusion logo when no logo is set*. Every menu ends with *Fusion Menu by Fusion Menu Studios*.
 
 ### HUD and vehicle HUD
 
@@ -313,7 +313,7 @@ Every module has a page in **F10 › Settings**, and the first switch on it turn
 * **Every player can move their own HUD:** *Menu › Misc Settings › Edit HUD Layout* or `/hud`. Drag anything (cash, bank, job, status, vehicle HUD, notifications, progress bar, prompts) where you want it, and right-click to hide or show it. **Reset** restores the defaults. Layouts are saved per player.
 * **Settings › Interface › HUD:** turn the HUD, vehicle HUD and street/compass on or off, and decide whether players may move the HUD. Speed units (MPH / KM/H) are in **Settings › Vehicles**.
 * **Speedometer styles:** *Classic card*, *Analog dial* (needle gauge with an RPM ring), *Digital (LCD)*, *Sport* (shift-light ribbon) and *Minimal*. The server picks one in **Settings › Interface › HUD › Speedometer style**; with *Players can pick their own speedometer* on, each player chooses theirs in *Menu › Misc Settings › Speedometer*.
-* **Windshield HUD:** driving or riding in **first person** (press V until you're in the cockpit), the speedometer is replaced by a see-through display low on the windshield: speed, gear, RPM bar, turn signals, high beams, compass and street, fuel, and blinking *FASTEN SEATBELT* / *ENGINE DAMAGE* warnings. It works in every vehicle. The server can switch it off (**Settings › Interface › HUD**) and each player can too (*Menu › Misc Settings › Windshield HUD*). Players can move it with `/hud`.
+* **Windshield HUD:** driving or riding in **first person** (press V until you're in the cockpit), the speedometer is replaced by a see-through display low on the windshield: speed, gear, RPM bar, turn signals, high beams, compass and street, fuel, and blinking *FASTEN SEATBELT* / *ENGINE DAMAGE* warnings. It works in every vehicle. In a **plane or helicopter** it becomes a flight display: airspeed (knots), altitude and climb rate (feet), heading, an artificial horizon that follows your pitch and roll, radar altitude near the ground, landing gear, and a *TOO LOW · GEAR* warning. The server can switch it off (**Settings › Interface › HUD**) and each player can too (*Menu › Misc Settings › Windshield HUD*). Players can move it with `/hud`.
 
 ### Streaming & video (M › Streaming & Video)
 
@@ -353,6 +353,12 @@ Permissions: `media.streamer`, `media.videomode`, `media.freecam`, `media.record
 * *Only show on the minimap when nearby* keeps the minimap tidy. Blips always show on the full map.
 
 Banks, garages, stores, gas stations and hospitals put their own blips on the map from their own location lists, and those update live too.
+
+**Player blips** (Settings › Gameplay › Players) cover the whole map, updated every 2 seconds:
+
+* *Player blips on map*: staff with `admin.blips` see every player as `[id] name` (or set it to everyone, or off).
+* *Emergency services see each other on the map*: on-duty members of the jobs in *Jobs that share emergency blips* (police, sheriff, ambulance and fire by default) see each other, blue for police, red for EMS, orange for fire, with a car icon when driving.
+* Anyone can hide their own player blips with `/playerblips` (again to show them).
 
 ### Loading screen
 
@@ -403,16 +409,20 @@ controls, the menu, money and inventory, vehicles, phone and voice, homes, jobs,
   Weapons share one picture per type (handguns, SMGs, rifles, shotguns, snipers, machine guns, heavy, melee, throwables, misc), saved as `weapon_<name>.png` so you can replace any single weapon's picture. Addon weapons added in game use `weapontype_<type>.png` until you give them their own. An item with no picture shows its category's picture (`category_<category>.png`), and if that is missing too, an icon.
 
   The picture then shows everywhere: inventory, item pop-ups, stores and the admin panel. To use a different file name, or a web link (no restart needed), open the item in **F10 › Items** and set **Image**. Names must match exactly, including lowercase: on a Linux VPS `Energy_Drink.png` and `energy_drink.png` are different files. Until an item has a picture it shows its category icon. Items added by QBCore scripts use the same folder (copy in the images that come with the script), and qb-inventory's pictures work as-is because Fusion uses the same item names.
+* **ID cards and licenses:** using the *ID Card*, *Driver License*, *Weapon License* or *Pilot License* item shows the card itself to you and anyone within 3 m: the character's photo (taken from them as they are now), name, date of birth, sex, nationality and ID, while your character holds it up. **Settings › ID Cards & Licenses** changes each card live: the big name at the top (e.g. *State of San Andreas* → your city's name), the card title, its color, a seal or logo and a background picture (**Upload** or a link). Give licenses from the player's inventory in **F10 › Players**.
+* **Weapons and ammo (inventory mode):** a weapon holds the ammo stored on it. Press **R** with an empty weapon to load a matching ammo item from your inventory and reload, or use the ammo item. To put a weapon away, press its hotbar number again (or use it again from the inventory).
 * Players: **I** opens the inventory. Drag to move, right-click to use, drop items on *Use / Give / Drop*, set an amount to split a stack. At a vehicle's trunk it opens the trunk; inside a vehicle, the glovebox.
 
 ### Vehicles, garages and keys
 
 * **Spawner:** every vanilla and **addon** vehicle appears automatically, sorted by class. Addon packs (anything in `resources/[addons]` with a `vehicles.meta`) also get their own **Addon Vehicles** section. Packs started while the server is running (`ensure mypack`) show up within a few seconds, without players reconnecting. **Settings › Vehicles** controls spawning inside, replacing the previous vehicle, spawn cost (flat or catalog price), cooldown, plate format (`#` digit, `@` letter), list or picture-grid layout, saved vehicles, keys, locking NPC cars, the seatbelt, ejection speed and whether ejection hurts. Without a seatbelt a hard crash throws the driver or
 passenger through the windshield at the speed they were going, over the hood, ragdolling; with the seatbelt on
-nobody goes through.
+nobody goes through. *Ejection injuries* decides how bad it is: **seriously injured** (the default: left barely alive, and fatal 60 km/h above the ejection speed), **always fatal**, or **light**.
+* **Persistence (Settings › Vehicles › Persistence):** a vehicle a player spawned or drove stays in the world when everyone walks away. It is removed when it sits unused longer than *Remove after sitting unused* (5 minutes by default, 0 = never), when staff delete it, when its player leaves the server (can be turned off), or when the server restarts.
+* **Taken off the server:** when a vehicle's pack is removed from the server, or the vehicle is deleted in **F10 › Vehicles**, it disappears from its owners' garages and impound the next time they log in or open one, and with the economy on its catalog price goes back to their bank.
 * **Vehicles tab:** rename vehicles, set brand, price and class, hide a vehicle from the spawner, or restrict it to a permission or job (e.g. police cars for `police` only).
 * **Vehicle Options** (in a vehicle): repair, wash, flip, god mode, engine, doors, windows, seats, **extras**, **liveries**, mod menu, wheels, colors, neon and headlights, plate text and style, torque/power, speed limiter, give keys, delete.
-* **Settings › Garages & Impound:** garage and impound locations (car, air or boat; optional job), shared garages, **storing spawned vehicles** (they become owned, mods and all), max owned per character, impound fee, and sending vehicles left out to the impound on restart.
+* **Settings › Garages & Impound:** garage and impound locations (car, air or boat; optional job), shared garages, **storing spawned vehicles** (they become owned, mods and all), max owned per character, impound fee, and sending vehicles left out to the impound on restart. **Add garage here** / **Add impound lot here** creates one where you stand, and **Here** moves a point (the interaction marker, or the spot cars come out, facing the way you face). Everything changes live for every player: markers, blips and menus, no restart. A garage or impound menu closes when you walk away from it.
 * **Vehicle pictures:** `resources/[fusion]/fusion-vehicles/html/images/<model>.png`, then `ensure fusion-vehicles`.
 
 ### Siren controller and police radar
@@ -427,6 +437,10 @@ nobody goes through.
 | E (hold) | Left stick click (hold) | Air horn |
 
 Players can change all of these in **Settings › Key Bindings › FiveM**.
+
+With the lights or siren on, **AI traffic ahead pulls over to the right** and stops, then drives on once you have passed (Settings › Emergency Vehicles › Siren: on/off and how far ahead).
+
+**ULC (Ultimate Lighting Controls)** is included in `[standalone]`. ULC only shows its controller for vehicles whose pack it has been told about; Fusion does that for you: every started pack with a `ulc.lua` (or `data/ulc.lua`) is listed in `resources/[standalone]/ulc/config.local.fusion.lua`, and ULC is restarted when the list changes. Your own ULC `config.lua` is never touched.
 
 An on-screen **siren controller** (a control head with lit LIGHTS, SIREN and HORN buttons and a button for every tone) sits next to the speedometer. Press **F6** to use it with the mouse while you keep driving; F6 again gives the mouse back. Hide it from **Menu › Emergency** (or with `/hud`). Each vehicle only gets the tones of its service, like real US units:
 
@@ -649,6 +663,8 @@ When two vehicle packs use the same **siren**, **light settings** or **modkit** 
 
 * **Respawn mode (vMenu):** short timer, then respawn at the nearest hospital or where you died.
 * **Downed mode (RP):** players go down, then die after a timer. EMS revive them with the revive item (first aid kit), or they respawn after bleeding out, paying a bill and optionally losing items (with a keep list).
+* **Falling:** a fall longer than *Fatal fall height* (15 m by default) without an open parachute kills; landing in water is survivable.
+* **Places that need an MLO:** a teleport or respawn to a spot with no floor outside every GTA interior (for example inside Pillbox hospital when no Pillbox MLO is installed) puts you on the nearest sidewalk instead of dropping you through the map. Install a Pillbox MLO to use the inside of the hospital.
 * EMS jobs, alerts to on-duty EMS, check-in desks (cost, treatment time, disabled when enough EMS are on duty), and hospital locations.
 
 ### Jail
@@ -826,7 +842,7 @@ Fusion provides the full QBCore API:
 Every script you add (anything outside `[fusion]`) is listed with its config files (`config.lua`, `shared/config.lua`, `config/*.lua`, `settings.json` and the like). Scripts new since the last start are marked **New**.
 
 * **Settings:** every simple setting in the file (`Config.UseTarget = true`, `Config.Pay = 250`, `Config.Truck.Model = 'trash'` …) is listed with the comment written next to it in the file. Change values with switches and boxes, then **Save changes**. Only the value changes; the rest of the line, comments and layout stay exactly as they were.
-* **Edit as text:** the whole file in an editor, for lists, tables and anything else. A Lua file with an error (or broken JSON) is refused instead of saved, so a typo can't stop the script from loading.
+* **Edit as text:** the whole file in a large editor (the script list folds away while you edit; click **Settings** to bring it back), for lists, tables and anything else. A Lua file with an error (or broken JSON) is refused instead of saved, so a typo can't stop the script from loading.
 * **Auto-configure for Fusion:** Fusion answers to the QBCore names, so most scripts just need pointing at them. Fusion suggests the values: framework → the QBCore word the script itself checks for (`qb`, `qbcore` …), core resource → `qb-core`, inventory → `qb-inventory` / `qb`, target → `qb-target` (and *UseTarget* on), fuel → `LegacyFuel`, voice → `pma-voice`, keys → `qb-vehiclekeys`, notifications → `qb`, and so on. Uncheck anything you don't want and press **Apply selected**. Suggestions only appear for Fusion modules that are running.
 * **Restart the script after saving** is checked for running scripts, so changes apply straight away. **Restart script** is also on the page.
 * **Start with the server:** next to **Backups**, each script has one button. **Red** (*Add ensure (script name) to
