@@ -664,7 +664,8 @@ When two vehicle packs use the same **siren**, **light settings** or **modkit** 
 * **Respawn mode (vMenu):** short timer, then respawn at the nearest hospital or where you died.
 * **Downed mode (RP):** players go down, then die after a timer. EMS revive them with the revive item (first aid kit), or they respawn after bleeding out, paying a bill and optionally losing items (with a keep list).
 * **Falling:** a fall longer than *Fatal fall height* (15 m by default) without an open parachute kills; landing in water is survivable.
-* **Places that need an MLO:** a teleport or respawn to a spot with no floor outside every GTA interior (for example inside Pillbox hospital when no Pillbox MLO is installed) puts you on the nearest sidewalk instead of dropping you through the map. Install a Pillbox MLO to use the inside of the hospital.
+* **Pillbox Hill hospital you can walk into:** GTA has its own walk-in Pillbox lobby that multiplayer normally leaves switched off (only a painted fake interior shows behind the glass). *Open GTA's own Pillbox Hill hospital interior* (on by default, **Settings › Hospital › Locations**) switches it on, with working doors, so the default check-in desk and respawn point are inside. Turn it off if you install a Pillbox MLO.
+* **Places that need an MLO:** a teleport or respawn to a spot with no floor outside every GTA interior puts you on the nearest sidewalk instead of dropping you through the map.
 * EMS jobs, alerts to on-duty EMS, check-in desks (cost, treatment time, disabled when enough EMS are on duty), and hospital locations.
 
 ### Jail
@@ -910,8 +911,12 @@ Every key below is a FiveM key binding: each player can change it in *GTA Settin
 | **Q / E**, **Left Shift / Left Ctrl** | Noclip up / down, faster / slower | Staff |
 | **Backspace** | Stop spectating | Staff |
 | **Delete** | Delete the entity under the entity laser | Staff |
+| **E / Q**, **Left Shift / Left Ctrl**, mouse wheel, **Z / C**, **X**, **Backspace** | Free camera: up / down, faster / slower, zoom, tilt, level, leave | Players with `media.freecam` |
+| Controller: **D-pad left / B / D-pad down**, hold **left stick** | Emergency lights / siren / next tone / air horn | Per job / permission |
 
-Three things follow GTA's own controls instead (change them in GTA's normal key bindings): walking in noclip and turning your character in the appearance editor (your walking keys), **Esc** to close the menu, and the controller D-pad in menus.
+Fusion add-ons work the same way: the **Fusion Interior Builder**'s build-mode keys are listed as *Fusion Builder: ...*.
+
+Four things follow GTA's own controls instead (change them in GTA's normal key bindings): walking in noclip and the free camera and turning your character in the appearance editor (your walking keys), **R** to reload (GTA's *Reload* key; with an empty weapon it loads ammo from your inventory), **Esc** to close the menu, and the controller D-pad in menus.
 
 In the menu: **↑↓** move, **←→** change values, **Enter** select, **Backspace** back, **Esc** close. Players can keep walking and driving while it's open.
 
