@@ -198,7 +198,9 @@ Open with **F10** or `/admin`. Each tab only appears for staff with the matching
 
 ### Using your position in settings
 
-Every location setting (garages, stores, stashes, hospitals, banks, spawns, teleports…) has a **Here** button that fills in your current position and heading. When you add a new entry to a list, it starts at your position automatically. Stand where you want the thing, click **Add**, give it a name, done.
+Every location setting (garages, stores, stashes, hospitals, banks, spawns, teleports…) has a **Here** button that fills in your current position and heading. When you add a new entry to a list, every position in it starts where you stand. Stand where you want the thing, click **Add**, give it a name, done. Changes to locations (garages, impound lots, stores, dealerships, refuel points, blips…) show for every player straight away, with no restart.
+
+Lists to pick from (items, weapons, vehicles, jobs, store catalogs…) stay up to date while F10 is open: an item, weapon, vehicle or catalog added in game appears in every list at once.
 
 ### Staff hierarchy
 
@@ -424,6 +426,12 @@ nobody goes through. *Ejection injuries* decides how bad it is: **seriously inju
 * **Vehicle Options** (in a vehicle): repair, wash, flip, god mode, engine, doors, windows, seats, **extras**, **liveries**, mod menu, wheels, colors, neon and headlights, plate text and style, torque/power, speed limiter, give keys, delete.
 * **Settings › Garages & Impound:** garage and impound locations (car, air or boat; optional job), shared garages, **storing spawned vehicles** (they become owned, mods and all), max owned per character, impound fee, and sending vehicles left out to the impound on restart. **Add garage here** / **Add impound lot here** creates one where you stand, and **Here** moves a point (the interaction marker, or the spot cars come out, facing the way you face). Everything changes live for every player: markers, blips and menus, no restart. A garage or impound menu closes when you walk away from it.
 * **Vehicle pictures:** `resources/[fusion]/fusion-vehicles/html/images/<model>.png`, then `ensure fusion-vehicles`.
+
+**Dealerships (Settings › Vehicle Dealerships):** where players buy cars, aircraft and boats. Comes with Premium Deluxe Motorsport (cars), Elitas Travel at LSIA (planes and helicopters) and the Puerta del Sol marina (boats).
+
+* **What is for sale comes from the vehicle catalog (F10 › Vehicles):** every vehicle with a price, sorted by class, picked by the dealership's type: *Cars, bikes and trucks*, *Aircraft*, *Boats* or *Everything*. *Only these classes* narrows it further (e.g. a motorcycle dealer, or a police dealership with the Emergency class and a job). New and add-on vehicles are for sale as soon as they are in the catalog; change a price, hide a vehicle or limit it to a job or permission there, and dealerships follow at once. Without a class list, car dealerships never sell service, emergency or military vehicles.
+* **Buying:** walk up to the green marker, press the interact key, pick a class, and look through the vehicles. The one you are on stands at the dealership for you to see. Buying registers it to you (with its keys) and it comes out at the dealership; park it in any garage to keep it there. *Price multiplier* scales every price, and with the economy off vehicles are free (optional).
+* **Adding or moving a dealership, live:** **Add dealership here** where customers should stand, then stand where bought vehicles should appear, facing the way they should point, and click **Here** next to *Vehicle comes out here*. Blips, markers and stock update for everyone straight away, no restart.
 
 ### Siren controller and police radar
 
