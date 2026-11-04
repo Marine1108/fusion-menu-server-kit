@@ -1,12 +1,16 @@
-FUSION MENU - COMMERCIAL LICENSE
-Copyright (c) 2026 Fusion Menu Studios. All rights reserved.
+FUSION - COMMERCIAL LICENSE
+Copyright (c) 2026 Fusion Platform Technologies LLC. All rights reserved.
 
-This license applies to "Fusion Menu" (the "Software"): every resource whose
-name starts with "fusion-", the compatibility resources in "[compat]", the
-installers, documentation and artwork, as supplied by Fusion Menu Studios.
+This license applies to the Fusion product you obtained (the "Software"):
+Fusion Menu, a framework (a set of resources) that you add to your own FiveM
+server, and each add-on sold separately (such as Fusion Lighting, Fusion
+Aerial and Fusion Interior Builder): every resource whose name starts with
+"fusion-", and its documentation and artwork, as supplied by Fusion Platform
+Technologies LLC. Each product is licensed on its own, to those who obtained
+it. The free server kit is covered by section 4.
 
 1. LICENSE GRANT
-   When you obtain the Software through an official Fusion Menu Studios store,
+   When you obtain the Software through an official Fusion Platform Technologies LLC store,
    you ("Licensee") receive a non-exclusive, non-transferable, worldwide license
    to:
      a) install and run the Software on FiveM servers that you own or operate;
@@ -29,31 +33,40 @@ installers, documentation and artwork, as supplied by Fusion Menu Studios.
    selling the Software itself is not.
 
 3. CREDIT
-   You must give credit to Fusion Menu Studios:
+   You must give credit to Fusion Platform Technologies LLC:
      a) keep this LICENSE file and all copyright notices in the Software;
-     b) do not remove or hide the "Fusion Menu by Fusion Menu Studios" credit
-        that the Software displays (loading screen, admin panel and server
-        console);
+     b) do not remove or hide the "Fusion Menu by Fusion Platform
+        Technologies" credit that Fusion Menu displays (loading screen, admin
+        panel and server console);
      c) when you publicly describe your server's framework, credit it as
-        "Fusion Menu by Fusion Menu Studios".
+        "Fusion Menu by Fusion Platform Technologies".
 
-4. THIRD-PARTY COMPONENTS
-   The following are included for convenience and remain under their own
-   licenses, which this license does not change:
+4. FREE SERVER KIT AND THIRD-PARTY COMPONENTS
+   The free server kit (the installers and setup tools, the server.cfg
+   template and the QBCore compatibility bridges in "[compat]") is not part of
+   the paid Software. It is free of charge: you may use, modify and share it,
+   but you may not sell it. It is provided "as is" (section 7).
+   The kit also includes the following, which remain under their own
+   licenses:
      - oxmysql (Overextended) - GNU LGPL v3.0 or later
      - default Cfx.re resources in "[cfx-default]" - MIT License
-   QBCore is a trademark/project of its respective owners; Fusion Menu provides
-   compatibility with its API and is not affiliated with it.
+   The built-in postal code sets in fusion-core/data/postals come from
+   nearest-postal (MIT License, Copyright (c) 2019 BlockBa5her); its license
+   is included next to them. The fonts Oswald, Barlow Semi Condensed and Libre
+   Baskerville are under the SIL Open Font License, included next to them.
+   QBCore and the other projects named in the documentation belong to their
+   respective owners. Fusion Menu is compatible with some of their APIs and
+   is not affiliated with or endorsed by them.
 
 5. OWNERSHIP
-   The Software is licensed, not sold. Fusion Menu Studios keeps all rights,
+   The Software is licensed, not sold. Fusion Platform Technologies LLC keeps all rights,
    title and interest in the Software. Any rights not expressly granted here
    are reserved.
 
 6. TERMINATION
    This license ends automatically if you break any of its terms. On
    termination you must stop using the Software and delete all copies,
-   including modified versions. Fusion Menu Studios may revoke access to
+   including modified versions. Fusion Platform Technologies LLC may revoke access to
    updates and downloads for accounts that break this license.
 
 7. NO WARRANTY
@@ -62,7 +75,7 @@ installers, documentation and artwork, as supplied by Fusion Menu Studios.
    NON-INFRINGEMENT.
 
 8. LIMITATION OF LIABILITY
-   IN NO EVENT SHALL FUSION MENU STUDIOS BE LIABLE FOR ANY CLAIM, DAMAGES, LOSS
+   IN NO EVENT SHALL FUSION PLATFORM TECHNOLOGIES LLC BE LIABLE FOR ANY CLAIM, DAMAGES, LOSS
    OF DATA OR OTHER LIABILITY ARISING FROM THE USE OF, OR INABILITY TO USE, THE
    SOFTWARE, EXCEPT WHERE SUCH LIMITATION IS NOT PERMITTED BY LAW.
 

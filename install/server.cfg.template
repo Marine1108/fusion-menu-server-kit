@@ -16,7 +16,7 @@ sv_licenseKey "{{svLicense}}"
 sv_hostname "{{serverName}}"
 sets sv_projectName "{{serverName}}"
 sets sv_projectDesc "Powered by Fusion Menu"
-sets tags "fusion, vmenu, qbcore, roleplay"
+sets tags "fusion, freeroam, qbcore, roleplay"
 sets locale "en-US"
 sv_scriptHookAllowed 0
 

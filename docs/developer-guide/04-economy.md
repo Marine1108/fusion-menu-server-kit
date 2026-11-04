@@ -47,7 +47,7 @@ Check the result: **take the money first, then hand out the item or service**, a
 
 ### "Economy off" servers
 
-Owners can turn the economy off (**Settings › Economy › Enable economy**) for a vMenu-style freeroam server. Then:
+Owners can turn the economy off (**Settings › Economy › Enable economy**) for a freeroam server. Then:
 
 * `RemoveMoney` returns **`true` without taking anything**, so purchases, fines and fees just work and are free,
 * money is hidden from the HUD, and paychecks, banks and giving cash are off.

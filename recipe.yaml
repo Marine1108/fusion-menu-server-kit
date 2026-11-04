@@ -13,7 +13,7 @@ $onesync: on
 name: Fusion Menu
 version: 1.0.0
 author: Fusion Menu
-description: vMenu-style FiveM framework that runs QBCore scripts unmodified. Everything - settings, permissions, locations, jobs, items - is configured in game.
+description: FiveM framework for freeroam and roleplay, compatible with QBCore scripts unmodified. Everything - settings, permissions, locations, jobs, items - is configured in game.
 
 tasks:
   - action: download_github

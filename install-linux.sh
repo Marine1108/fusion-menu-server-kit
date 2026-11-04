@@ -82,6 +82,16 @@ add_fusion() {
     tmp="$(mktemp -d)"
     unzip -q "$z" -d "$tmp"
     mkdir -p "$ROOT/resources/[fusion]"
+    # older zips also held the QBCore bridges, which now come with the free kit in [compat]:
+    # update those copies instead of making a second resource of the same name
+    local d name
+    for d in "$tmp/$prefix"*/; do
+        name="$(basename "$d")"
+        if [[ $name != fusion-* && -d "$ROOT/resources/[fusion]/[compat]/$name" ]]; then
+            cp -a "$d". "$ROOT/resources/[fusion]/[compat]/$name/"
+            rm -rf "$d"
+        fi
+    done
     cp -a "$tmp/$prefix". "$ROOT/resources/[fusion]/"
     rm -rf "$tmp"
     c_ok "Fusion Menu unpacked into resources/[fusion]"

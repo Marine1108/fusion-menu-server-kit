@@ -39,6 +39,10 @@ function Expand-Fusion($path) {
             if (-not $name.StartsWith($prefix) -or $name.EndsWith('/')) { continue }
             $rel = $name.Substring($prefix.Length)
             if ($rel -match '(^|/)\.\.(/|$)') { continue }
+            # older zips also held the QBCore bridges, which now come with the free kit in [compat]:
+            # update those copies instead of making a second resource of the same name
+            $top = $rel.Split('/')[0]
+            if ($top -notlike 'fusion-*' -and $rel.Contains('/') -and (Test-Path -LiteralPath (Join-Path $target "[compat]\$top"))) { $rel = "[compat]/$rel" }
             # never overwrite the owner's own edits or pictures on an update
             if ($rel -match '/html/(img|images|media|sounds)/' -and (Test-Path -LiteralPath (Join-Path $target $rel))) { continue }
             $out = Join-Path $target ($rel -replace '/', '\')

@@ -218,7 +218,7 @@ nav.toc a::after { content: target-counter(attr(href), page); margin-left: auto;
         <div class="sec-head"><h2>First join</h2><button class="copy" type="button">Copy for Discord</button></div>
         <ul>
           <li>The first time you join, a short <b>server guide</b> shows before you pick a character. Open it again any time with <code>/guide</code> or <b>M › Server Guide</b>.</li>
-          <li><b>Create a character</b>: name, date of birth, nationality. New characters usually open the appearance editor so you can dress them.</li>
+          <li><b>Create a character</b>: name, date of birth, nationality. New characters usually open the appearance editor so you can dress them. At the bottom of each of its menus, <b>Camera</b> keeps the view on one part of your body (head, hands, waist, feet, back…) and <b>Turn Character</b> turns you around; holding A / D turns you too.</li>
           <li><b>Pick where to spawn</b> from the spawn screen: city locations, your last location, or one of your homes once you own one.</li>
           <li>Change character later with <b>M › Switch Character</b> or <code>/logout</code>.</li>
         </ul>
@@ -262,7 +262,7 @@ nav.toc a::after { content: target-counter(attr(href), page); margin-left: auto;
             <tr><td>My Home</td><td>Storage, wardrobe, visitors, keys and selling, once you own a home</td></tr>
             <tr><td>Emergency</td><td>Siren, radar and PIT tools for police, fire and EMS</td></tr>
             <tr><td>Streaming &amp; Video</td><td>Streamer mode, video mode, free camera and the recorder</td></tr>
-            <tr><td>Misc Settings</td><td>HUD layout, speedometer style, windshield HUD, show location and more</td></tr>
+            <tr><td>Misc Settings</td><td>HUD layout, speedometer style, windshield HUD, terrain warning, show location and more</td></tr>
             <tr><td>Help &amp; Reports</td><td>Call an admin, report a player, ask a question</td></tr>
             <tr><td>Switch Character</td><td>Back to the character screen</td></tr>
           </tbody>
@@ -272,9 +272,10 @@ nav.toc a::after { content: target-counter(attr(href), page); margin-left: auto;
       <section id="hud" data-title="Your HUD">
         <div class="sec-head"><h2>Your HUD</h2><button class="copy" type="button">Copy for Discord</button></div>
         <ul>
-          <li>On foot you see your server ID, cash, bank, job and status. In a vehicle you also get speed, gear, fuel, seatbelt, lock, street, compass and postal code.</li>
+          <li>On foot you see your server ID, cash, bank, job and status. In a vehicle you also get speed, gear, fuel, seatbelt, lock, street, compass and postal code, and a speed limit sign next to the minimap that turns red when you're speeding (<code>/speedlimit</code> shows the limit of the road you're on).</li>
           <li><b>Move it:</b> <code>/hud</code> or <b>M › Misc Settings › Edit HUD Layout</b>. Drag anything where you want it, right-click to hide it, <b>Reset</b> to start over. Your layout is saved.</li>
           <li><b>Speedometer style:</b> Classic, Analog dial, Digital, Sport or Minimal in <b>M › Misc Settings › Speedometer</b> (if the server lets players choose).</li>
+          <li><b>Flying:</b> in a plane or helicopter the speedometer shows your airspeed, altitude, height above the ground, climb rate and heading, plus your <b>ground speed</b> in its own section (the speed to call out when following a vehicle). A <b>terrain warning</b> (PULL UP, SINK RATE, TERRAIN AHEAD) sounds when you're about to hit something; turn it off in <b>M › Misc Settings</b>.</li>
           <li><b>Windshield HUD:</b> drive in first person (<kbd>V</kbd>) and your speed, gear, signals and warnings show low on the windshield. Turn it off in <b>M › Misc Settings</b>.</li>
         </ul>
       </section>
@@ -307,6 +308,7 @@ nav.toc a::after { content: target-counter(attr(href), page); margin-left: auto;
           <li><b>Wear your seatbelt</b> (<kbd>B</kbd>). Without it, a hard crash throws you through the windshield, and the faster you were going, the more it hurts. You can't get out while you're buckled.</li>
           <li><b>Garages:</b> at a garage marker press <kbd>E</kbd>: in a car to park it, on foot to take one out. Cars left out may go to the <b>impound</b> after a restart; getting them back costs a fee.</li>
           <li><b>Fuel:</b> pull up to a pump and press <kbd>E</kbd>. Press <kbd>G</kbd> there to buy a jerry can. Electric cars charge at chargers.</li>
+          <li><b>Jerry cans</b> keep the fuel left in them. With the can in hand: <kbd>E</kbd> at a car pours it in, <kbd>E</kbd> at a pump fills it up, <kbd>G</kbd> puts it back in your inventory. It fits in a trunk too.</li>
           <li><b>Weather matters:</b> rain makes the roads slippery, snow and ice more so, and deep water makes you aquaplane. The HUD says <i>Wet roads</i>, <i>Snow on roads</i> or <i>Icy roads</i>.</li>
         </ul>
       </section>
@@ -343,6 +345,8 @@ nav.toc a::after { content: target-counter(attr(href), page); margin-left: auto;
           <li>A <b>green marker</b> at a door means something is for sale. Press <kbd>E</kbd> to <b>Look inside</b>, then <b>Buy</b>. Apartment buildings have one apartment per player; a house has one owner.</li>
           <li>At your door: <b>Go inside</b> and <b>Lock / Unlock</b>. In apartment buildings, <b>Residents</b> lets you ring someone's doorbell; they let you in from <b>M › My Home</b>.</li>
           <li><b>M › My Home</b>: storage, wardrobe, visitors, waypoints, <b>Give a key</b>, take keys back, and <b>Sell</b>.</li>
+          <li>Put your storage and wardrobe where you like: stand at a shelf or closet and pick <b>Put my storage here</b> / <b>Put my wardrobe here</b> in <b>M › My Home</b>. Then press <kbd>E</kbd> at the marker. The wardrobe lets you change clothes and use your saved outfits for free.</li>
+          <li><b>My Outfits</b>: open a saved outfit to wear it, <b>Rename</b> it, or <b>Update With What I'm Wearing</b> to re-save it after changing a piece (handy when an EUP update moves something).</li>
           <li><b>Your garage:</b> every home can have one. Park and take out your cars there; key holders can use it too, and each person only sees their own cars.</li>
           <li><b>Leaving:</b> at any exit (front door, balcony, back door) pick where you come out: any entrance of the home, or straight to its garage.</li>
           <li>Your homes appear on the spawn screen, so you can start the day at home. Log off inside and you come back outside the door.</li>
@@ -368,7 +372,7 @@ nav.toc a::after { content: target-counter(attr(href), page); margin-left: auto;
           <div class="key-row"><div class="k"><kbd>E</kbd> hold</div><div>Air horn</div></div>
           <div class="key-row"><div class="k">Controller</div><div>D-pad left lights, <kbd>B</kbd> siren, D-pad down tone, hold the left stick for the air horn</div></div>
           <div class="key-row"><div class="k"><kbd>F6</kbd></div><div>Use the siren controller and radar remote with the mouse</div></div>
-          <div class="key-row"><div class="k"><kbd>F5</kbd></div><div>Radar power (police)</div></div>
+          <div class="key-row"><div class="k"><kbd>F5</kbd></div><div>Radar power (police). It runs a self test, then reads: the TARGET window shows the strongest vehicle in the beam, FAST anything faster, LOCK what you locked (Numpad 8 / 5). Set each antenna to oncoming, same-direction or both traffic, the range, Doppler audio and the look of the display in <b>M › Emergency</b> or on the remote (F6).</div></div>
           <div class="key-row"><div class="k"><kbd>Num 8</kbd> <kbd>Num 5</kbd></div><div>Lock front / rear speed</div></div>
           <div class="key-row"><div class="k"><kbd>Num 9</kbd> <kbd>Num 6</kbd></div><div>Lock front / rear plate</div></div>
           <div class="key-row"><div class="k"><kbd>Num 0</kbd></div><div>Start or reset the PIT timer</div></div>
@@ -384,9 +388,12 @@ nav.toc a::after { content: target-counter(attr(href), page); margin-left: auto;
         <div class="sec-head"><h2>Getting hurt</h2><button class="copy" type="button">Copy for Discord</button></div>
         <ul>
           <li>Depending on the server, you either <b>respawn</b> at a hospital after a short timer, or go <b>down</b> and wait for EMS to revive you before a timer runs out.</li>
-          <li>Call EMS from the phone's <b>911</b> app. On-duty EMS get your location.</li>
+          <li>While down, press <kbd>G</kbd> to call EMS, or call from the phone's <b>911</b> app. On-duty EMS get your location. If no EMS are on duty, an <b>AI ambulance</b> comes and a paramedic revives you, for a fee.</li>
+          <li>Rather not wait? Hold <kbd>H</kbd> to give up and respawn at the hospital.</li>
           <li>No EMS around? Use the <b>hospital check-in</b> desk (<kbd>E</kbd>) for treatment, for a fee.</li>
           <li>Bleeding out usually costs a hospital bill, and some servers take items.</li>
+          <li><b>Fire</b> sets you alight: molotovs, burning cars and building fires. Get clear, or jump in water to put it out.</li>
+          <li><b>BZ gas and tear gas</b> blur your screen, make you cough and stop you sprinting while you're in the cloud. Get out of it, or wear a gas mask if your server has them.</li>
         </ul>
       </section>
 
@@ -394,7 +401,7 @@ nav.toc a::after { content: target-counter(attr(href), page); margin-left: auto;
         <div class="sec-head"><h2>Weather</h2><button class="copy" type="button">Copy for Discord</button></div>
         <ul>
           <li>The weather changes through the day, and the phone's <b>Weather</b> app shows what's coming.</li>
-          <li><b>Severe weather</b> (thunderstorm, flood, hurricane, tornado, blizzard) comes with a warning banner and a countdown. Outdoor sirens sound for tornadoes and hurricanes.</li>
+          <li><b>Severe weather</b> (thunderstorm, flood, hurricane, tornado, blizzard, hailstorm) comes with a warning banner and a countdown. Outdoor sirens sound for tornadoes and hurricanes.</li>
           <li>Floods raise the water, tornadoes pick up cars and people, and lightning can hurt you on foot. Get indoors or drive away from the danger zone on the map.</li>
         </ul>
       </section>

@@ -1,6 +1,8 @@
 # Fusion Menu — Server Owner's Guide
 
-Fusion Menu is a complete FiveM server: a framework that **plays like vMenu**, **runs QBCore scripts without modification**, and is **configured entirely in game**. Settings, permissions, locations, jobs, items, vehicles, prices and every feature toggle live in the admin panel. The only files you ever add are pictures, music and new resources.
+Fusion Menu is a FiveM framework: a set of resources (`fusion-core`, `fusion-inventory`, `fusion-vehicles` and the other `fusion-…` modules) that you add to your FiveM server. It works for **freeroam and roleplay**, is **compatible with QBCore scripts without modification**, and is **configured entirely in game**. Settings, permissions, locations, jobs, items, vehicles, prices and every feature toggle live in the admin panel. The only files you ever add are pictures, music and new resources.
+
+**What you get:** the Fusion Menu resources come from the Cfx.re portal after buying. Everything else in this guide (the installers, the `server.cfg` template, the txAdmin recipe and the QBCore compatibility bridges in `[compat]`) is the **free server kit**: optional tools that set up a FiveM server for Fusion Menu, or add Fusion Menu to the server you already have.
 
 **As a PDF:** this guide is also the [Fusion Server Owner's Guide (PDF)](docs/owner-guide/Fusion-Server-Owner-Guide.pdf), which is in the server kit too.
 
@@ -65,7 +67,7 @@ FusionMenu/                          ← your server data folder
    │  ├─ fusion-hospital             death, respawning, EMS
    │  ├─ fusion-jail                 prison
    │  ├─ fusion-weather              weather and time sync
-   │  └─ [compat]                    qb-core, qb-menu, qb-input, progressbar (QBCore compatibility)
+   │  └─ [compat]                    qb-core, qb-menu, qb-input, progressbar: free QBCore compatibility bridges (server kit)
    ├─ [standalone]
    │  └─ screenshot-basic            screenshots for other scripts (CCTV, evidence, MDTs, phone cameras)
    ├─ [qb]                           ← put QBCore scripts here
@@ -270,7 +272,7 @@ The **Permissions** tab lists every node with a description, so you don't need t
 
 ### Replacing a Fusion module with another script
 
-Every Fusion module can be swapped for a script you prefer. In **Settings › Modules**, turn off *Use Fusion's phone* (or inventory, voice, targeting, fuel, garages, hospital, jail, stores, weapons, appearance, sirens/radar, weather, loading screen or anticheat), then install the replacement in `resources/[qb]`. Fusion stops its own module straight away and after every restart, and the rest of Fusion keeps working without it. Turn the switch back on to return to Fusion's version. `install-script` refuses scripts Fusion already replaces until you turn Fusion's version off and run it with `-Force` (`--force` on Linux).
+Every Fusion module can be swapped for a script you prefer. In **Settings › Modules**, turn off *Use Fusion's phone* (or inventory, voice, targeting, fuel, garages, hospital, jail, door locks, stores, weapons, appearance, sirens/radar, weather, loading screen or anticheat), then install the replacement in `resources/[qb]`. Fusion stops its own module straight away and after every restart, and the rest of Fusion keeps working without it. Turn the switch back on to return to Fusion's version. `install-script` refuses scripts Fusion already replaces until you turn Fusion's version off and run it with `-Force` (`--force` on Linux).
 
 Every module has a page in **F10 › Settings**, and the first switch on it turns the whole module on or off. Changes apply instantly for everyone.
 
@@ -281,13 +283,14 @@ Every module has a page in **F10 › Settings**, and the first switch on it turn
 | Vehicles | Enable vehicle module | Spawner, saved vehicles, keys and seatbelt also have their own switches |
 | Garages & Impound | Enable garages | |
 | Emergency Vehicles | Enable emergency vehicle features | Siren controller and radar each have their own switch |
-| Weapons | Enable weapon module | **Mode:** free (vMenu) or inventory items (RP) |
+| Weapons | Enable weapon module | **Mode:** free (freeroam) or inventory items (RP) |
 | Appearance & EUP | Enable appearance module | *Editor available anywhere* vs stores only |
 | Inventory | Enable inventory | Hotbar, giving and dropping have their own switches |
 | Stores | Enable stores | |
 | Fuel & Gas Stations | Enable fuel | Off = vehicles never run out |
-| Hospital & Death | Enable hospital module | **Death mode:** respawn (vMenu) or downed/bleed-out (RP) |
+| Hospital & Death | Enable hospital module | **Death mode:** respawn (freeroam) or downed/bleed-out (RP) |
 | Jail | Enable jail | |
+| Door Locks | Enable door locks | The doors themselves are listed on the same page |
 | Weather & Time | Sync weather & time | |
 | Targeting | Enable targeting | |
 | Player Guide | Show the guide to new players | |
@@ -308,7 +311,7 @@ Every module has a page in **F10 › Settings**, and the first switch on it turn
 
 * **Settings › Server:** server name, server-list description and tags (update live), Discord link, autosave interval, **whitelist** (only `server.whitelisted` can join), **maintenance mode** (only `server.maintenance` can join), join/leave messages.
 * **Settings › Interface:** menu title, subtitle and logo, accent colors, panel color and opacity, menu position (left/right/center) and size, notification position, money pop-ups, HUD, menu sounds, and whether players can walk/drive with the menu open.
-* **Logo:** the menu shows the Fusion logo until you set your own. Click **Upload** next to *Logo* in **Settings › Interface** and pick a picture (PNG, JPG, WebP, GIF or SVG): it shows for everyone straight away, no restart. You can also type a web link, or a file name from `resources/[fusion]/fusion-core/html/img/` (a file copied there only reaches players after `ensure fusion-core`). To show no logo at all, click **Clear** and turn off *Show the Fusion logo when no logo is set*. Every menu ends with *Fusion Menu by Fusion Menu Studios*.
+* **Logo:** the menu shows the Fusion logo until you set your own. Click **Upload** next to *Logo* in **Settings › Interface** and pick a picture (PNG, JPG, WebP, GIF or SVG): it shows for everyone straight away, no restart. You can also type a web link, or a file name from `resources/[fusion]/fusion-core/html/img/` (a file copied there only reaches players after `ensure fusion-core`). To show no logo at all, click **Clear** and turn off *Show the Fusion logo when no logo is set*. Every menu ends with *Fusion Menu by Fusion Platform Technologies*.
 
 ### HUD and vehicle HUD
 
@@ -316,7 +319,9 @@ Every module has a page in **F10 › Settings**, and the first switch on it turn
 * **Every player can move their own HUD:** *Menu › Misc Settings › Edit HUD Layout* or `/hud`. Drag anything (cash, bank, job, status, vehicle HUD, notifications, progress bar, prompts) where you want it, and right-click to hide or show it. **Reset** restores the defaults. Layouts are saved per player.
 * **Settings › Interface › HUD:** turn the HUD, vehicle HUD and street/compass on or off, and decide whether players may move the HUD. Speed units (MPH / KM/H) are in **Settings › Vehicles**.
 * **Speedometer styles:** *Classic card*, *Analog dial* (needle gauge with an RPM ring), *Digital (LCD)*, *Sport* (shift-light ribbon) and *Minimal*. The server picks one in **Settings › Interface › HUD › Speedometer style**; with *Players can pick their own speedometer* on, each player chooses theirs in *Menu › Misc Settings › Speedometer*.
-* **Windshield HUD:** driving or riding in **first person** (press V until you're in the cockpit), the speedometer is replaced by a see-through display low on the windshield: speed, gear, RPM bar, turn signals, high beams, compass and street, fuel, and blinking *FASTEN SEATBELT* / *ENGINE DAMAGE* warnings. It works in every vehicle. In a **plane or helicopter** it becomes a flight display: airspeed (knots), altitude and climb rate (feet), heading, an artificial horizon that follows your pitch and roll, radar altitude near the ground, landing gear, and a *TOO LOW · GEAR* warning. The server can switch it off (**Settings › Interface › HUD**) and each player can too (*Menu › Misc Settings › Windshield HUD*). Players can move it with `/hud`.
+* **Flight instruments:** in a **plane or helicopter** the speedometer becomes a flight display, whatever style is picked: airspeed (knots) with an artificial horizon, then **ground speed** in its own section, in the server's speed unit (MPH or KM/H) and in knots, so air units can call out a pursuit's speed. Ground speed is the speed over the ground, so climbing or descending doesn't change it. Below that: altitude and height above ground (feet), climb rate, heading, landing gear (planes), fuel, engine, and the postal and street below you. Switch it off in **Settings › Interface › HUD › Flight instruments in planes and helicopters**.
+* **Terrain warning:** in a plane or helicopter, *SINK RATE*, *PULL UP* or *TERRAIN AHEAD* flashes on the flight display with a warning tone when you're about to hit the ground, a hill or a building (it looks about 6 seconds ahead along your flight path). It stays quiet on the ground, while hovering and on normal landings (gear down, or a slow final descent). The server can switch it off (**Settings › Interface › HUD › Terrain warning in planes and helicopters**) and each player can too (*Menu › Misc Settings › Terrain warning*).
+* **Windshield HUD:** driving or riding in **first person** (press V until you're in the cockpit), the speedometer is replaced by a see-through display low on the windshield: speed, gear, RPM bar, turn signals, high beams, compass and street, fuel, and blinking *FASTEN SEATBELT* / *ENGINE DAMAGE* warnings. It works in every vehicle. In a **plane or helicopter** it becomes a flight display: airspeed (knots), altitude and climb rate (feet), ground speed, heading, an artificial horizon that follows your pitch and roll, radar altitude near the ground, landing gear, and a *TOO LOW · GEAR* warning. The server can switch it off (**Settings › Interface › HUD**) and each player can too (*Menu › Misc Settings › Windshield HUD*). Players can move it with `/hud`.
 
 ### Streaming & video (M › Streaming & Video)
 
@@ -383,7 +388,7 @@ controls, the menu, money and inventory, vehicles, phone and voice, homes, jobs,
 ### Characters and spawning
 
 * **Settings › Characters:** multiple characters on/off, number of slots (plus extra slots for `characters.extraslots`), deleting and switching characters, nationalities list, **starter items** for new characters, and whether new characters open the appearance editor.
-* **Settings › Spawning:** spawn mode (**spawn selector**, last location, or always the default spawn), whether new characters use the selector, the default spawn point, *Last Location* in the selector, camera height, and the **selector locations**. Each location can be limited to a job or a permission.
+* **Settings › Spawning:** spawn mode (**spawn selector**, last location, or always the default spawn), whether new characters use the selector, the default spawn point, *Last Location* in the selector, camera height, and the **selector locations**. Each location can be limited to one or more jobs (*Only for these jobs*) or a permission.
 * **Settings › Teleport Locations:** the staff teleport list in *Menu › Misc Settings*.
 
 ### Economy and banking
@@ -438,14 +443,20 @@ nobody goes through. *Ejection injuries* decides how bad it is: **seriously inju
 
 **Siren controller** (any vehicle in GTA's emergency class, plus models you add):
 
-| Key | Controller | Action |
-|---|---|---|
-| Q | D-pad left | Emergency lights on / off |
-| R | B | Siren on / off (turns the lights on too) |
-| Y | D-pad down | Next siren tone |
-| E (hold) | Left stick click (hold) | Air horn |
+| Key | Action |
+|---|---|
+| Q | Emergency lights on / off |
+| R | Siren on / off (turns the lights on too) |
+| Y | Next siren tone |
+| E (hold) | Air horn |
 
-Players can change all of these in **Settings › Key Bindings › FiveM**.
+Players can change all of these in **Settings › Key Bindings › FiveM**. Controller players set their own buttons
+there too: the *Fusion: ... (controller, set your button)* entries have no default.
+
+> **With the Fusion Lighting add-on** (sold separately), Fusion Lighting's controller takes over the lights and
+> siren: stages, patterns, buttons, the setup editor and **F10 › Settings › Emergency Lighting**. The radar,
+> plate reader and AI pull-over below keep working. Turn ULC off while it runs, because both switch the same
+> extras (Fusion Lighting imports each pack's `ulc.lua` instead). See its own guide.
 
 With the lights or siren on, **AI traffic ahead pulls over to the right** and stops, then drives on once you have passed (Settings › Emergency Vehicles › Siren: on/off and how far ahead).
 
@@ -471,7 +482,17 @@ The vanilla ambulance and lifeguard are EMS and the fire truck is fire; addon ve
 | Numpad 0 | Start / reset the **PIT timer** |
 | F6 | Radar remote (and the siren controller) with the mouse |
 
-Front and rear lock separately, like a real unit: locking the front never locks the rear. The on-screen **radar unit** shows your patrol speed and, for each antenna, the nearest target's speed, the fastest vehicle in the beam, lock lamps and the plate. The **radar remote** (F6) has every button: power, front / rear antenna on-off, the four locks, auto-lock and the speed alarm. Hide the radar display from **Menu › Emergency** or with `/hud`. The plate reader shows the nearest front and rear plates. **Menu › Emergency** adds a speed alarm (with optional auto-lock), **Run plate** (registered owner and model from the database), and the **BOLO list**: when the reader sees a BOLO plate it locks, beeps and shows the reason.
+It works like a dual-antenna moving traffic radar:
+
+* **What it reads:** each antenna (front and rear) shows the **strongest** return in its beam in the TARGET window (big and close vehicles win, so a truck can hide a car behind it), the **FAST** window when something faster is in the beam, and a **LOCK** window. Only moving vehicles return a signal. Each antenna watches **OPP** (oncoming), **SAME** (same direction) or **BOTH**; by default the front watches oncoming traffic and the rear watches traffic coming up behind. Readings are the speed along the beam, so a car off to the side reads a little low (the cosine effect), and walls and buildings block the beam. Arrows show whether a target is approaching (▲) or moving away (▼).
+* **Locking:** a lock holds the faster of TARGET and FAST in the LOCK window while the live windows keep tracking. Front and rear lock separately. The speed alarm (with optional auto-lock) flashes the front target and beeps.
+* **XMIT / HOLD:** on hold the antennas stop transmitting: nothing reads, locked speeds stay. Lamps show XMIT/HOLD, moving or stationary patrol (MOV/STA) and the range.
+* **Remote (F6):** POWER, XMIT/HOLD, TEST (the self test also runs at power-up: all segments light, then PASS), SELECT front/rear (the antenna MODE and audio work on), FRONT/REAR antenna on-off, MODE (OPP/SAME/BOTH), FAST, LOCK/REL for each antenna's speed and plate (F SPD, R SPD, F PLT, R PLT), AUTO lock, RANGE 1-5, AUDIO (Doppler tone whose pitch follows the target's speed, three volumes), DIM, PIT and the speed alarm.
+* **Plate reader:** reads the nearest plate in its camera view, moving or parked, when it has a clear line of sight; the plate is drawn in its own style (blue on white, yellow on black, yellow on blue...). A **read log** under the windows lists the last plates with the game time, BOLO hits in red. When it sees a BOLO plate it locks, beeps and shows the reason.
+* **Radar Display** (*Menu › Emergency › Radar Display*, each officer's own): layout (full, compact, front antenna only), target digit color (red, amber, green, blue), size, brightness (auto dims at night), see-through, unlit "888" segments, and showing the plate reader, read log and PIT strip. Hide the whole display from **Menu › Emergency** or with `/hud`, and move it with `/hud`.
+* **Menu › Emergency** also has transmit/hold, each antenna's mode, range, fast window and audio, **Run plate** (registered owner and model from the database) and the **BOLO list**.
+
+Keys besides the ones above (XMIT/HOLD, select antenna, lock/release the selected antenna, antenna mode, audio volume) start unbound, since lighting scripts often use the numpad: set them in *GTA Settings › Key Bindings › FiveM*.
 
 **PIT timer:** when a pursuit starts, press **Numpad 0** (or *START PIT* on the remote, or *Menu › Emergency › Start PIT Timer*). A strip under the radar windows counts the pursuit time: amber *WAIT 0:32* until the department's time is up, then green **PIT AUTHORIZED** with a chime. If the department sets a top PIT speed it shows *SLOW TO 60 MPH* in red while you're going faster, and it shows *PIT NOT ALLOWED* when the department doesn't allow PITs at all. Press Numpad 0 again to stop and reset it.
 
@@ -510,7 +531,9 @@ Fusion has its own voice system built on FiveM's voice chat, so no pma-voice is 
 * **Calls:** phone calls are heard clearly from anywhere.
 * QBCore scripts written for pma-voice (radios, phones, MDTs) work with Fusion Voice automatically.
 
-**Settings › Voice & Radio:** turn Fusion Voice on or off, the ranges and distances, the starting range, the HUD, radios on or off, the radio item, the highest channel, restricted channels and their jobs, radio and call volume, the radio effect, mic clicks and the radio animation. If pma-voice is running, Fusion Voice switches itself off.
+**Settings › Voice & Radio:** turn Fusion Voice on or off, the ranges and distances, the starting range, the HUD, Fusion's radio on or off, the radio item, the highest channel, restricted channels and their jobs, radio and call volume, the radio effect, mic clicks and the radio animation. If pma-voice is running, Fusion Voice switches itself off.
+
+**Voice without Fusion's radio:** turn off **Settings › Voice & Radio › Fusion radio**. Proximity voice and phone calls keep working; the Radio menu entry and `/radio` go away and everyone on a channel is taken off it. A radio script of your own that uses the pma-voice functions (qb-radio and the like) can still put players on channels, and Caps Lock talks on them.
 
 **Using pma-voice instead of Fusion Voice:**
 1. Download pma-voice from https://github.com/AvarianKnight/pma-voice (**Code › Download ZIP**), unzip it into `resources/[standalone]` and rename the folder from `pma-voice-main` to `pma-voice`.
@@ -528,6 +551,19 @@ Phone calls switch to pma-voice by themselves, and scripts written for pma-voice
 own radio (`/radio`, the radio in the M menu, restricted police channels) and the voice indicator on Fusion's HUD
 belong to Fusion Voice, so with pma-voice use a pma-voice radio script (e.g. qb-radio in `[qb]`) instead. To go back,
 remove pma-voice and its `server.cfg` lines and turn **Voice and radio** on again.
+
+### Speed limits
+
+Every road has a speed limit. Drivers see it on a **sign next to the minimap** (US "SPEED LIMIT" or a European red circle; players move or hide it with `/hud`). The sign turns red while they're going faster.
+
+**Settings › Speed Limits:** turn it on or off, the sign and its style, and the limits themselves:
+
+* **Default for each kind of road**, from the road's name: freeways (65 mph), highways and routes (55), avenues and boulevards (40), streets in the city (35) and roads in Blaine County (45).
+* **Roads with their own limit**: a starter list of GTA's freeways, highways and main roads (Route 68, Great Ocean Hwy, Senora Fwy …). Change any of them, delete them, or add more by the name the HUD shows. They win over the defaults.
+* In game, staff with `admin.speedlimits` stand on a road and type **`/speedlimit 85`** to set its limit, or **`/speedlimit reset`** for its default. Anyone can type `/speedlimit` to see the road's limit.
+* *Limits below are in* sets MPH or KM/H; the sign and radar show them in the server's speed unit.
+
+Changes reach every player at once, and the **police radar** reads them too: with its speed alarm on *Over the posted limit*, an officer set to +20 is only alerted when a target goes 20 over the limit **of the road that target is on**. Raise Route 68 to 85 and the alarm follows straight away. The radar shows the limit where the patrol car is (*LIMIT 65*).
 
 ### Postal codes
 
@@ -590,7 +626,14 @@ the same way.
   **Let in** in **M › My Home**.
 * **Garage:** at the home's garage spot, **park** your vehicle (in it) or **take one out** (on foot). Owners and key
   holders can use it; everyone only sees their own vehicles there. *My Vehicles* shows them as *Garage: (home name)*.
-* **M › My Home**: inside, **Storage**, **Wardrobe**, visitors to let in and **Leave**; for each home, waypoints to
+* **Storage and wardrobe spots:** the owner walks to a shelf, cupboard or closet and picks **Put my storage here** /
+  **Put my wardrobe here** in **M › My Home**. A marker shows the spot and **E** opens it: storage is the home's
+  stash (slots and weight from the interior style), the wardrobe is the clothing editor with saved outfits, free.
+  Key holders use them too. Staff can give a whole interior style default spots: preview it (F10 › Housing), stand
+  at the spot and pick **Set this style's storage / wardrobe here** in **M › My Home** (or type them into the style
+  in **Settings › Housing › Interior styles**). An owner's own spot wins over the style's, and **back to the
+  default spot** undoes it. Homes without any spot keep **Storage** and **Wardrobe** in **M › My Home**.
+* **M › My Home**: inside, **Storage** and **Wardrobe** (when the home has no spot for them), visitors to let in and **Leave**; for each home, waypoints to
   it and its garage, **Give a key**, **Key holders** (and **Take back**) and **Sell** (refunds *Selling back refunds*
   % of the price).
 * **Spawn at home:** owned homes are listed on the spawn screen; picking one starts you inside.
@@ -628,6 +671,10 @@ Vanilla GTA vehicles keep their handling inside the game files, so only addon ve
 
 ### Vehicle meta (carcols) fixer
 
+> **With the Fusion Lighting add-on**, its Lighting Fixer does this job by default, and this page's Scan and
+> Fix are turned off (Backups / undo still work). **F10 › Settings › Emergency Lighting** › *Fix pack ID
+> conflicts with Fusion Lighting instead of Fusion's Sirens & Carcols page* switches back.
+
 When two vehicle packs use the same **siren**, **light settings** or **modkit** ID, cars get the wrong sirens or lightbar patterns, or lose liveries and mods. **F10 › Sirens & Carcols** (its own page in the admin panel) solves this:
 
 1. **Scan vehicle packs:** reads every resource's `carcols.meta` and `carvariations.meta` and lists each clashing ID, which pack keeps it, and which packs need a new one.
@@ -640,7 +687,7 @@ When two vehicle packs use the same **siren**, **light settings** or **modkit** 
 
 ### Weapons
 
-* **Settings › Weapons:** free mode (vMenu style) or inventory items, ammo given, weapons hidden from the spawner, keeping weapons after death and relog, replacing GTA's TAB wheel with the Fusion wheel, and **job loadouts** (pick weapons, jobs, optional permission, on-duty only, auto-attachments).
+* **Settings › Weapons:** free mode (freeroam style) or inventory items, ammo given, weapons hidden from the spawner, keeping weapons after death and relog, replacing GTA's TAB wheel with the Fusion wheel, **job loadouts** (pick weapons, jobs, optional permission, on-duty only, auto-attachments), and **gas grenades**: BZ gas and tear gas impair every player in the cloud (blurry, shaking screen, coughing and eye-wiping, no sprinting) until a few seconds after they get out. Set the cloud radius and how long it lasts, whether players in vehicles are affected, and which mask numbers count as gas masks.
 * Players get **Menu › Weapons**: spawner by category, attachments, tints, ammo, unlimited ammo / no reload (staff), personal loadouts with *equip on spawn*, and the weapon wheel (`/wheel`).
 * Weapon categories are permissions (`weapons.category.heavy`…), so you can, for example, allow handguns to everyone and rifles only to police.
 * **Addon weapons:**
@@ -652,9 +699,11 @@ When two vehicle packs use the same **siren**, **light settings** or **modkit** 
 
 * **Settings › Appearance & EUP:** editor anywhere vs stores only, clothing / barber / surgeon prices, **store locations** (a store with a job becomes a free locker room), **uniform presets**, and the ped model list.
 * **Creating EUP uniforms:**
-  1. Dress your character (Menu › Appearance › Clothing; **Set By Number** jumps straight to an EUP drawable).
+  1. Dress your character (Menu › Appearance › Clothing; **Set By Number** jumps straight to an EUP drawable). At the bottom of every editor menu, **Camera** keeps the camera on one part of the body while you go through the items (head, chest, hands, waist/belt, legs, feet, back, full body; *Auto* follows what you highlight), which helps with pieces in an unexpected slot such as a holster on the bag/parachute slot. **Turn Character** turns the character 45° with ← → (ENTER turns it around). Holding A and D turns it freely (FiveM key bindings "Fusion appearance: turn the character left / right").
   2. Go to **Appearance › Uniforms › Save Current Outfit As Uniform**, and give it a name, department, jobs and a minimum grade.
   3. Fine-tune or add a picture later in **Settings › Appearance & EUP › Uniform presets**.
+  4. After an EUP update (or to change a piece), put the uniform on, fix what changed, and pick **Update With What I'm Wearing** on that uniform. It keeps its name, jobs, grades and picture.
+* **My Outfits** (Appearance › My Outfits): players save outfits, then **Wear**, **Update With What I'm Wearing** (re-save it after changing a piece or an EUP update), **Rename** or **Delete** them. Outfits made for another character model still open for renaming, updating and deleting.
 * **Uniform pictures:** `resources/[fusion]/fusion-appearance/html/images/`, then `ensure fusion-appearance`.
 * **Adding EUP or other clothing packs:** put the pack in `resources/[addons]` and restart. Its clothing shows up in the editor automatically, after the vanilla items in each slot. Use **Set By Number** to jump straight to a drawable.
 
@@ -670,6 +719,10 @@ When two vehicle packs use the same **siren**, **light settings** or **modkit** 
 
 **Settings › Fuel & Gas Stations:** consumption overall and per vehicle class, price per liter, jerry can price, refuel speed, pump and EV-charger props, electric vehicles, low-fuel warning, NPC vehicle fuel, and station blips. Pumps work at every gas station automatically.
 
+**Running out:** below *Engine sputters below* (5% by default) the engine stumbles, more often as the tank empties, then dies at 0 and the car coasts. Electric vehicles lose power smoothly instead. Set it to 0 to switch sputtering off.
+
+**Jerry cans:** bought full at a pump (G): the can's price plus the fuel in it. With fusion-inventory running a jerry can is an inventory item in either weapon mode, and it keeps the fuel left in it, so it can go in pockets, trunks and stashes. With the can in hand: **E** at a vehicle pours it in, **E** at a pump fills it (paying for the fuel it takes), and **G** puts it away with its fuel. *A full jerry can fills this much of a tank* (25% by default, about a real 5-gallon can) sets how far one can goes.
+
 * **Refuel points (aircraft, boats and your own stations):** areas where the driver refuels **from the seat** with the engine off: stop inside one and press the interact key. Each has a type (*Aircraft*, *Boats*, *Cars*, or *Every vehicle*), a radius, an optional job and a blip (blue for aviation fuel, teal for marine fuel). It comes with aviation fuel at LSIA, Sandy Shores Airfield, McKenzie Field and the Pillbox Hill, Mission Row and Vespucci helipads, and marine fuel at the LSYMC marina.
 * **Adding or moving them, live:** **Add refuel point here** where you stand, **Here** to move one, and the same for gas station blips (**Add blip here**). Everyone sees the change straight away, no restart.
 
@@ -677,10 +730,11 @@ When two vehicle packs use the same **siren**, **light settings** or **modkit** 
 
 **Settings › Hospital & Death:**
 
-* **Respawn mode (vMenu):** short timer, then respawn at the nearest hospital or where you died.
-* **Downed mode (RP):** players go down, then die after a timer. EMS revive them with the revive item (first aid kit), or they respawn after bleeding out, paying a bill and optionally losing items (with a keep list).
-* **Falling:** a fall longer than *Fatal fall height* (15 m by default) without an open parachute kills; landing in water is survivable.
-* **Pillbox Hill hospital you can walk into:** GTA has its own walk-in Pillbox lobby that multiplayer normally leaves switched off (only a painted fake interior shows behind the glass). *Open GTA's own Pillbox Hill hospital interior* (on by default, **Settings › Hospital › Locations**) switches it on. It is the only Pillbox interior in GTA, and the game only has it as a story mission left it, after a truck crashed through. Fusion streams a cleaned copy (`fusion-hospital/stream/v_int_40.ytyp`) with the debris, rubble, planks, broken wall piece and scorch marks gone, leaves out the painted fake interior and its closed doors (whose collision blocked the entrance), and puts GTA's hospital doors propped open at the entrance, so you walk straight in. The default check-in desk and respawn point are inside. The torn edge around the ward doorway is part of the building itself and stays. If you install a Pillbox MLO, turn this off and delete `fusion-hospital/stream/v_int_40.ytyp`.
+* **Respawn mode (freeroam):** short timer, then respawn at the nearest hospital or where you died.
+* **Downed mode (RP):** players go down, then die after a timer. EMS revive them with the revive item (first aid kit), or they respawn after bleeding out, paying a bill and optionally losing items (with a keep list). While down they can **call EMS** (G: every EMS on duty gets an alert with their location, once a minute; with nobody from the EMS jobs on duty, an **AI medic** drives over in an ambulance and revives them for the *AI medic bill*, 250 by default; turn it off or change the vehicle in **Settings › Hospital › EMS**) or **give up** (hold H for 3 seconds: they die and may respawn after *After giving up, respawn allowed after*, 30 seconds by default; turn giving up off in **Settings › Hospital › Downed mode**). Both are FiveM key bindings.
+* **Fire** (Settings › Gameplay › Fire): walking into any fire (a molotov, a burning vehicle, Fusion Fires) or sitting in a burning vehicle for 2 seconds sets the player alight. They lose 12 health a second (adjustable) until the fire goes out, 5 seconds after catching fire or at once in water. Fusion god mode, noclip and spectate are spared.
+* **Falling:** a fall longer than *Fatal fall height* (15 m by default) without an open parachute kills, even for staff (only Fusion's own god mode, noclip and spectating spare you); landing in water is survivable. High up (*Free fall starts this high above the ground*, 30 m by default), a falling player drops belly-down like a skydiver instead of flailing; without a parachute of their own they can't open one, and the landing is still fatal.
+* **Pillbox Hill hospital you can walk into:** GTA has its own walk-in Pillbox lobby that multiplayer normally leaves switched off (only a painted fake interior shows behind the glass). *Open GTA's own Pillbox Hill hospital interior* (on by default, **Settings › Hospital › Locations**) switches it on. It is the only Pillbox interior in GTA, and the game only has it as a story mission left it, after a truck crashed through. Fusion streams a repaired copy (`fusion-hospital/stream/v_int_40.ytyp`): the debris, rubble, litter, hanging pipes and scorch marks are gone, the rusty waiting seats, bent bench seats and tipped-over armchairs are replaced with clean ones (and the rusty plastic chairs are gone), knocked-over furniture stands upright again, a scorched door is swapped for a clean one, and clean panels in GTA's own hospital finishes cover the damage built into the building (the torn-open corridor ceiling, the broken doorways, wall ends and sunroom window posts), the sunroom's broken window panes have glass again, and the light fittings left hanging at the ward hall are gone. The front entrance gets GTA's hospital glass doors, which swing open as you walk through. It also leaves out the painted fake interior and its closed doors (whose collision blocked the entrance). The default check-in desk and respawn point are inside. If you install a Pillbox MLO, turn this off and delete `fusion-hospital/stream/v_int_40.ytyp`, `fusion_pillbox.ytyp`, `fusion_pillbox.ytd`, `v_40_lights2.ydr`, `v_hospital.ybn` and the `fusion_pb_*.ydr` files.
 * **Places that need an MLO:** a teleport or respawn to a spot with no floor outside every GTA interior puts you on the nearest sidewalk instead of dropping you through the map.
 * EMS jobs, alerts to on-duty EMS, check-in desks (cost, treatment time, disabled when enough EMS are on duty), and hospital locations.
 * **Treatment beds:** a checked-in patient is taken to a free bed, lies on it while being treated, then gets up beside it. Each hospital has its own *Treatment beds* list (**Add bed here** while lying on or standing on a bed, facing the foot end); Pillbox comes with its 8 ward beds. A hospital without beds treats patients at the desk.
@@ -688,6 +742,16 @@ When two vehicle packs use the same **siren**, **light settings** or **modkit** 
 ### Jail
 
 **Settings › Jail:** jobs allowed to jail, the longest sentence, confiscating items (returned on release, with a keep list), time counting offline, cell, release point, escape radius, and what happens on escape. Police use **Menu › Jail** or `/jail <id> <minutes> <charges>`.
+
+### Door locks
+
+Lock any door in the game: a police station, a business, a house, a gate.
+
+* **Adding doors:** staff open **Menu › Door Locks**, look at a door and press *Add the door you are looking at*, then give it a name. For double doors, *Add a double door* asks for each half in turn. A new door starts locked.
+* **Who may use it** is set per door in **Settings › Door Locks › Doors**: any number of jobs (only while on duty, unless you turn that off), a key item that opens it, or both. Staff with `doorlock.all` open every door; `doorlock.manage` (admins by default) adds and removes them.
+* **Each door** also has *Locked after a server restart*, *Lock again by itself after* (seconds, for doors that should never stay open) and its reach. The position and model are filled in when you add it; you can type them too (a model name or hash).
+* **Using a door:** near a door you may use, the prompt shows its name and whether it's locked; the interact key (E, a FiveM key binding) locks or unlocks it with a key-card swipe. Everyone sees the change at once, and a locked door can't be opened by anyone.
+* **Other scripts:** `exports['fusion-doorlock']:SetDoorState(nameOrId, locked)` and `GetDoorState(nameOrId)`; the server event `fusion:doorlock:changed (id, locked)` fires on every change.
 
 ### Weather and time
 
@@ -701,13 +765,14 @@ When two vehicle packs use the same **siren**, **light settings** or **modkit** 
 
 | Event | What happens |
 |---|---|
-| **Thunderstorm** | Heavy rain, strong wind, rough sea and lightning strikes around players (they can hurt people on foot and stall cars) |
+| **Thunderstorm** | Heavy rain, strong wind, rough sea and lightning strikes around players: a visible bolt every few seconds, landing near each player in turn (they can hurt people on foot and stall cars) |
 | **Flood** | Torrential rain while the sea, rivers and lakes rise (3 m by default): the docks, low coastal roads and riverbanks go under, then the water drains away |
 | **Hurricane** | Winds build to maximum, huge waves, a storm surge, a power cut across the city, lightning, and gusts that shove vehicles sideways |
-| **Tornado** | A spinning funnel travels across the map toward players, shown on the map with a danger zone. It pulls in and lifts vehicles, people and loose objects, and hurts anyone caught inside |
+| **Tornado** | A spinning funnel travels across the map toward players, shown on the map with a danger zone. It pulls in and lifts vehicles, people and loose objects, and hurts anyone caught inside. Comes with hail and lightning |
 | **Blizzard** | Heavy snow, snow covering the ground and roads, strong wind and low visibility, with optional icy roads |
+| **Hailstorm** | Hail bouncing off the ground, denting vehicles left outside and hurting people caught in the open, with strong wind and lightning |
 
-**Settings › Weather & Time › Severe weather:** turn events on or off, the warning time, random events (chance per hour, which types, minimum players), each event's length, lightning strikes and damage, flood height and how fast it rises, hurricane surge, gusts and power cut, tornado size, speed, strength and damage, and icy roads. Permission: `weather.events` (admins by default).
+**Settings › Weather & Time › Severe weather:** turn events on or off, the warning time, random events (chance per hour, which types, minimum players), each event's length, lightning strikes and damage, hail and hail damage, flood height and how fast it rises, hurricane surge, gusts and power cut, tornado size, speed, strength and damage, and icy roads. Permission: `weather.events` (admins by default).
 
 > The tornado funnel is built from GTA's own smoke effects. If you prefer another look, change the particle asset and effect under *Severe weather* (advanced).
 
@@ -838,7 +903,7 @@ Your own pictures and media stay yours: Fusion updates never overwrite them, and
 
 ## 9. Running QBCore scripts
 
-Fusion provides the full QBCore API:
+Fusion provides the full QBCore API. The `[compat]` folder from the free server kit holds small bridge resources (`qb-core`, `qb-menu`, `qb-input`, `progressbar`) that pass QBCore calls on to Fusion, so scripts find the resource names they expect. Keep them in `resources/[fusion]/[compat]`.
 
 * `exports['qb-core']:GetCoreObject()`, `QBCore.Functions.*`, the player object (`Player.Functions.AddMoney`, `SetJob`, `AddItem`…), callbacks, commands, usable items, and `QBCore.Shared` items, jobs, gangs, vehicles and weapons.
 * The standard `QBCore:*` events (player loaded/unloaded, job and duty updates, notifications…).
@@ -871,6 +936,12 @@ Every script you add (anything outside `[fusion]`) is listed with its config fil
 * **Start order:** Fusion reads what each script needs (its manifest's dependencies and the scripts it calls through
   `exports[...]`) and keeps your scripts' ensure lines in that order: a script starts after the scripts it needs.
   This happens when you add a line and at every server start; Fusion's own lines and folder lines don't move.
+* **Start after…:** when a script has to wait for another one that Fusion can't see in its manifest or code, press
+  **Start after…** on its page and pick the scripts it must start after. Fusion moves the ensure lines (or orders its
+  own start list) straight away and keeps that order at every start. The button then shows what it starts after. If
+  Fusion can't put them in order by itself, it says why and what to do: both scripts start with the same folder
+  (FiveM picks the order inside a folder, so give the script its own ensure line), one of them doesn't start with the
+  server, or the picks make a loop (A after B, B after A).
 * **When server.cfg can't be written** from the server (FiveM blocks scripts from files outside the resources on
   many servers), the button still works: Fusion writes the scripts, in start order, as `ensure` lines into
   `resources/[fusion]/fusion-core/permissions/startup.cfg`, and server.cfg runs that file with one line at its very
@@ -914,6 +985,7 @@ Every key below is a FiveM key binding: each player can change it in *GTA Settin
 | **Caps Lock** | Mouse cursor in the menu | Everyone |
 | **F1** | Phone | Everyone |
 | **↑ ↓ ← →**, **Enter**, **Backspace** | Menu: move, change value, select, back | Everyone |
+| **A / D** (hold) | Turn your character in the appearance editor | Everyone |
 | **TAB** | Fusion weapon wheel (when *Replace GTA's weapon wheel* is on) | Everyone |
 | **Q / R / Y**, hold **E** | Emergency lights / siren / next tone / air horn (in emergency vehicles) | Per job / permission |
 | **F5** | Police radar power | Per job / permission |
@@ -927,13 +999,13 @@ Every key below is a FiveM key binding: each player can change it in *GTA Settin
 | **Home** | Noclip on / off | Staff |
 | **Q / E**, **Left Shift / Left Ctrl** | Noclip up / down, faster / slower | Staff |
 | **Backspace** | Stop spectating | Staff |
-| **Delete** | Delete the entity under the entity laser | Staff |
+| **Delete** | Delete the entity under the entity laser. A prop of GTA's map stays deleted for everyone, also after restarts (`/restoreprops` brings them all back); a prop built with the Interior Builder is deleted from its place. Props built into GTA's interiors can't be hidden this way | Staff |
 | **E / Q**, **Left Shift / Left Ctrl**, mouse wheel, **Z / C**, **X**, **Backspace** | Free camera: up / down, faster / slower, zoom, tilt, level, leave | Players with `media.freecam` |
-| Controller: **D-pad left / B / D-pad down**, hold **left stick** | Emergency lights / siren / next tone / air horn | Per job / permission |
+| Controller: your own buttons (*Fusion: ... (controller, set your button)*, no default) | Emergency lights / siren / next tone / air horn | Per job / permission |
 
 Fusion add-ons work the same way: the **Fusion Interior Builder**'s build-mode keys are listed as *Fusion Builder: ...*.
 
-Four things follow GTA's own controls instead (change them in GTA's normal key bindings): walking in noclip and the free camera and turning your character in the appearance editor (your walking keys), **R** to reload (GTA's *Reload* key; with an empty weapon it loads ammo from your inventory), **Esc** to close the menu, and the controller D-pad in menus.
+Three things follow GTA's own controls instead (change them in GTA's normal key bindings): walking in noclip and the free camera (your walking keys), **R** to reload (GTA's *Reload* key; with an empty weapon it loads ammo from your inventory), **Esc** to close the menu, and the controller D-pad in menus.
 
 In the menu: **↑↓** move, **←→** change values, **Enter** select, **Backspace** back, **Esc** close. Players can keep walking and driving while it's open.
 
@@ -945,6 +1017,7 @@ In the menu: **↑↓** move, **←→** change values, **Enter** select, **Back
 | `/guide` | Everyone | Reopen the player guide |
 | `/hud` | Everyone | Move or hide HUD elements |
 | `/calladmin [reason]`, `/report <message>` | Everyone | Ask staff for help |
+| `/me <action>`, `/does <description>` | Everyone | Roleplay: shown above your character for 7 seconds and in the chat of players within 20 m (**Settings › Gameplay › Roleplay**) |
 | `/reports` | Staff | Open the Reports tab |
 | `/noclip` | Staff | Toggle noclip |
 | `/car <model>`, `/dv`, `/fix` | Per permission | Spawn, delete or repair a vehicle |
@@ -959,7 +1032,7 @@ In the menu: **↑↓** move, **←→** change values, **Enter** select, **Back
 | `/announce <message>` | Staff | Server announcement |
 | `/jail <id> <minutes> <charges>`, `/unjail <id>` | Police / staff | Jail |
 | `/weather <type>`, `/time <h> <m>`, `/blackout` | Staff | Weather and time |
-| `/weatherevent thunderstorm\|flood\|hurricane\|tornado\|blizzard\|stop` | Staff | Severe weather events |
+| `/weatherevent thunderstorm\|flood\|hurricane\|tornado\|blizzard\|hailstorm\|stop` | Staff | Severe weather events |
 | `/setfuel <0-100>` | Staff | Set your vehicle's fuel |
 | `/postal [code]` | Everyone | Waypoint to a postal code (empty clears it) |
 | `/streamer`, `/videomode`, `/freecam` | Everyone | Streamer mode, video mode, free camera |
@@ -978,11 +1051,12 @@ In the menu: **↑↓** move, **←→** change values, **Enter** select, **Back
 Fusion checks for new versions by itself (every 6 hours) and tells staff with `admin.updates` (owners by default) when one is out.
 
 * **F10 › Updates** shows the version you run, the newest one, and **what changed** in every version in between.
-* New versions are **downloaded by themselves** and checked before anything can be installed: the update list must carry Fusion Menu Studios' signature (a fake or altered list is ignored), and the download must match its size and **SHA-256 checksum**, and every file inside it its own checksum. A broken or tampered download is thrown away and downloaded again. If the main download address fails, it retries, resumes where it stopped, and moves on to the next mirror.
+* New versions are **downloaded by themselves** and checked before anything can be installed: the update list must carry Fusion Platform Technologies' signature (a fake or altered list is ignored), and the download must match its size and **SHA-256 checksum**, and every file inside it its own checksum. A broken or tampered download is thrown away and downloaded again. If the main download address fails, it retries, resumes where it stopped, and moves on to the next mirror.
 * **You choose when it installs:** **Install** (players get a countdown, by default 5 minutes, then everyone is disconnected while Fusion restarts, about a minute), **When the server is empty**, or **At this time**. Or let it install by itself in Settings › Updates (when the server is empty, or at a set time each day). **Skip this version** if you want to wait for the next one.
 * **Installing:** Fusion stops its modules, backs up exactly the files it is about to change, writes the new ones and reads every one back to check it. Files you edited are kept (the new version goes beside them as `.new`), and your pictures, media, clips and settings are never touched, the same as the updater script.
 * **If anything goes wrong it puts the old version back by itself:** when a file can't be written, when the new version doesn't start and report its build within 3 minutes, or when the server stops in the middle of an install (the next start restores the old files before Fusion loads). Staff are told why, and that build isn't installed by itself again.
 * **Undo** in the history list goes back to the version you had before the last update.
+* **Fusion add-ons update too.** Every Fusion add-on installed here (Trucking, Fires, Aerial, Lighting, Interior Builder, Pursuit Equipment, Fire Hose) is listed under *Add-ons* with its version and the newest one. New versions are checked and downloaded the same way, and installed the way you set in Settings › Updates (or with **Install add-on updates**). Each add-on is backed up and restarted on its own for a few seconds while players stay connected; if it doesn't start, its old files go back by themselves and that version isn't installed by itself again. Files you edited are kept, with the new version saved next to them as `.new`. Only copies from Cfx.re (escrowed) are updated. Servers that run an add-on without Fusion Menu are updated by the add-on's own updater, which stays off while `fusion-updater` runs.
 
 The updater is its own resource, `fusion-updater`. It must start **before** `fusion-core` (`ensure fusion-updater` above `ensure fusion-core`; new installs and updates put it there), so it can repair Fusion even when Fusion itself doesn't start. It saves its downloads and backups in `resources/[fusion]/fusion-updater/data` (the last 3 versions by default, Settings › Updates).
 
@@ -1011,9 +1085,7 @@ For servers where you can't run the updater (ZAP-Hosting and other txAdmin hosts
 1. Back up first: F10 › Settings › **Export**, the database (your host's panel or phpMyAdmin › Export), and download a copy of `resources/[fusion]`.
 2. Stop the server.
 3. Unzip the new Fusion zip on your PC.
-4. Upload every folder from the zip over the folder of the same name on the server, **replacing files but not deleting the old folders first**:
-   * the `fusion-…` folders go into `resources/[fusion]`;
-   * `qb-core`, `qb-menu`, `qb-input` and `progressbar` go wherever they already are: `resources/[fusion]/[compat]` if you have that folder, otherwise straight into `resources/[fusion]`. Never end up with two copies of the same folder name anywhere in `resources`: the server refuses to start a resource it finds twice.
+4. Upload every `fusion-…` folder from the zip over the folder of the same name in `resources/[fusion]`, **replacing files but not deleting the old folders first**. Leave `resources/[fusion]/[compat]` as it is: those bridges come with the free server kit, not the Fusion zip. Never end up with two copies of the same folder name anywhere in `resources`: the server refuses to start a resource it finds twice.
 5. **Don't** upload over or delete: `server.cfg`, `resources/[qb]`, `resources/[addons]`, `resources/[standalone]`, and inside `fusion-core` the folders `support`, `permissions`, `media-clips`, `config-backups` and `script-backups`. If you replaced a built-in picture (an item, vehicle or weapon picture with the same name as Fusion's), skip that one file when your FTP program asks.
 6. Start the server.
 
@@ -1095,7 +1167,7 @@ To roll back, stop the server and copy the resource folders from `backups/<date>
 
 ## 12. License
 
-Fusion Menu is licensed, not sold (see `LICENSE`). You may use and modify it on servers you own or operate. You may **not** resell, share or redistribute it, original or modified, and the *Fusion Menu by Fusion Menu Studios* credit must stay. oxmysql (LGPL-3.0) and the default Cfx.re resources (MIT) keep their own licenses.
+Fusion Menu (the `fusion-…` resources) is licensed, not sold (see `LICENSE`). You may use and modify it on servers you own or operate. You may **not** resell, share or redistribute it, original or modified, and the *Fusion Menu by Fusion Platform Technologies* credit must stay. The free server kit (installers, setup tools, the `server.cfg` template and the `[compat]` bridges) may be used, changed and shared, but not sold. oxmysql (LGPL-3.0), the default Cfx.re resources (MIT) and the built-in postal code sets from nearest-postal (MIT) keep their own licenses. QBCore and the other projects named here belong to their owners; Fusion Menu is compatible with them and not affiliated with them.
 
 ---
 
@@ -1113,7 +1185,7 @@ console. Passwords, license keys, database logins, webhooks and players' IP addr
 |---|---|
 | Console: *You lack the required entitlement* for a fusion resource | The server's license key belongs to a different Cfx.re account than the one that bought Fusion Menu. Use a key from the buying account |
 | Console: *Still waiting for the database* | MySQL isn't running, or the database doesn't exist. Start MySQL (XAMPP) or `systemctl start mariadb` (Linux) and run the installer again |
-| Console runs old resources (vMenu, missing cars…) | txAdmin's *CFG File* still points at another server's `server.cfg` |
+| Console runs old resources (another framework, missing cars…) | txAdmin's *CFG File* still points at another server's `server.cfg` |
 | Stuck on a camera view or blank screen | Press F8 and type `nui_devtools` to see interface errors; send them to whoever maintains your server |
 | A picture doesn't show | Check the file name matches exactly (including `.png`) and `ensure` the resource |
 | A third-party script ignores your roles | Find the permission name it uses and add it under **Custom nodes** ([section 5](#5-roles-and-permissions)) |

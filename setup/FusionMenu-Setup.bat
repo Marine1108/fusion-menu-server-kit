@@ -1,6 +1,6 @@
 @echo off
 title Fusion Menu setup
-rem One-click setup: downloads the Fusion Menu server kit and sets up the whole server on this PC.
+rem One-click setup: downloads the free Fusion Menu server kit and sets up a FiveM server for Fusion Menu on this PC.
 rem Windows asks for permission because a database service, firewall rule and shortcuts are set up.
 net session >nul 2>&1
 if %errorlevel% neq 0 (
